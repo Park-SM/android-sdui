@@ -1,0 +1,79 @@
+package com.smparkworld.park.ui
+
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.Transformations
+import androidx.viewbinding.BuildConfig
+import com.smparkworld.park.domain.usecase.GetSectionsUseCase
+import com.smparkworld.park.model.ExtraKey
+import com.smparkworld.park.model.Result
+import com.smparkworld.park.model.Section
+import com.smparkworld.park.ui.base.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import java.lang.Exception
+import javax.inject.Inject
+
+@HiltViewModel
+internal class ParkViewModel @Inject constructor(
+    private val stateHandle: SavedStateHandle,
+    private val getSectionsUseCase: GetSectionsUseCase
+) : BaseViewModel() {
+
+    private val _isLoading: MutableLiveData<Boolean> = MutableLiveData()
+    val isLoading: LiveData<Boolean> get() = _isLoading
+
+    private val _items: MutableLiveData<List<Section>> = MutableLiveData()
+    val items: LiveData<List<Section>> get() = _items
+
+    val isEmpty: LiveData<Boolean> get() = Transformations.map(_items) {
+        it.isNullOrEmpty()
+    }
+
+    init {
+        requestSections()
+    }
+
+    private fun requestSections() {
+
+        viewModelScope.launch {
+            _isLoading.value = true
+
+            val requestUrl = getRequestUrl()
+            if (requestUrl != null) {
+
+                when (val result = getSectionsUseCase(requestUrl)) {
+                    is Result.Success -> {
+                        onSuccessGetSections(result.data)
+                    }
+                    is Result.Error -> {
+                        onFailureGetSections(result.exception)
+                    }
+                }
+            } else {
+                onEmptyRequestUrl()
+            }
+
+            _isLoading.value = false
+        }
+    }
+
+    private fun onSuccessGetSections(data: List<Section>) {
+        _items.value = data
+    }
+
+    private fun onFailureGetSections(exception: Exception) {
+        // Send non-fatal log, etc..
+
+        if (BuildConfig.DEBUG) exception.printStackTrace()
+    }
+
+    private fun onEmptyRequestUrl() {
+        // Send non-fatal log, etc..
+
+        _items.value = emptyList()
+    }
+
+    private fun getRequestUrl() = stateHandle.get<String>(ExtraKey.REQUEST_URL)
+}
