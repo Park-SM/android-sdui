@@ -1,4 +1,4 @@
-package com.smparkworld.park.di
+package com.smparkworld.park.di.qualifier
 
 import javax.inject.Qualifier
 
