@@ -1,8 +1,8 @@
 package com.smparkworld.park.domain.repository
 
-import com.smparkworld.park.model.Section
+import com.smparkworld.park.domain.dto.ParkSectionsDTO
 
 interface ParkRepository {
 
-    suspend fun requestSections(url: String): List<Section>
+    suspend fun requestSections(url: String): ParkSectionsDTO
 }

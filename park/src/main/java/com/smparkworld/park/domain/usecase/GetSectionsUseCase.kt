@@ -1,13 +1,13 @@
 package com.smparkworld.park.domain.usecase
 
-import com.smparkworld.park.di.IoDispatcher
+import com.smparkworld.park.di.qualifier.IoDispatcher
+import com.smparkworld.park.domain.dto.ParkSectionsDTO
 import com.smparkworld.park.domain.repository.ParkRepository
-import com.smparkworld.park.model.Section
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 
 private typealias ParamType = String
-private typealias ResultType = List<Section>
+private typealias ResultType = ParkSectionsDTO
 
 class GetSectionsUseCase @Inject constructor(
     private val parkRepository: ParkRepository,

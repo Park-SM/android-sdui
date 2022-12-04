@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.Transformations
 import androidx.viewbinding.BuildConfig
+import com.smparkworld.park.domain.dto.ParkSectionsDTO
 import com.smparkworld.park.domain.usecase.GetSectionsUseCase
 import com.smparkworld.park.model.ExtraKey
 import com.smparkworld.park.model.Result
@@ -30,6 +31,8 @@ internal class ParkViewModel @Inject constructor(
     val isEmpty: LiveData<Boolean> get() = Transformations.map(_items) {
         it.isNullOrEmpty()
     }
+
+    private var nextRequestUrl: String? = null
 
     init {
         requestSections()
@@ -59,8 +62,10 @@ internal class ParkViewModel @Inject constructor(
         }
     }
 
-    private fun onSuccessGetSections(data: List<Section>) {
-        _items.value = data
+    private fun onSuccessGetSections(data: ParkSectionsDTO) {
+        nextRequestUrl = data.requestUrl?.nextPageUrl
+
+        _items.value = data.sections
     }
 
     private fun onFailureGetSections(exception: Exception) {
