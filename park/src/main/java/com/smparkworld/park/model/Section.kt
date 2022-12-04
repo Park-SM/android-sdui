@@ -1,3 +1,12 @@
 package com.smparkworld.park.model
 
-interface Section
+import com.google.gson.annotations.SerializedName
+
+abstract class Section {
+
+    @SerializedName("type")
+    val viewType: String? = null
+
+    @SerializedName("sectionType")
+    val sectionType: String? = null
+}
