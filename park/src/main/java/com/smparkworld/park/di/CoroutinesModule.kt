@@ -1,6 +1,11 @@
 
 package com.smparkworld.park.di
 
+import com.smparkworld.park.di.qualifier.ApplicationScope
+import com.smparkworld.park.di.qualifier.DefaultDispatcher
+import com.smparkworld.park.di.qualifier.IoDispatcher
+import com.smparkworld.park.di.qualifier.MainDispatcher
+import com.smparkworld.park.di.qualifier.MainImmediateDispatcher
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
