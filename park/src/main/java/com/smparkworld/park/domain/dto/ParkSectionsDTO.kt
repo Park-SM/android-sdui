@@ -5,7 +5,7 @@ import com.smparkworld.park.model.Section
 
 data class ParkSectionsDTO(
 
-    val requestUrl: ParkRequestUrlVO? = null,
+    var requestUrl: ParkRequestUrlVO? = null,
 
-    val sections: List<Section>? = null,
+    var sections: List<Section>? = null,
 )

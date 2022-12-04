@@ -10,13 +10,15 @@ import kotlin.reflect.KClass
 @HiltSetBinds
 class ParkSectionsDTOMapper @Inject constructor(
 
-) : Mapper<ParkSectionsDTO, ParkSectionsVO> {
+) : Mapper<ParkSectionsVO, ParkSectionsDTO> {
 
-    override fun map(from: ParkSectionsDTO): ParkSectionsVO {
-        TODO("Not yet implemented")
+    override fun map(from: ParkSectionsVO): ParkSectionsDTO {
+        return ParkSectionsDTO(
+            requestUrl = from.requestUrl,
+            sections = from.sections
+        )
     }
 
-    override fun equals(from: KClass<*>, to: KClass<*>): Boolean {
-        TODO("Not yet implemented")
-    }
+    override fun equals(from: KClass<*>, to: KClass<*>): Boolean =
+        from == ParkSectionsVO::class && to == ParkSectionsDTO::class
 }

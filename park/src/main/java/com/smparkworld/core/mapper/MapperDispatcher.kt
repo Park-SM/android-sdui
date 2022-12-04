@@ -29,5 +29,5 @@ class MapperDispatcher @Inject constructor(
         "Not found mapper class. | from: ${from.simpleName}, to: ${to.simpleName}"
 
     fun getNonUniqueMapperErrorMessage(from: KClass<*>, to: KClass<*>): String =
-        "More than 1 Mapper found. | from: ${from.simpleName}, to: ${to.simpleName}"
+        "Not unique mapper class. | from: ${from.simpleName}, to: ${to.simpleName}"
 }
