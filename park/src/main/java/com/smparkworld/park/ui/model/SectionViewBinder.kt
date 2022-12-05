@@ -1,4 +1,4 @@
-package com.smparkworld.park.model
+package com.smparkworld.park.ui.model
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
