@@ -5,15 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.Transformations
 import androidx.viewbinding.BuildConfig
+import com.smparkworld.core.ExtraKey
 import com.smparkworld.park.domain.dto.ParkSectionsDTO
+import com.smparkworld.park.domain.dto.SectionDTO
 import com.smparkworld.park.domain.usecase.GetSectionsUseCase
-import com.smparkworld.park.model.ExtraKey
 import com.smparkworld.park.model.Result
-import com.smparkworld.park.model.Section
 import com.smparkworld.park.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,8 +24,8 @@ internal class ParkViewModel @Inject constructor(
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData()
     val isLoading: LiveData<Boolean> get() = _isLoading
 
-    private val _items: MutableLiveData<List<Section>> = MutableLiveData()
-    val items: LiveData<List<Section>> get() = _items
+    private val _items: MutableLiveData<List<SectionDTO>> = MutableLiveData()
+    val items: LiveData<List<SectionDTO>> get() = _items
 
     val isEmpty: LiveData<Boolean> get() = Transformations.map(_items) {
         it.isNullOrEmpty()

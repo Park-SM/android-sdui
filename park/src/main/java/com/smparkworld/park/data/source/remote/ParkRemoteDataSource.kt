@@ -2,7 +2,7 @@ package com.smparkworld.park.data.source.remote
 
 import com.google.gson.Gson
 import com.smparkworld.hiltbinder.HiltBinds
-import com.smparkworld.network.model.ParkSectionsVO
+import com.smparkworld.park.data.vo.ParkSectionsVO
 import javax.inject.Inject
 
 

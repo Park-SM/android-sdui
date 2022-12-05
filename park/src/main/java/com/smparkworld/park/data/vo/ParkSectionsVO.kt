@@ -1,8 +1,7 @@
-package com.smparkworld.network.model
+package com.smparkworld.park.data.vo
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import com.smparkworld.park.model.Section
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
 
@@ -13,6 +12,6 @@ data class ParkSectionsVO(
     val requestUrl: ParkRequestUrlVO? = null,
 
     @SerializedName("sections")
-    val sections: List<@RawValue Section>? = null,
+    val sections: List<@RawValue SectionVO>? = null,
 
-) : Parcelable
+    ) : Parcelable

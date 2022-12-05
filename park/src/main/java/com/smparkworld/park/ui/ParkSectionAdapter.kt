@@ -3,18 +3,19 @@ package com.smparkworld.park.ui
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.smparkworld.park.model.Section
-import com.smparkworld.park.model.SectionDiffCallback
-import com.smparkworld.park.model.SectionViewBinder
+import com.smparkworld.park.data.vo.SectionVO
+import com.smparkworld.park.domain.dto.SectionDTO
+import com.smparkworld.park.ui.model.SectionDiffCallback
+import com.smparkworld.park.ui.model.SectionViewBinder
 import kotlin.reflect.KClass
 
 class ParkSectionAdapter(
-    viewBinders: Map<KClass<out Section>, SectionViewBinder<Section, ViewHolder>>
-) : ListAdapter<Section, ViewHolder>(SectionDiffCallback(viewBinders)) {
+    viewBinders: Map<KClass<out SectionDTO>, SectionViewBinder<SectionDTO, ViewHolder>>
+) : ListAdapter<SectionDTO, ViewHolder>(SectionDiffCallback(viewBinders)) {
 
     private val viewTypeToBinders = viewBinders.mapKeys { it.value.getFeedItemType() }
 
-    private fun getViewBinder(viewType: Int): SectionViewBinder<Section, ViewHolder> =
+    private fun getViewBinder(viewType: Int): SectionViewBinder<SectionDTO, ViewHolder> =
         viewTypeToBinders.getValue(viewType)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

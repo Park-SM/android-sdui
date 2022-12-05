@@ -1,8 +1,8 @@
-package com.smparkworld.park.model
+package com.smparkworld.park.data.vo
 
 import com.google.gson.annotations.SerializedName
 
-abstract class Section {
+abstract class SectionVO {
 
     @SerializedName("type")
     val viewType: String? = null

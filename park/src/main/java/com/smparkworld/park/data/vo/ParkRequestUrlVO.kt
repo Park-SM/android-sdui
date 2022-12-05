@@ -1,4 +1,4 @@
-package com.smparkworld.network.model
+package com.smparkworld.park.data.vo
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
