@@ -1,15 +1,15 @@
 package com.smparkworld.park.data.mapper
 
 import com.smparkworld.core.mapper.Mapper
-import com.smparkworld.park.data.vo.ParkRequestUrlVO
+import com.smparkworld.core.mapper.MapperDispatcher
 import com.smparkworld.park.data.vo.SectionVO
-import com.smparkworld.park.domain.dto.ParkRequestUrlDTO
 import com.smparkworld.park.domain.dto.SectionDTO
 import javax.inject.Inject
 import kotlin.reflect.KClass
 
-class SectionDTOMapper @Inject constructor(
 
+class SectionDTOMapper @Inject constructor(
+    private val mapperDispatcher: MapperDispatcher,
 ) : Mapper<SectionVO, SectionDTO> {
 
     override fun map(from: SectionVO): SectionDTO {

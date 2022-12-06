@@ -19,7 +19,8 @@ import javax.inject.Inject
 internal class ParkViewModel @Inject constructor(
     private val stateHandle: SavedStateHandle,
     private val getSectionsUseCase: GetSectionsUseCase
-) : BaseViewModel() {
+) : BaseViewModel(),
+    EventListener {
 
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData()
     val isLoading: LiveData<Boolean> get() = _isLoading

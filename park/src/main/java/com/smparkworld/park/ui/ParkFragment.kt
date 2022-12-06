@@ -9,17 +9,19 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.smparkworld.park.di.qualifier.SectionViewBinders
 import com.smparkworld.park.domain.dto.SectionDTO
 import com.smparkworld.park.extension.viewModels
 import com.smparkworld.park.ui.model.SectionViewBinder
 import javax.inject.Inject
 import kotlin.reflect.KClass
 
-internal typealias ViewBinderMap = Map<KClass<out SectionDTO>, SectionViewBinder<SectionDTO, RecyclerView.ViewHolder>>
+private typealias ViewBinderMap = Map<KClass<out SectionDTO>, SectionViewBinder<SectionDTO, RecyclerView.ViewHolder>>
 
 abstract class ParkFragment<V : ViewDataBinding> : Fragment() {
 
     @Inject
+    @SectionViewBinders
     lateinit var viewBinders: @JvmSuppressWildcards ViewBinderMap
 
     private val vm: ParkViewModel by viewModels()
@@ -41,6 +43,9 @@ abstract class ParkFragment<V : ViewDataBinding> : Fragment() {
     }
 
     private fun initViewsInternal(sections: RecyclerView) {
+        for ((_, viewBinder) in viewBinders) {
+            viewBinder.initialize(this, vm)
+        }
         sections.layoutManager = LinearLayoutManager(requireContext())
         sections.adapter = ParkSectionAdapter(viewBinders)
     }

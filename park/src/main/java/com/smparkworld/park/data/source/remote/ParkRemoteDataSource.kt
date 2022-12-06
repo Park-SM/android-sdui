@@ -34,9 +34,10 @@ class ParkRemoteDataSourceFakeImpl @Inject constructor(
                     "data" {
                         "id": "1111",
                         "imageUrl": "http://smparkworld.com/test-product-image.png",
-                        "title": "테스트 제목",
-                        "description": "테스트 설명입니다.",
-                        "price": "20,000원"
+                        "title": "[서울] 아쿠아플라넷 63 & 맥스달튼 얼리버드 입장권",
+                        "category": "입장권 • 서울",
+                        "reviewScore": "4.6 (358)",
+                        "price": "10,080원"
                     },
                     "action": {
                         "target": "ROOT",
