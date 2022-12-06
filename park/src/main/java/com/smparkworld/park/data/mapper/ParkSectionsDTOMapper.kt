@@ -2,6 +2,7 @@ package com.smparkworld.park.data.mapper
 
 import com.smparkworld.core.mapper.Mapper
 import com.smparkworld.core.mapper.MapperDispatcher
+import com.smparkworld.core.mapper.MapperManager
 import com.smparkworld.hiltbinder.HiltSetBinds
 import com.smparkworld.park.data.vo.ParkRequestUrlVO
 import com.smparkworld.park.data.vo.ParkSectionsVO
@@ -13,17 +14,15 @@ import javax.inject.Inject
 import kotlin.reflect.KClass
 
 @HiltSetBinds
-class ParkSectionsDTOMapper @Inject constructor(
-    private val dispatcher: MapperDispatcher
-) : Mapper<ParkSectionsVO, ParkSectionsDTO> {
+class ParkSectionsDTOMapper @Inject constructor() : Mapper<ParkSectionsVO, ParkSectionsDTO>() {
 
     override fun map(from: ParkSectionsVO): ParkSectionsDTO {
         return ParkSectionsDTO(
             requestUrl = from.requestUrl?.let { vo ->
-                dispatcher.getMapper<ParkRequestUrlVO, ParkRequestUrlDTO>().map(vo)
+                mapperManager.map(vo)
             },
             sections = from.sections?.map { vo ->
-                dispatcher.getMapper<SectionVO, SectionDTO>().map(vo)
+                mapperManager.map(vo)
             }
         )
     }
