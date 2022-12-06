@@ -1,10 +1,14 @@
 package com.smparkworld.core.mapper
 
+import javax.inject.Inject
 import kotlin.reflect.KClass
 
-interface Mapper<FROM, TO> {
+abstract class Mapper<FROM, TO> {
 
-    fun map(from: FROM): TO
+    @Inject
+    lateinit var mapperManager: MapperManager
 
-    fun equals(from: KClass<*>, to: KClass<*>): Boolean
+    abstract fun map(from: FROM): TO
+
+    abstract fun equals(from: KClass<*>, to: KClass<*>): Boolean
 }
