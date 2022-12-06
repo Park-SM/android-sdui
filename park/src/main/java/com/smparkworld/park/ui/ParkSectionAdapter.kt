@@ -3,20 +3,23 @@ package com.smparkworld.park.ui
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.smparkworld.park.data.vo.SectionVO
 import com.smparkworld.park.domain.dto.SectionDTO
 import com.smparkworld.park.ui.model.SectionDiffCallback
 import com.smparkworld.park.ui.model.SectionViewBinder
 import kotlin.reflect.KClass
 
 class ParkSectionAdapter(
-    viewBinders: Map<KClass<out SectionDTO>, SectionViewBinder<SectionDTO, ViewHolder>>
+    private val viewBinders: Map<KClass<out SectionDTO>, SectionViewBinder<SectionDTO, ViewHolder>>
 ) : ListAdapter<SectionDTO, ViewHolder>(SectionDiffCallback(viewBinders)) {
 
-    private val viewTypeToBinders = viewBinders.mapKeys { it.value.getFeedItemType() }
+    private val viewTypeToBinders = viewBinders.mapKeys { it.value.getSectionItemType() }
 
     private fun getViewBinder(viewType: Int): SectionViewBinder<SectionDTO, ViewHolder> =
         viewTypeToBinders.getValue(viewType)
+
+    override fun getItemViewType(position: Int): Int =
+        viewBinders.getValue(super.getItem(position)::class).getSectionItemType()
+        //            -> 여기 super.getItem(position)::class에서 ProductSectionDTO 클래스 타입에 해당하는 ViewBinder가 잘 뽑힐지?
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return getViewBinder(viewType).createViewHolder(parent)
