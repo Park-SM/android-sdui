@@ -10,12 +10,8 @@ class ParkSectionsDTOMapper @Inject constructor() : Mapper<ParkSectionsVO, ParkS
 
     override fun map(from: ParkSectionsVO): ParkSectionsDTO {
         return ParkSectionsDTO(
-            requestUrl = from.requestUrl?.let { vo ->
-                mapperManagerLazy.get().map(vo)
-            },
-            sections = from.sections?.map { vo ->
-                mapperManagerLazy.get().map(vo)
-            }
+            requestUrl = delegateMap(from.requestUrl),
+            sections = delegateMaps(from.sections)
         )
     }
 

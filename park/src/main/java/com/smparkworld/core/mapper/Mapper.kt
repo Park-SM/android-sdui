@@ -9,6 +9,18 @@ abstract class Mapper<FROM, TO> {
     @Inject
     lateinit var mapperManagerLazy: Lazy<MapperManager>
 
+    inline fun <reified T, reified R> delegateMap(from: T?): R? {
+        return from?.let {
+            mapperManagerLazy.get().map(it)
+        }
+    }
+
+    inline fun <reified T, reified R> delegateMaps(from: List<T>?): List<R>? {
+        return from?.map { vo ->
+            mapperManagerLazy.get().map(vo)
+        }
+    }
+
     abstract fun map(from: FROM): TO
 
     abstract fun equals(from: KClass<*>, to: KClass<*>): Boolean
