@@ -9,19 +9,22 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.smparkworld.core.ExtraKey
 import com.smparkworld.park.di.qualifier.SectionViewBinders
 import com.smparkworld.park.domain.dto.SectionDTO
 import com.smparkworld.park.extension.viewModels
 import com.smparkworld.park.ui.model.SectionViewBinder
+import com.smparkworld.park.ui.model.viewbinder.ProductViewBinder
 import javax.inject.Inject
 import kotlin.reflect.KClass
 
-private typealias ViewBinderMap = Map<KClass<out SectionDTO>, SectionViewBinder<SectionDTO, RecyclerView.ViewHolder>>
+// FIXME 요거 정리 필요
+private typealias ViewBinderMap = Map<Class<*>, SectionViewBinder<*, *>>
+private typealias ViewBinderMapInternal = Map<Class<out SectionDTO>, SectionViewBinder<SectionDTO, RecyclerView.ViewHolder>>
 
 abstract class ParkFragment<V : ViewDataBinding> : Fragment() {
 
     @Inject
-    @SectionViewBinders
     lateinit var viewBinders: @JvmSuppressWildcards ViewBinderMap
 
     private val vm: ParkViewModel by viewModels()
@@ -33,13 +36,18 @@ abstract class ParkFragment<V : ViewDataBinding> : Fragment() {
     ): View? {
         val binding: V = DataBindingUtil.inflate(inflater, layout, container, false)
 
-        initViewsInternal(getSections())
-        initObserversInternal(getSections())
+        onCreateBinding(binding)
 
-        initViews(binding)
-        initObservers(binding)
-
+        initViewsInternal(getSections(binding))
+        initObserversInternal(getSections(binding))
         return binding.root
+    }
+
+    fun setRequestUrl(url: String): ParkFragment<V> {
+        arguments = (arguments ?: Bundle()).apply {
+            putString(ExtraKey.REQUEST_URL, url)
+        }
+        return this
     }
 
     private fun initViewsInternal(sections: RecyclerView) {
@@ -47,7 +55,7 @@ abstract class ParkFragment<V : ViewDataBinding> : Fragment() {
             viewBinder.initialize(this, vm)
         }
         sections.layoutManager = LinearLayoutManager(requireContext())
-        sections.adapter = ParkSectionAdapter(viewBinders)
+        sections.adapter = ParkSectionAdapter(viewBinders as ViewBinderMapInternal)
     }
 
     private fun initObserversInternal(sections: RecyclerView) {
@@ -56,9 +64,8 @@ abstract class ParkFragment<V : ViewDataBinding> : Fragment() {
         }
     }
 
-    open fun initViews(binding: V) {}
-    open fun initObservers(binding: V) {}
+    open fun onCreateBinding(binding: V) {}
 
-    abstract fun getSections(): RecyclerView
+    abstract fun getSections(binding: V): RecyclerView
     abstract val layout: Int
 }

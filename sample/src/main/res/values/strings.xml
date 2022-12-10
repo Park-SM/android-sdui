@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">android-sdui</string>
+
+    <string name="label_main_title">SampleSDUI</string>
 </resources>

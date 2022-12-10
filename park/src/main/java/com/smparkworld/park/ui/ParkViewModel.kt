@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.Transformations
-import androidx.viewbinding.BuildConfig
 import com.smparkworld.core.ExtraKey
+import com.smparkworld.park.BuildConfig
 import com.smparkworld.park.domain.dto.ParkSectionsDTO
 import com.smparkworld.park.domain.dto.SectionDTO
 import com.smparkworld.park.domain.usecase.GetSectionsUseCase

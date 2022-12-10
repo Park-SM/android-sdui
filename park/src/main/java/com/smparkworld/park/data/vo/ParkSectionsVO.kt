@@ -14,4 +14,4 @@ data class ParkSectionsVO(
     @SerializedName("sections")
     val sections: List<@RawValue SectionVO>? = null,
 
-    ) : Parcelable
+) : Parcelable
