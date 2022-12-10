@@ -16,7 +16,7 @@ class ParkRepositoryImpl @Inject constructor(
 ) : ParkRepository {
 
     override suspend fun requestSections(url: String): ParkSectionsDTO {
-        return remoteDataSource.requestSections().let { vo ->
+        return remoteDataSource.requestSections(url).let { vo ->
             mapperManager.map(vo)
         }
     }

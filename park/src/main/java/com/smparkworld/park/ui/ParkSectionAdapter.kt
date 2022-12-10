@@ -9,7 +9,7 @@ import com.smparkworld.park.ui.model.SectionViewBinder
 import kotlin.reflect.KClass
 
 class ParkSectionAdapter(
-    private val viewBinders: Map<KClass<out SectionDTO>, SectionViewBinder<SectionDTO, ViewHolder>>
+    private val viewBinders: Map<Class<out SectionDTO>, SectionViewBinder<SectionDTO, ViewHolder>>
 ) : ListAdapter<SectionDTO, ViewHolder>(SectionDiffCallback(viewBinders)) {
 
     private val viewTypeToBinders = viewBinders.mapKeys { it.value.getSectionItemType() }
@@ -18,7 +18,7 @@ class ParkSectionAdapter(
         viewTypeToBinders.getValue(viewType)
 
     override fun getItemViewType(position: Int): Int =
-        viewBinders.getValue(super.getItem(position)::class).getSectionItemType()
+        viewBinders.getValue(super.getItem(position)::class.java).getSectionItemType()
         //            -> 여기 super.getItem(position)::class에서 ProductSectionDTO 클래스 타입에 해당하는 ViewBinder가 잘 뽑힐지?
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

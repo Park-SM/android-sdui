@@ -1,10 +1,9 @@
 package com.smparkworld.core.mapper
 
 import javax.inject.Inject
-import javax.inject.Provider
 import kotlin.reflect.KClass
 
-private typealias MappersType = Mapper<*, Provider<*>>
+private typealias MappersType = Mapper<*, *>
 
 class MapperDispatcher @Inject constructor(
     val mappers: @JvmSuppressWildcards Set<MappersType>
