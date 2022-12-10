@@ -14,17 +14,15 @@ import com.smparkworld.park.di.qualifier.SectionViewBinders
 import com.smparkworld.park.domain.dto.SectionDTO
 import com.smparkworld.park.extension.viewModels
 import com.smparkworld.park.ui.model.SectionViewBinder
-import com.smparkworld.park.ui.model.viewbinder.ProductViewBinder
 import javax.inject.Inject
-import kotlin.reflect.KClass
 
-// FIXME 요거 정리 필요
-private typealias ViewBinderMap = Map<Class<*>, SectionViewBinder<*, *>>
+private typealias ViewBinderMap = Map<Class<out SectionDTO>, SectionViewBinder<out SectionDTO, *>>
 private typealias ViewBinderMapInternal = Map<Class<out SectionDTO>, SectionViewBinder<SectionDTO, RecyclerView.ViewHolder>>
 
 abstract class ParkFragment<V : ViewDataBinding> : Fragment() {
 
     @Inject
+    @SectionViewBinders
     lateinit var viewBinders: @JvmSuppressWildcards ViewBinderMap
 
     private val vm: ParkViewModel by viewModels()
@@ -50,6 +48,7 @@ abstract class ParkFragment<V : ViewDataBinding> : Fragment() {
         return this
     }
 
+    @Suppress("UNCHECKED_CAST")
     private fun initViewsInternal(sections: RecyclerView) {
         for ((_, viewBinder) in viewBinders) {
             viewBinder.initialize(this, vm)

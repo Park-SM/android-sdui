@@ -10,7 +10,6 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import dagger.multibindings.ClassKey
 import dagger.multibindings.IntoMap
 
 @Module
@@ -19,6 +18,7 @@ abstract class ViewBinderModule {
 
     @Binds
     @IntoMap
-    @ClassKey(ProductSectionDTO::class)
-    abstract fun bindProductViewBinder(viewBinder: ProductViewBinder): SectionViewBinder<*, *>
+    @SectionViewBinders
+    @SectionViewBinderKey(ProductSectionDTO::class)
+    abstract fun bindProductViewBinder(viewBinder: ProductViewBinder): SectionViewBinder<out SectionDTO, *>
 }
