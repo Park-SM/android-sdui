@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.smparkworld.core.ExtraKey
-import com.smparkworld.park.di.qualifier.SectionViewBinders
+import com.smparkworld.park.di.annotation.SectionViewBinders
 import com.smparkworld.park.domain.dto.SectionDTO
 import com.smparkworld.park.extension.viewModels
 import com.smparkworld.park.ui.model.SectionViewBinder

@@ -1,11 +1,11 @@
 
 package com.smparkworld.park.di
 
-import com.smparkworld.park.di.qualifier.ApplicationScope
-import com.smparkworld.park.di.qualifier.DefaultDispatcher
-import com.smparkworld.park.di.qualifier.IoDispatcher
-import com.smparkworld.park.di.qualifier.MainDispatcher
-import com.smparkworld.park.di.qualifier.MainImmediateDispatcher
+import com.smparkworld.park.di.annotation.ApplicationScope
+import com.smparkworld.park.di.annotation.DefaultDispatcher
+import com.smparkworld.park.di.annotation.IoDispatcher
+import com.smparkworld.park.di.annotation.MainDispatcher
+import com.smparkworld.park.di.annotation.MainImmediateDispatcher
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

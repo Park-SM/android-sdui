@@ -5,25 +5,19 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class ProductSectionVO(
+data class BannerSectionVO(
 
     @SerializedName("id")
     val id: Long? = null,
 
-    @SerializedName("imageUrl")
-    val imageUrl: String? = null,
-
     @SerializedName("title")
     val title: String? = null,
 
-    @SerializedName("category")
-    val category: String? = null,
+    @SerializedName("message")
+    val message: String? = null,
 
-    @SerializedName("reviewScore")
-    val reviewScore: String? = null,
-
-    @SerializedName("price")
-    val price: String? = null,
+    @SerializedName("imageUrl")
+    val imageUrl: String? = null,
 
     @SerializedName("linkUrl")
     val linkUrl: String? = null
