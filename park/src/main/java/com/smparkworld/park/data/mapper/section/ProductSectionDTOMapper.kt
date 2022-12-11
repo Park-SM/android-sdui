@@ -3,7 +3,9 @@ package com.smparkworld.park.data.mapper.section
 import com.smparkworld.core.mapper.Mapper
 import com.smparkworld.park.data.vo.ProductSectionVO
 import com.smparkworld.park.domain.dto.ProductSectionDTO
+import com.smparkworld.park.extension.isAssignableFrom
 import javax.inject.Inject
+import kotlin.reflect.KClass
 
 class ProductSectionDTOMapper @Inject constructor() : Mapper<ProductSectionVO, ProductSectionDTO>() {
 
@@ -19,7 +21,7 @@ class ProductSectionDTOMapper @Inject constructor() : Mapper<ProductSectionVO, P
         )
     }
 
-    override fun equals(from: Class<*>, to: Class<*>): Boolean =
-        from.isAssignableFrom(ProductSectionVO::class.java)
-                && to.isAssignableFrom(ProductSectionDTO::class.java)
+    override fun equals(from: KClass<*>, to: KClass<*>): Boolean =
+        from.isAssignableFrom(ProductSectionVO::class)
+                && to.isAssignableFrom(ProductSectionDTO::class)
 }

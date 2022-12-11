@@ -3,6 +3,7 @@ package com.smparkworld.park.di
 import com.smparkworld.core.mapper.Mapper
 import com.smparkworld.park.data.mapper.ParkRequestDTOMapper
 import com.smparkworld.park.data.mapper.ParkSectionsDTOMapper
+import com.smparkworld.park.data.mapper.section.BannerSectionDTOMapper
 import com.smparkworld.park.data.mapper.section.ProductSectionDTOMapper
 import dagger.Binds
 import dagger.Module
@@ -25,4 +26,8 @@ abstract class MapperModule {
     @Binds
     @IntoSet
     abstract fun bindProductSectionDTOMapper(mapper: ProductSectionDTOMapper): Mapper<*, *>
+
+    @Binds
+    @IntoSet
+    abstract fun bindBannerSectionDTOMapper(mapper: BannerSectionDTOMapper): Mapper<*, *>
 }

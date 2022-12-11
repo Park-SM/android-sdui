@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.smparkworld.hiltbinder.HiltMapBinds
 import com.smparkworld.park.R
 import com.smparkworld.park.databinding.ParkSduiProductBinding
-import com.smparkworld.park.di.qualifier.SectionViewBinderKey
-import com.smparkworld.park.di.qualifier.SectionViewBinders
+import com.smparkworld.park.di.annotation.SectionViewBinderKey
+import com.smparkworld.park.di.annotation.SectionViewBinders
 import com.smparkworld.park.domain.dto.ProductSectionDTO
 import com.smparkworld.park.ui.EventListener
 import com.smparkworld.park.ui.model.SectionItemEvent
