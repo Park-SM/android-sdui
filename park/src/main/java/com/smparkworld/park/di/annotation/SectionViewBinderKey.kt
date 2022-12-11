@@ -1,4 +1,4 @@
-package com.smparkworld.park.di.qualifier
+package com.smparkworld.park.di.annotation
 
 import com.smparkworld.park.domain.dto.SectionDTO
 import dagger.MapKey
