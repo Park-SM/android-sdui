@@ -36,12 +36,7 @@ class ParkRemoteDataSourceFakeImpl @Inject constructor(
                 "category": "입장권 • 서울",
                 "reviewScore": "4.6 (358)",
                 "price": "10,080원",
-                "action": {
-                    "target": "ROOT",
-                    "triggerType": "CLICK",
-                    "type": "LINK",
-                    "linkUrl": "/product/detail/333"
-                },
+                "linkUrl": "sdui://product/detail/333",
                 "refresh": null,
                 "logs": [
                     {
@@ -67,12 +62,7 @@ class ParkRemoteDataSourceFakeImpl @Inject constructor(
                 "category": "입장권 • 제주",
                 "reviewScore": "4.8 (247)",
                 "price": "18,905원",
-                "action": {
-                    "target": "ROOT",
-                    "triggerType": "CLICK",
-                    "type": "LINK",
-                    "linkUrl": "/product/detail/555"
-                },
+                "linkUrl": "sdui://product/detail/555",
                 "refresh": null,
                 "logs": [
                     {

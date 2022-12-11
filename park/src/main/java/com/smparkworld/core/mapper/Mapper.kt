@@ -16,12 +16,12 @@ abstract class Mapper<FROM, TO> {
     }
 
     inline fun <reified T, reified R> delegateMaps(from: List<T>?): List<R>? {
-        return from?.map { vo ->
-            mapperManagerLazy.get().map(vo)
+        return from?.map {
+            mapperManagerLazy.get().map(it)
         }
     }
 
     abstract fun map(from: FROM): TO
 
-    abstract fun equals(from: KClass<*>, to: KClass<*>): Boolean
+    abstract fun equals(from: Class<*>, to: Class<*>): Boolean
 }

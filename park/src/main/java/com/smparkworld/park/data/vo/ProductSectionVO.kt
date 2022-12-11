@@ -23,6 +23,9 @@ data class ProductSectionVO(
     val reviewScore: String? = null,
 
     @SerializedName("price")
-    val price: String? = null
+    val price: String? = null,
+
+    @SerializedName("linkUrl")
+    val linkUrl: String? = null
 
 ) : SectionVO(), Parcelable

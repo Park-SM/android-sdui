@@ -6,10 +6,10 @@
     <data>
         <variable
             name="model"
-            type="com.smparkworld.park.model.sections.ProductSectionDTO" />
+            type="com.smparkworld.park.domain.dto.ProductSectionDTO" />
         <variable
-            name="eventListener"
-            type="com.smparkworld.park.ui.EventListener" />
+            name="listener"
+            type="com.smparkworld.park.ui.model.viewbinder.ProductViewHolder.ProductItemListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,7 +17,9 @@
         android:layout_height="wrap_content"
         android:paddingHorizontal="12dp"
         android:paddingTop="4dp"
-        android:paddingBottom="24dp">
+        android:paddingBottom="24dp"
+        android:foreground="?selectableItemBackground"
+        android:onClick="@{(v) -> listener.onClickItem(v)}">
 
         <ImageView
             android:id="@+id/image"
