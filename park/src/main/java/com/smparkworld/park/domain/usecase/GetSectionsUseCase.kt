@@ -1,6 +1,6 @@
 package com.smparkworld.park.domain.usecase
 
-import com.smparkworld.park.di.qualifier.IoDispatcher
+import com.smparkworld.park.di.annotation.IoDispatcher
 import com.smparkworld.park.domain.dto.ParkSectionsDTO
 import com.smparkworld.park.domain.repository.ParkRepository
 import kotlinx.coroutines.CoroutineDispatcher

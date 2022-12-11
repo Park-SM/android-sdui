@@ -1,9 +1,9 @@
 package com.smparkworld.park.di
 
-import com.smparkworld.park.di.qualifier.SectionViewBinderKey
-import com.smparkworld.park.di.qualifier.SectionViewBinders
+import com.smparkworld.park.di.annotation.SectionViewBinderKey
+import com.smparkworld.park.di.annotation.SectionViewBinders
 import com.smparkworld.park.domain.dto.SectionDTO
-import com.smparkworld.park.model.sections.ProductSectionDTO
+import com.smparkworld.park.domain.dto.ProductSectionDTO
 import com.smparkworld.park.ui.model.SectionViewBinder
 import com.smparkworld.park.ui.model.viewbinder.ProductViewBinder
 import dagger.Binds
