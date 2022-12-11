@@ -21,7 +21,7 @@ import javax.inject.Inject
 @SectionViewBinders
 @SectionViewBinderKey(ProductSectionDTO::class)
 class ProductViewBinder @Inject constructor(
-
+    // Inject viewTypeDispatcher..
 ) : SectionViewBinder<ProductSectionDTO, ProductViewHolder>(ProductSectionDTO::class) {
 
     override fun createViewHolder(
@@ -62,15 +62,11 @@ class ProductViewHolder(
         binding.listener = object: ProductItemListener {
 
             override fun onClickItem(v: View) {
-                val event = SectionItemEvent.Click(model)
-
-                eventListener.onClickItem(v, event)
+                eventListener.onClickItem(v, SectionItemEvent.Click(model))
             }
 
             override fun onClickWish(v: ImageView) {
-                val event = SectionItemEvent.WishClick(model, v.isSelected)
-
-                eventListener.onClickItem(v, event)
+                eventListener.onClickItem(v, SectionItemEvent.WishClick(model, v.isSelected))
             }
         }
     }

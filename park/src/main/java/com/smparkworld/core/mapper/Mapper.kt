@@ -2,7 +2,6 @@ package com.smparkworld.core.mapper
 
 import dagger.Lazy
 import javax.inject.Inject
-import kotlin.reflect.KClass
 
 abstract class Mapper<FROM, TO> {
 
