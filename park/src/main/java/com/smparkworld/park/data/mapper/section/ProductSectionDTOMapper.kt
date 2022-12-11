@@ -4,7 +4,6 @@ import com.smparkworld.core.mapper.Mapper
 import com.smparkworld.park.data.vo.ProductSectionVO
 import com.smparkworld.park.domain.dto.ProductSectionDTO
 import javax.inject.Inject
-import kotlin.reflect.KClass
 
 class ProductSectionDTOMapper @Inject constructor() : Mapper<ProductSectionVO, ProductSectionDTO>() {
 

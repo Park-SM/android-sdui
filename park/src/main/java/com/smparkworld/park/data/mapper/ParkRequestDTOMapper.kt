@@ -4,7 +4,6 @@ import com.smparkworld.core.mapper.Mapper
 import com.smparkworld.park.data.vo.ParkRequestUrlVO
 import com.smparkworld.park.domain.dto.ParkRequestUrlDTO
 import javax.inject.Inject
-import kotlin.reflect.KClass
 
 class ParkRequestDTOMapper @Inject constructor() : Mapper<ParkRequestUrlVO, ParkRequestUrlDTO>() {
 
