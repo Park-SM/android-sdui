@@ -188,10 +188,8 @@ public final class RuntimeTypeAdapterFactory<T> implements TypeAdapterFactory {
             return null;
         }
 
-        final Map<String, TypeAdapter<?>> labelToDelegate
-                = new LinkedHashMap<>();
-        final Map<Class<?>, TypeAdapter<?>> subtypeToDelegate
-                = new LinkedHashMap<>();
+        final Map<String, TypeAdapter<?>> labelToDelegate = new LinkedHashMap<>();
+        final Map<Class<?>, TypeAdapter<?>> subtypeToDelegate = new LinkedHashMap<>();
 
         for (Map.Entry<String, Class<?>> entry : labelToSubtype.entrySet()) {
             TypeAdapter<?> delegate = gson.getDelegateAdapter(this, TypeToken.get(entry.getValue()));
@@ -204,31 +202,41 @@ public final class RuntimeTypeAdapterFactory<T> implements TypeAdapterFactory {
         }
 
         return new TypeAdapter<R>() {
-            @Override public R read(JsonReader in) throws IOException {
+
+            @Override
+            @SuppressWarnings("unchecked")
+            public R read(JsonReader in) throws IOException {
+
                 JsonElement jsonElement = Streams.parse(in);
                 JsonElement labelJsonElement = jsonElement.getAsJsonObject().get(typeFieldName);
+
                 String label;
                 if (labelJsonElement != null) {
                     label = labelJsonElement.getAsString();
                 } else {
                     label = defaultLabel;
                 }
-                @SuppressWarnings("unchecked") // registration requires that subtype extends T
-                        TypeAdapter<R> delegate = (TypeAdapter<R>) labelToDelegate.get(label);
-                if (delegate == null)
+
+                // registration requires that subtype extends T
+                TypeAdapter<R> delegate = (TypeAdapter<R>) labelToDelegate.get(label);
+                if (delegate == null) {
                     delegate = (TypeAdapter<R>) defaultDelegate;
+                }
                 if (delegate == null) {
                     throw new JsonParseException("cannot deserialize " + baseType + " subtype named "
                             + label + "; did you forget to register a subtype?");
                 }
+
                 return delegate.fromJsonTree(jsonElement);
             }
 
-            @Override public void write(JsonWriter out, R value) throws IOException {
+            @Override
+            @SuppressWarnings("unchecked")
+            public void write(JsonWriter out, R value) throws IOException {
                 Class<?> srcType = value.getClass();
 
-                @SuppressWarnings("unchecked") // registration requires that subtype extends T
-                        TypeAdapter<R> delegate = (TypeAdapter<R>) subtypeToDelegate.get(srcType);
+                // registration requires that subtype extends T
+                TypeAdapter<R> delegate = (TypeAdapter<R>) subtypeToDelegate.get(srcType);
 
                 if (delegate == null) {
                     delegate = (TypeAdapter<R>) defaultDelegate;
@@ -240,6 +248,7 @@ public final class RuntimeTypeAdapterFactory<T> implements TypeAdapterFactory {
                 JsonObject jsonObject = delegate.toJsonTree(value).getAsJsonObject();
                 Streams.write(jsonObject, out);
             }
+
         }.nullSafe();
     }
 
