@@ -15,6 +15,6 @@ class ParkRequestDTOMapper @Inject constructor() : Mapper<ParkRequestUrlVO, Park
         )
     }
 
-    override fun equals(from: KClass<*>, to: KClass<*>): Boolean =
-        from == ParkRequestUrlVO::class && to == ParkRequestUrlDTO::class
+    override fun equals(from: Class<*>, to: Class<*>): Boolean =
+        from == ParkRequestUrlVO::class.java && to == ParkRequestUrlDTO::class.java
 }

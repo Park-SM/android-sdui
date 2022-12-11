@@ -1,5 +1,7 @@
 package com.smparkworld.park.ui
 
+import android.util.Log
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
@@ -11,6 +13,7 @@ import com.smparkworld.park.domain.dto.SectionDTO
 import com.smparkworld.park.domain.usecase.GetSectionsUseCase
 import com.smparkworld.park.model.Result
 import com.smparkworld.park.ui.base.BaseViewModel
+import com.smparkworld.park.ui.model.SectionItemEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -59,6 +62,27 @@ internal class ParkViewModel @Inject constructor(
             }
 
             _isLoading.value = false
+        }
+    }
+
+    override fun onClickItem(v: View, event: SectionItemEvent) {
+        when (event) {
+            is SectionItemEvent.Click -> {
+                val linkUrl = event.model.getRedirectUrl()
+                // Redirect to linkUrl
+                Log.d("Test!!", "Clicked item! | linkUrl: $linkUrl")
+            }
+            is SectionItemEvent.LongClick -> {
+                val linkUrl = event.model.getRedirectUrl()
+                // Redirect to linkUrl
+            }
+            is SectionItemEvent.WishClick -> {
+                val isWished = event.isWished
+                val linkUrl = event.model.getWishRequestUrl(isWished)
+                // Request wish api w/ isWished
+
+                Log.d("Test!!", "Clicked item's wish! | linkUrl: $linkUrl")
+            }
         }
     }
 

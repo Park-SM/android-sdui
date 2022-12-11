@@ -1,7 +1,9 @@
 package com.smparkworld.park.ui.model.viewbinder
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.smparkworld.hiltbinder.HiltMapBinds
@@ -9,8 +11,9 @@ import com.smparkworld.park.R
 import com.smparkworld.park.databinding.ParkSduiProductBinding
 import com.smparkworld.park.di.qualifier.SectionViewBinderKey
 import com.smparkworld.park.di.qualifier.SectionViewBinders
-import com.smparkworld.park.model.sections.ProductSectionDTO
+import com.smparkworld.park.domain.dto.ProductSectionDTO
 import com.smparkworld.park.ui.EventListener
+import com.smparkworld.park.ui.model.SectionItemEvent
 import com.smparkworld.park.ui.model.SectionViewBinder
 import javax.inject.Inject
 
@@ -55,7 +58,27 @@ class ProductViewHolder(
 
     fun bind(model: ProductSectionDTO) {
         binding.lifecycleOwner = lifecycleOwner
-        binding.eventListener = eventListener
         binding.model = model
+        binding.listener = object: ProductItemListener {
+
+            override fun onClickItem(v: View) {
+                val event = SectionItemEvent.Click(model)
+
+                eventListener.onClickItem(v, event)
+            }
+
+            override fun onClickWish(v: ImageView) {
+                val event = SectionItemEvent.WishClick(model, v.isSelected)
+
+                eventListener.onClickItem(v, event)
+            }
+        }
+    }
+
+    interface ProductItemListener {
+
+        fun onClickItem(v: View)
+
+        fun onClickWish(v: ImageView)
     }
 }

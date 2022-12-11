@@ -12,7 +12,7 @@ class MapperDispatcher @Inject constructor(
     @Suppress("UNCHECKED_CAST")
     inline fun <reified FROM, reified TO> getMapper(): Mapper<FROM, TO> {
 
-        val matchedMappers = mappers.filter { it.equals(FROM::class, TO::class) }
+        val matchedMappers = mappers.filter { it.equals(FROM::class.java, TO::class.java) }
         if (matchedMappers.size == 1) {
             return matchedMappers.getOrNull(0) as? Mapper<FROM, TO>
                 ?: throw IllegalArgumentException(getNotFoundErrorMessage(FROM::class, TO::class))

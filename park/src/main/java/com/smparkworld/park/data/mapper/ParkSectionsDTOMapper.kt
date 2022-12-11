@@ -5,6 +5,8 @@ import com.smparkworld.park.data.vo.ParkSectionsVO
 import com.smparkworld.park.domain.dto.ParkSectionsDTO
 import javax.inject.Inject
 import kotlin.reflect.KClass
+import kotlin.reflect.cast
+import kotlin.reflect.safeCast
 
 class ParkSectionsDTOMapper @Inject constructor() : Mapper<ParkSectionsVO, ParkSectionsDTO>() {
 
@@ -15,6 +17,6 @@ class ParkSectionsDTOMapper @Inject constructor() : Mapper<ParkSectionsVO, ParkS
         )
     }
 
-    override fun equals(from: KClass<*>, to: KClass<*>): Boolean =
-        from == ParkSectionsVO::class && to == ParkSectionsDTO::class
+    override fun equals(from: Class<*>, to: Class<*>): Boolean =
+        from == ParkSectionsVO::class.java && to == ParkSectionsDTO::class.java
 }
