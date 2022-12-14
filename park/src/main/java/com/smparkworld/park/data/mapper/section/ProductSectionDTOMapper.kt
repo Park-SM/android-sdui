@@ -7,10 +7,14 @@ import com.smparkworld.park.extension.isAssignableFrom
 import javax.inject.Inject
 import kotlin.reflect.KClass
 
-class ProductSectionDTOMapper @Inject constructor() : Mapper<ProductSectionVO, ProductSectionDTO>() {
+class ProductSectionDTOMapper @Inject constructor(
+
+) : Mapper<ProductSectionVO, ProductSectionDTO>() {
 
     override fun map(from: ProductSectionVO): ProductSectionDTO {
         return ProductSectionDTO(
+            sectionType = from.sectionType,
+            viewType = from.viewType,
             id = from.id,
             imageUrl = from.imageUrl,
             title = from.title,

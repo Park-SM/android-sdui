@@ -7,10 +7,14 @@ import com.smparkworld.park.extension.isAssignableFrom
 import javax.inject.Inject
 import kotlin.reflect.KClass
 
-class BannerSectionDTOMapper @Inject constructor() : Mapper<BannerSectionVO, BannerSectionDTO>() {
+class BannerSectionDTOMapper @Inject constructor(
+
+) : Mapper<BannerSectionVO, BannerSectionDTO>() {
 
     override fun map(from: BannerSectionVO): BannerSectionDTO {
         return BannerSectionDTO(
+            sectionType = from.sectionType,
+            viewType = from.viewType,
             id = from.id,
             title = from.title,
             message = from.message,

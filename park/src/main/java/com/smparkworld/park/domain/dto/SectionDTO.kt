@@ -1,8 +1,8 @@
 package com.smparkworld.park.domain.dto
 
-abstract class SectionDTO {
+interface SectionDTO {
 
-    var viewType: String? = null
+    var viewType: String?
 
-    var sectionType: String? = null
+    var sectionType: String?
 }

@@ -19,7 +19,7 @@
         android:paddingTop="4dp"
         android:paddingBottom="24dp"
         android:foreground="?selectableItemBackground"
-        android:onClick="@{(v) -> listener.onClickItem(v)}">
+        android:onClick="@{(v) -> listener.onClickItem(v, model)}">
 
         <ImageView
             android:id="@+id/image"

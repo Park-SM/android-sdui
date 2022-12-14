@@ -6,10 +6,10 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.smparkworld.park.domain.dto.SectionDTO
 import com.smparkworld.park.ui.model.SectionDiffCallback
 import com.smparkworld.park.ui.model.SectionViewBinder
-import kotlin.reflect.KClass
+import com.smparkworld.park.ui.model.SectionViewType
 
 class ParkSectionAdapter(
-    private val viewBinders: Map<Class<out SectionDTO>, SectionViewBinder<SectionDTO, ViewHolder>>
+    private val viewBinders: Map<String, SectionViewBinder<SectionDTO, ViewHolder>>
 ) : ListAdapter<SectionDTO, ViewHolder>(SectionDiffCallback(viewBinders)) {
 
     private val viewTypeToBinders = viewBinders.mapKeys { it.value.getSectionItemType() }
@@ -18,8 +18,9 @@ class ParkSectionAdapter(
         viewTypeToBinders.getValue(viewType)
 
     override fun getItemViewType(position: Int): Int =
-        viewBinders.getValue(super.getItem(position)::class.java).getSectionItemType()
-        //            -> 여기 super.getItem(position)::class에서 ProductSectionDTO 클래스 타입에 해당하는 ViewBinder가 잘 뽑힐지?
+        (super.getItem(position).viewType ?: SectionViewType.DEFAULT_VIEW_TYPE).let { viewType ->
+            viewBinders.getValue(viewType).getSectionItemType()
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return getViewBinder(viewType).createViewHolder(parent)
