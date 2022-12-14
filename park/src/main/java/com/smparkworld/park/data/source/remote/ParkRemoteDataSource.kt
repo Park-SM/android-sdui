@@ -29,7 +29,7 @@ class ParkRemoteDataSourceFakeImpl @Inject constructor(
         "sections": [
             {
                 "sectionType": "PRODUCT_SECTION",
-                "viewType": "TEST_PRODUCT_DEFAULT",
+                "viewType": "PRODUCT_DEFAULT",
                 "id": "333",
                 "imageUrl": "http://smparkworld.com/img/blog_images/98866035372614732852192638679394314086458144735809.png",
                 "title": "[서울] 아쿠아플라넷 63 & 맥스달튼 얼리버드 입장권",
@@ -55,7 +55,7 @@ class ParkRemoteDataSourceFakeImpl @Inject constructor(
             },
             {
                 "sectionType": "PRODUCT_SECTION",
-                "viewType": "TEST_PRODUCT_DEFAULT",
+                "viewType": "PRODUCT_DEFAULT",
                 "id": "555",
                 "imageUrl": "http://smparkworld.com/img/blog_images/06457547313343780518062733748263636158307658431761.png",
                 "title": "[제주] 제주투어패스 48시간 프리패스권",

@@ -6,6 +6,10 @@ import com.smparkworld.park.model.action.WishClickableDTO
 
 data class ProductSectionDTO(
 
+    override var sectionType: String? = null,
+
+    override var viewType: String? = null,
+
     var id: Long? = null,
 
     var imageUrl: String? = null,
@@ -20,7 +24,7 @@ data class ProductSectionDTO(
 
     var linkUrl: String? = null,
 
-) : SectionDTO(),
+) : SectionDTO,
     ClickableDTO,
     WishClickableDTO {
 

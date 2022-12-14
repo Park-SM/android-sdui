@@ -10,7 +10,7 @@ class MapperDispatcher @Inject constructor(
 ) {
 
     @Suppress("UNCHECKED_CAST")
-    inline fun <reified FROM, reified TO> getMapper(from: FROM): TO {
+    inline fun <reified FROM, reified TO> map(from: FROM): TO {
 
         val matchedMappers = mappers.filter { it.equals(FROM::class, TO::class) }
         if (matchedMappers.isEmpty()) {

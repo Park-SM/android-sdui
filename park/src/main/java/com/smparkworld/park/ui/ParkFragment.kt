@@ -16,8 +16,8 @@ import com.smparkworld.park.extension.viewModels
 import com.smparkworld.park.ui.model.SectionViewBinder
 import javax.inject.Inject
 
-private typealias ViewBinderMap = Map<Class<out SectionDTO>, SectionViewBinder<out SectionDTO, *>>
-private typealias ViewBinderMapInternal = Map<Class<out SectionDTO>, SectionViewBinder<SectionDTO, RecyclerView.ViewHolder>>
+private typealias ViewBinderMap = Map<String, SectionViewBinder<out SectionDTO, *>>
+private typealias ViewBinderMapInternal = Map<String, SectionViewBinder<SectionDTO, RecyclerView.ViewHolder>>
 
 abstract class ParkFragment<V : ViewDataBinding> : Fragment() {
 

@@ -7,7 +7,9 @@ import com.smparkworld.park.extension.isAssignableFrom
 import javax.inject.Inject
 import kotlin.reflect.KClass
 
-class ParkRequestDTOMapper @Inject constructor() : Mapper<ParkRequestUrlVO, ParkRequestUrlDTO>() {
+class ParkRequestDTOMapper @Inject constructor(
+
+) : Mapper<ParkRequestUrlVO, ParkRequestUrlDTO>() {
 
     override fun map(from: ParkRequestUrlVO): ParkRequestUrlDTO {
         return ParkRequestUrlDTO(

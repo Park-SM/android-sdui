@@ -6,22 +6,16 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
-import com.smparkworld.hiltbinder.HiltMapBinds
 import com.smparkworld.park.R
 import com.smparkworld.park.databinding.ParkSduiProductBinding
-import com.smparkworld.park.di.annotation.SectionViewBinderKey
-import com.smparkworld.park.di.annotation.SectionViewBinders
 import com.smparkworld.park.domain.dto.ProductSectionDTO
 import com.smparkworld.park.ui.EventListener
 import com.smparkworld.park.ui.model.SectionItemEvent
 import com.smparkworld.park.ui.model.SectionViewBinder
 import javax.inject.Inject
 
-@HiltMapBinds
-@SectionViewBinders
-@SectionViewBinderKey(ProductSectionDTO::class)
 class ProductViewBinder @Inject constructor(
-    // Inject viewTypeDispatcher..
+
 ) : SectionViewBinder<ProductSectionDTO, ProductViewHolder>(ProductSectionDTO::class) {
 
     override fun createViewHolder(
@@ -56,25 +50,27 @@ class ProductViewHolder(
     private val eventListener: EventListener
 ) : RecyclerView.ViewHolder(binding.root) {
 
+    private val itemListener = object: ProductItemListener {
+
+        override fun onClickItem(v: View, model: ProductSectionDTO) {
+            eventListener.onClickItem(v, SectionItemEvent.Click(model))
+        }
+
+        override fun onClickWish(v: ImageView, model: ProductSectionDTO) {
+            eventListener.onClickItem(v, SectionItemEvent.WishClick(model, v.isSelected))
+        }
+    }
+
     fun bind(model: ProductSectionDTO) {
         binding.lifecycleOwner = lifecycleOwner
         binding.model = model
-        binding.listener = object: ProductItemListener {
-
-            override fun onClickItem(v: View) {
-                eventListener.onClickItem(v, SectionItemEvent.Click(model))
-            }
-
-            override fun onClickWish(v: ImageView) {
-                eventListener.onClickItem(v, SectionItemEvent.WishClick(model, v.isSelected))
-            }
-        }
+        binding.listener = itemListener
     }
 
     interface ProductItemListener {
 
-        fun onClickItem(v: View)
+        fun onClickItem(v: View, model: ProductSectionDTO)
 
-        fun onClickWish(v: ImageView)
+        fun onClickWish(v: ImageView, model: ProductSectionDTO)
     }
 }
