@@ -53,6 +53,7 @@ abstract class ParkFragment<V : ViewDataBinding> : Fragment() {
         for ((_, viewBinder) in viewBinders) {
             viewBinder.initialize(this, vm)
         }
+        sections.itemAnimator = null
         sections.layoutManager = LinearLayoutManager(requireContext())
         sections.adapter = ParkSectionAdapter(viewBinders as ViewBinderMapInternal)
     }

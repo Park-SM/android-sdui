@@ -33,6 +33,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
+        <ImageView
+            android:id="@+id/wish"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            android:onClick="@{(v) -> listener.onClickWish(v, model)}"
+            android:background="@drawable/selector_wish_icon"
+            android:selected="@{model.isWished == true}"
+            app:isVisible="@{model.isWished != null}"
+            app:layout_constraintEnd_toEndOf="@id/image"
+            app:layout_constraintTop_toTopOf="@id/image" />
+
         <TextView
             android:id="@+id/title"
             android:layout_width="0dp"

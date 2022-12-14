@@ -3,7 +3,6 @@ package com.smparkworld.park.ui.model.viewbinder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.smparkworld.park.R
@@ -56,8 +55,12 @@ class ProductOneColumnViewHolder(
             eventListener.onClickItem(v, SectionItemEvent.Click(model))
         }
 
-        override fun onClickWish(v: ImageView, model: ProductSectionDTO) {
-            eventListener.onClickItem(v, SectionItemEvent.WishClick(model, v.isSelected))
+        override fun onClickWish(v: View, model: ProductSectionDTO) {
+            val isSelected = v.isSelected.not().also {
+                v.isSelected = it
+                model.isWished = it
+            }
+            eventListener.onClickItem(v, SectionItemEvent.WishClick(model, isSelected))
         }
     }
 
@@ -71,6 +74,6 @@ class ProductOneColumnViewHolder(
 
         fun onClickItem(v: View, model: ProductSectionDTO)
 
-        fun onClickWish(v: ImageView, model: ProductSectionDTO)
+        fun onClickWish(v: View, model: ProductSectionDTO)
     }
 }

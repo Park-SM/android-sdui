@@ -3,7 +3,6 @@ package com.smparkworld.park.ui.model.viewbinder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.smparkworld.park.R
@@ -56,7 +55,7 @@ class ProductOneColumn2ViewHolder(
             eventListener.onClickItem(v, SectionItemEvent.Click(model))
         }
 
-        override fun onClickWish(v: ImageView, model: ProductSectionDTO) {
+        override fun onClickWish(v: View, model: ProductSectionDTO) {
             eventListener.onClickItem(v, SectionItemEvent.WishClick(model, v.isSelected))
         }
     }
@@ -71,6 +70,6 @@ class ProductOneColumn2ViewHolder(
 
         fun onClickItem(v: View, model: ProductSectionDTO)
 
-        fun onClickWish(v: ImageView, model: ProductSectionDTO)
+        fun onClickWish(v: View, model: ProductSectionDTO)
     }
 }

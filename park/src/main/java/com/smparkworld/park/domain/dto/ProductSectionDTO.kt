@@ -1,6 +1,5 @@
 package com.smparkworld.park.domain.dto
 
-import com.smparkworld.core.RequestUrl
 import com.smparkworld.park.model.action.ClickableDTO
 import com.smparkworld.park.model.action.WishClickableDTO
 
@@ -24,6 +23,8 @@ data class ProductSectionDTO(
 
     var linkUrl: String? = null,
 
+    var isWished: Boolean? = null,
+
 ) : SectionDTO,
     ClickableDTO,
     WishClickableDTO {
@@ -32,7 +33,15 @@ data class ProductSectionDTO(
         return linkUrl
     }
 
-    override fun getWishRequestUrl(isWished: Boolean): String {
-        return RequestUrl.WISH_REQUEST_URL
+    override fun getWishTargetId(): Long? {
+        return id
+    }
+
+    override fun getWishState(): Boolean? {
+        return isWished
+    }
+
+    override fun setWishState(isWished: Boolean) {
+        this.isWished = isWished
     }
 }
