@@ -14,7 +14,7 @@ import com.smparkworld.park.ui.model.SectionItemEvent
 import com.smparkworld.park.ui.model.SectionViewBinder
 import javax.inject.Inject
 
-class ProductViewBinder @Inject constructor(
+class ProductOneColumnViewBinder @Inject constructor(
 
 ) : SectionViewBinder<ProductSectionDTO, ProductOneColumnViewHolder>(ProductSectionDTO::class) {
 
