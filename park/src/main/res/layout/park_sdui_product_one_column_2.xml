@@ -9,7 +9,7 @@
             type="com.smparkworld.park.domain.dto.ProductSectionDTO" />
         <variable
             name="listener"
-            type="com.smparkworld.park.ui.model.viewbinder.ProductViewHolder.ProductItemListener" />
+            type="com.smparkworld.park.ui.model.viewbinder.ProductOneColumn2ViewHolder.ProductOneColumn2ItemListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,7 +19,7 @@
         android:paddingTop="4dp"
         android:paddingBottom="24dp"
         android:foreground="?selectableItemBackground"
-        android:onClick="@{(v) -> listener.onClickItem(v)}">
+        android:onClick="@{(v) -> listener.onClickItem(v, model)}">
 
         <ImageView
             android:id="@+id/image"
@@ -28,7 +28,7 @@
             android:scaleType="centerCrop"
             app:imageUrl="@{model.imageUrl}"
             app:roundCorner="@{@dimen/corner_radius_20}"
-            app:layout_constraintDimensionRatio="4:3"
+            app:layout_constraintDimensionRatio="4:2"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
@@ -41,9 +41,9 @@
             android:ellipsize="end"
             android:maxLines="2"
             android:text="@{model.title}"
-            android:textSize="15dp"
             android:textColor="@color/black"
-            app:layout_constraintEnd_toStartOf="@+id/review_icon"
+            android:textSize="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image"
             tools:text="[서울] 아쿠아플라넷 63 &amp; 맥스달튼 얼리버드 입장권" />
@@ -53,16 +53,16 @@
             android:layout_width="17dp"
             android:layout_height="17dp"
             android:src="@drawable/ic_baseline_star_24"
-            app:layout_constraintEnd_toStartOf="@+id/review_score"
-            app:layout_constraintTop_toTopOf="@+id/title" />
+            app:layout_constraintBottom_toBottomOf="@+id/price"
+            app:layout_constraintEnd_toStartOf="@+id/review_score" />
 
         <TextView
             android:id="@+id/review_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{model.reviewScore}"
-            android:textSize="14dp"
             android:textColor="@color/black"
+            android:textSize="14dp"
             app:layout_constraintBottom_toBottomOf="@+id/review_icon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/review_icon"
@@ -72,23 +72,25 @@
             android:id="@+id/price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             android:text="@{model.price}"
-            android:textSize="15dp"
             android:textColor="@color/black"
+            android:textSize="15dp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title"
-            tools:text="10,080원"/>
+            app:layout_constraintTop_toBottomOf="@+id/category"
+            tools:text="10,080원" />
 
         <TextView
             android:id="@+id/category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:text="@{model.category}"
-            android:textSize="13dp"
             android:textColor="@color/gray"
-            app:layout_constraintBottom_toBottomOf="@+id/price"
+            android:textSize="13dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title"
             tools:text="입장권 • 서울" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
