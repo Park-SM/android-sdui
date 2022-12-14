@@ -5,7 +5,7 @@ import com.smparkworld.park.di.annotation.SectionViewBinders
 import com.smparkworld.park.domain.dto.SectionDTO
 import com.smparkworld.park.ui.model.SectionViewBinder
 import com.smparkworld.park.ui.model.SectionViewTypeKey
-import com.smparkworld.park.ui.model.viewbinder.ProductViewBinder
+import com.smparkworld.park.ui.model.viewbinder.ProductOneColumnViewBinder
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -20,5 +20,5 @@ abstract class ViewBinderModule {
     @IntoMap
     @SectionViewBinders
     @SectionViewBinderKey(viewType = SectionViewTypeKey.PRODUCT_ONE_COLUMN)
-    abstract fun bindProductViewBinder(viewBinder: ProductViewBinder): SectionViewBinder<out SectionDTO, *>
+    abstract fun bindProductOneColumnViewBinder(viewBinder: ProductOneColumnViewBinder): SectionViewBinder<out SectionDTO, *>
 }
