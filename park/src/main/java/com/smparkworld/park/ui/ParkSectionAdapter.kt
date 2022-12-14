@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.smparkworld.park.domain.dto.SectionDTO
 import com.smparkworld.park.ui.model.SectionDiffCallback
 import com.smparkworld.park.ui.model.SectionViewBinder
-import com.smparkworld.park.ui.model.SectionViewType
+import com.smparkworld.park.ui.model.SectionViewTypeKey
 
 class ParkSectionAdapter(
     private val viewBinders: Map<String, SectionViewBinder<SectionDTO, ViewHolder>>
@@ -18,7 +18,7 @@ class ParkSectionAdapter(
         viewTypeToBinders.getValue(viewType)
 
     override fun getItemViewType(position: Int): Int =
-        (super.getItem(position).viewType ?: SectionViewType.DEFAULT_VIEW_TYPE).let { viewType ->
+        (super.getItem(position).viewType ?: SectionViewTypeKey.DEFAULT_VIEW_TYPE).let { viewType ->
             viewBinders.getValue(viewType).getSectionItemType()
         }
 
