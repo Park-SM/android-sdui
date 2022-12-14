@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 abstract class SectionVO {
 
-    @SerializedName("type")
+    @SerializedName("viewType")
     val viewType: String? = null
 
     @SerializedName("sectionType")

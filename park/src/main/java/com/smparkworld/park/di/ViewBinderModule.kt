@@ -3,9 +3,10 @@ package com.smparkworld.park.di
 import com.smparkworld.park.di.annotation.SectionViewBinderKey
 import com.smparkworld.park.di.annotation.SectionViewBinders
 import com.smparkworld.park.domain.dto.SectionDTO
-import com.smparkworld.park.domain.dto.ProductSectionDTO
 import com.smparkworld.park.ui.model.SectionViewBinder
-import com.smparkworld.park.ui.model.viewbinder.ProductViewBinder
+import com.smparkworld.park.ui.model.SectionViewTypeKey
+import com.smparkworld.park.ui.model.viewbinder.ProductOneColumn2ViewBinder
+import com.smparkworld.park.ui.model.viewbinder.ProductOneColumnViewBinder
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -19,6 +20,12 @@ abstract class ViewBinderModule {
     @Binds
     @IntoMap
     @SectionViewBinders
-    @SectionViewBinderKey(ProductSectionDTO::class)
-    abstract fun bindProductViewBinder(viewBinder: ProductViewBinder): SectionViewBinder<out SectionDTO, *>
+    @SectionViewBinderKey(viewType = SectionViewTypeKey.PRODUCT_ONE_COLUMN)
+    abstract fun bindProductOneColumnViewBinder(viewBinder: ProductOneColumnViewBinder): SectionViewBinder<out SectionDTO, *>
+
+    @Binds
+    @IntoMap
+    @SectionViewBinders
+    @SectionViewBinderKey(viewType = SectionViewTypeKey.PRODUCT_ONE_COLUMN_2)
+    abstract fun bindProductOneColumn2ViewBinder(viewBinder: ProductOneColumn2ViewBinder): SectionViewBinder<out SectionDTO, *>
 }

@@ -29,7 +29,7 @@ class ParkRemoteDataSourceFakeImpl @Inject constructor(
         "sections": [
             {
                 "sectionType": "PRODUCT_SECTION",
-                "viewType": "TEST_PRODUCT_DEFAULT",
+                "viewType": "PRODUCT_ONE_COLUMN",
                 "id": "333",
                 "imageUrl": "http://smparkworld.com/img/blog_images/98866035372614732852192638679394314086458144735809.png",
                 "title": "[서울] 아쿠아플라넷 63 & 맥스달튼 얼리버드 입장권",
@@ -55,13 +55,13 @@ class ParkRemoteDataSourceFakeImpl @Inject constructor(
             },
             {
                 "sectionType": "PRODUCT_SECTION",
-                "viewType": "TEST_PRODUCT_DEFAULT",
+                "viewType": "PRODUCT_ONE_COLUMN_2",
                 "id": "555",
-                "imageUrl": "http://smparkworld.com/img/blog_images/06457547313343780518062733748263636158307658431761.png",
-                "title": "[제주] 제주투어패스 48시간 프리패스권",
-                "category": "입장권 • 제주",
-                "reviewScore": "4.8 (247)",
-                "price": "18,905원",
+                "imageUrl": "http://smparkworld.com/img/blog_images/28700093715932212986310862007881110398175148893334.png",
+                "title": "[대구] 이월드 연간회원권",
+                "category": "입장권 • 대구",
+                "reviewScore": "4.6 (382)",
+                "price": "119,000원",
                 "linkUrl": "sdui://product/detail/555",
                 "refresh": null,
                 "logs": [
@@ -75,6 +75,32 @@ class ParkRemoteDataSourceFakeImpl @Inject constructor(
                         "type": "IMPRESSION",
                         "data": {
                             "id": "555"
+                        }
+                    }
+                ]
+            },
+            {
+                "sectionType": "PRODUCT_SECTION",
+                "viewType": "PRODUCT_ONE_COLUMN",
+                "id": "777",
+                "imageUrl": "http://smparkworld.com/img/blog_images/06457547313343780518062733748263636158307658431761.png",
+                "title": "[제주] 제주투어패스 48시간 프리패스권",
+                "category": "입장권 • 제주",
+                "reviewScore": "4.8 (247)",
+                "price": "18,905원",
+                "linkUrl": "sdui://product/detail/777",
+                "refresh": null,
+                "logs": [
+                    {
+                        "type": "CLICK",
+                        "data": {
+                            "id": "777"
+                        }
+                    },
+                    {
+                        "type": "IMPRESSION",
+                        "data": {
+                            "id": "777"
                         }
                     }
                 ]

@@ -10,6 +10,6 @@ class MapperManager @Inject constructor(
 
     inline fun <reified FROM, reified TO> map(from: FROM): TO {
         // Here can use the Something Decorator to decorate the TO class. | e.g) Result<TO>
-        return dispatcher.getMapper(from)
+        return dispatcher.map(from)
     }
 }

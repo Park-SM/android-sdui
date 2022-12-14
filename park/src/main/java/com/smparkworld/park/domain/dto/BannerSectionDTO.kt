@@ -7,6 +7,10 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class BannerSectionDTO(
 
+    override var sectionType: String? = null,
+
+    override var viewType: String? = null,
+
     var id: Long? = null,
 
     var title: String? = null,
@@ -17,7 +21,7 @@ data class BannerSectionDTO(
 
     var linkUrl: String? = null,
 
-) : SectionDTO(),
+) : SectionDTO,
     Parcelable,
     ClickableDTO {
 
