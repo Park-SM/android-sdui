@@ -1,5 +1,6 @@
 package com.smparkworld.park.domain.usecase
 
+import com.smparkworld.park.BuildConfig
 import com.smparkworld.park.model.Result
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -18,6 +19,7 @@ abstract class UseCaseWithParam<in P, R>(
                 }
             }
         } catch (e: Exception) {
+            if (BuildConfig.DEBUG) e.printStackTrace()
             Result.Error(e)
         }
     }
@@ -38,6 +40,7 @@ abstract class UseCaseWithoutParam<R>(
                 }
             }
         } catch (e: Exception) {
+            if (BuildConfig.DEBUG) e.printStackTrace()
             Result.Error(e)
         }
     }

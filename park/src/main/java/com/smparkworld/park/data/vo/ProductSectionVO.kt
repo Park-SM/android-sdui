@@ -7,6 +7,12 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class ProductSectionVO(
 
+    @SerializedName("sectionType")
+    override val sectionType: String? = null,
+
+    @SerializedName("viewType")
+    override val viewType: String? = null,
+
     @SerializedName("id")
     val id: Long? = null,
 
@@ -25,7 +31,10 @@ data class ProductSectionVO(
     @SerializedName("price")
     val price: String? = null,
 
+    @SerializedName("isWished")
+    val isWished: Boolean? = null,
+
     @SerializedName("linkUrl")
     val linkUrl: String? = null
 
-) : SectionVO(), Parcelable
+) : SectionVO, Parcelable

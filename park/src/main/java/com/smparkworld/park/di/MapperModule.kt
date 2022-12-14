@@ -5,6 +5,7 @@ import com.smparkworld.park.data.mapper.ParkRequestDTOMapper
 import com.smparkworld.park.data.mapper.ParkSectionsDTOMapper
 import com.smparkworld.park.data.mapper.section.BannerSectionDTOMapper
 import com.smparkworld.park.data.mapper.section.ProductSectionDTOMapper
+import com.smparkworld.park.data.mapper.section.ProductSectionVOMapper
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -26,6 +27,10 @@ abstract class MapperModule {
     @Binds
     @IntoSet
     abstract fun bindProductSectionDTOMapper(mapper: ProductSectionDTOMapper): Mapper<*, *>
+
+    @Binds
+    @IntoSet
+    abstract fun bindProductSectionVOMapper(mapper: ProductSectionVOMapper): Mapper<*, *>
 
     @Binds
     @IntoSet
