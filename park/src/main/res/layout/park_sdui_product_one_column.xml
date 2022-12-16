@@ -9,7 +9,7 @@
             type="com.smparkworld.park.domain.dto.ProductSectionDTO" />
         <variable
             name="listener"
-            type="com.smparkworld.park.ui.model.viewbinder.ProductOneColumnViewHolder.ProductOneColumnItemListener" />
+            type="com.smparkworld.park.ui.viewbinder.ProductOneColumnViewHolder.ProductOneColumnItemListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,7 +1,7 @@
-package com.smparkworld.park.ui
+package com.smparkworld.park.ui.park
 
 import android.view.View
-import com.smparkworld.park.ui.model.SectionItemEvent
+import com.smparkworld.park.ui.park.model.SectionItemEvent
 
 interface ParkEventListener {
 

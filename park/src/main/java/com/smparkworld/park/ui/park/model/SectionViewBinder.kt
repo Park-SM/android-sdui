@@ -1,10 +1,10 @@
-package com.smparkworld.park.ui.model
+package com.smparkworld.park.ui.park.model
 
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.smparkworld.park.ui.ParkEventListener
+import com.smparkworld.park.ui.park.ParkEventListener
 import kotlin.reflect.KClass
 
 abstract class SectionViewBinder<M, in VH : ViewHolder>(

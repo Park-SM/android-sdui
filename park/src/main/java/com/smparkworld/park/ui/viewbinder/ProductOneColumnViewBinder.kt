@@ -1,4 +1,4 @@
-package com.smparkworld.park.ui.model.viewbinder
+package com.smparkworld.park.ui.viewbinder
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,35 +6,35 @@ import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.smparkworld.park.R
-import com.smparkworld.park.databinding.ParkSduiProductOneColumn2Binding
+import com.smparkworld.park.databinding.ParkSduiProductOneColumnBinding
 import com.smparkworld.park.domain.dto.ProductSectionDTO
-import com.smparkworld.park.ui.ParkEventListener
-import com.smparkworld.park.ui.model.SectionItemEvent
-import com.smparkworld.park.ui.model.SectionViewBinder
+import com.smparkworld.park.ui.park.ParkEventListener
+import com.smparkworld.park.ui.park.model.SectionItemEvent
+import com.smparkworld.park.ui.park.model.SectionViewBinder
 import javax.inject.Inject
 
-class ProductOneColumn2ViewBinder @Inject constructor(
+class ProductOneColumnViewBinder @Inject constructor(
 
-) : SectionViewBinder<ProductSectionDTO, ProductOneColumn2ViewHolder>(ProductSectionDTO::class) {
+) : SectionViewBinder<ProductSectionDTO, ProductOneColumnViewHolder>(ProductSectionDTO::class) {
 
     override fun createViewHolder(
         parent: ViewGroup,
         owner: LifecycleOwner,
         listener: ParkEventListener
     ): RecyclerView.ViewHolder {
-        return ProductOneColumn2ViewHolder(
-            ParkSduiProductOneColumn2Binding.inflate(
+        return ProductOneColumnViewHolder(
+            ParkSduiProductOneColumnBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             ),
             owner, listener
         )
     }
 
-    override fun bindViewHolder(model: ProductSectionDTO, viewHolder: ProductOneColumn2ViewHolder): Unit =
+    override fun bindViewHolder(model: ProductSectionDTO, viewHolder: ProductOneColumnViewHolder): Unit =
         viewHolder.bind(model)
 
     override fun getSectionItemType(): Int =
-        R.layout.park_sdui_product_one_column_2
+        R.layout.park_sdui_product_one_column
 
     override fun areItemsTheSame(oldItem: ProductSectionDTO, newItem: ProductSectionDTO): Boolean =
         oldItem.id == newItem.id
@@ -43,20 +43,24 @@ class ProductOneColumn2ViewBinder @Inject constructor(
         oldItem == newItem
 }
 
-class ProductOneColumn2ViewHolder(
-    private val binding: ParkSduiProductOneColumn2Binding,
+class ProductOneColumnViewHolder(
+    private val binding: ParkSduiProductOneColumnBinding,
     private val lifecycleOwner: LifecycleOwner,
     private val eventListener: ParkEventListener
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    private val itemListener = object: ProductOneColumn2ItemListener {
+    private val itemListener = object: ProductOneColumnItemListener {
 
         override fun onClickItem(v: View, model: ProductSectionDTO) {
             eventListener.onClickItem(v, SectionItemEvent.Click(model))
         }
 
         override fun onClickWish(v: View, model: ProductSectionDTO) {
-            eventListener.onClickItem(v, SectionItemEvent.WishClick(model, v.isSelected))
+            val isSelected = v.isSelected.not().also {
+                v.isSelected = it
+                model.isWished = it
+            }
+            eventListener.onClickItem(v, SectionItemEvent.WishClick(model, isSelected))
         }
     }
 
@@ -66,7 +70,7 @@ class ProductOneColumn2ViewHolder(
         binding.listener = itemListener
     }
 
-    interface ProductOneColumn2ItemListener {
+    interface ProductOneColumnItemListener {
 
         fun onClickItem(v: View, model: ProductSectionDTO)
 
