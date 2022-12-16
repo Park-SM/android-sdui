@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.smparkworld.park.R
 import com.smparkworld.park.databinding.ParkSduiProductOneColumnBinding
 import com.smparkworld.park.domain.dto.ProductSectionDTO
-import com.smparkworld.park.ui.EventListener
+import com.smparkworld.park.ui.ParkEventListener
 import com.smparkworld.park.ui.model.SectionItemEvent
 import com.smparkworld.park.ui.model.SectionViewBinder
 import javax.inject.Inject
@@ -20,7 +20,7 @@ class ProductOneColumnViewBinder @Inject constructor(
     override fun createViewHolder(
         parent: ViewGroup,
         owner: LifecycleOwner,
-        listener: EventListener
+        listener: ParkEventListener
     ): RecyclerView.ViewHolder {
         return ProductOneColumnViewHolder(
             ParkSduiProductOneColumnBinding.inflate(
@@ -46,7 +46,7 @@ class ProductOneColumnViewBinder @Inject constructor(
 class ProductOneColumnViewHolder(
     private val binding: ParkSduiProductOneColumnBinding,
     private val lifecycleOwner: LifecycleOwner,
-    private val eventListener: EventListener
+    private val eventListener: ParkEventListener
 ) : RecyclerView.ViewHolder(binding.root) {
 
     private val itemListener = object: ProductOneColumnItemListener {
