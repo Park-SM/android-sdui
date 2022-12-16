@@ -3,10 +3,10 @@ package com.smparkworld.park.di
 import com.smparkworld.park.di.annotation.SectionViewBinderKey
 import com.smparkworld.park.di.annotation.SectionViewBinders
 import com.smparkworld.park.domain.dto.SectionDTO
-import com.smparkworld.park.ui.model.SectionViewBinder
-import com.smparkworld.park.ui.model.SectionViewTypeKey
-import com.smparkworld.park.ui.model.viewbinder.ProductOneColumn2ViewBinder
-import com.smparkworld.park.ui.model.viewbinder.ProductOneColumnViewBinder
+import com.smparkworld.park.ui.park.model.SectionViewBinder
+import com.smparkworld.park.ui.park.model.SectionViewTypeKey
+import com.smparkworld.park.ui.viewbinder.ProductOneColumn2ViewBinder
+import com.smparkworld.park.ui.viewbinder.ProductOneColumnViewBinder
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

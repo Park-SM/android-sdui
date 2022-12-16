@@ -1,4 +1,4 @@
-package com.smparkworld.park.ui.delegator
+package com.smparkworld.park.ui.park.delegator
 
 import android.util.Log
 import javax.inject.Inject

@@ -1,4 +1,4 @@
-package com.smparkworld.park.ui
+package com.smparkworld.park.ui.park
 
 import android.view.View
 import androidx.lifecycle.LiveData
@@ -12,11 +12,11 @@ import com.smparkworld.park.domain.dto.SectionDTO
 import com.smparkworld.park.domain.usecase.GetSectionsUseCase
 import com.smparkworld.park.model.Result
 import com.smparkworld.park.ui.base.BaseViewModel
-import com.smparkworld.park.ui.delegator.RedirectDefaultDelegator
-import com.smparkworld.park.ui.delegator.RedirectDelegator
-import com.smparkworld.park.ui.delegator.SectionWishDelegator
-import com.smparkworld.park.ui.delegator.WishDelegator
-import com.smparkworld.park.ui.model.SectionItemEvent
+import com.smparkworld.park.ui.park.delegator.RedirectDefaultDelegator
+import com.smparkworld.park.ui.park.delegator.RedirectDelegator
+import com.smparkworld.park.ui.park.delegator.SectionWishDelegator
+import com.smparkworld.park.ui.park.delegator.WishDelegator
+import com.smparkworld.park.ui.park.model.SectionItemEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

@@ -1,4 +1,4 @@
-package com.smparkworld.park.ui
+package com.smparkworld.park.ui.park
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,7 +13,7 @@ import com.smparkworld.core.ExtraKey
 import com.smparkworld.park.di.annotation.SectionViewBinders
 import com.smparkworld.park.domain.dto.SectionDTO
 import com.smparkworld.park.extension.viewModels
-import com.smparkworld.park.ui.model.SectionViewBinder
+import com.smparkworld.park.ui.park.model.SectionViewBinder
 import javax.inject.Inject
 
 private typealias ViewBinderMap = Map<String, SectionViewBinder<out SectionDTO, *>>
