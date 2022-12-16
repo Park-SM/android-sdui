@@ -41,6 +41,11 @@ abstract class ParkFragment<V : ViewDataBinding> : Fragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        vm.refreshItems()
+    }
+
     fun setRequestUrl(url: String): ParkFragment<V> {
         arguments = (arguments ?: Bundle()).apply {
             putString(ExtraKey.REQUEST_URL, url)

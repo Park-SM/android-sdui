@@ -7,14 +7,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.Transformations
 import com.smparkworld.core.ExtraKey
-import com.smparkworld.core.SingleLiveEvent
-import com.smparkworld.park.BuildConfig
 import com.smparkworld.park.domain.dto.ParkSectionsDTO
 import com.smparkworld.park.domain.dto.SectionDTO
+import com.smparkworld.park.domain.usecase.CacheWishUseCase
 import com.smparkworld.park.domain.usecase.CreateWishUseCase
 import com.smparkworld.park.domain.usecase.DeleteWishUseCase
 import com.smparkworld.park.domain.usecase.GetSectionsUseCase
 import com.smparkworld.park.domain.usecase.RollbackSectionWishStateUseCase
+import com.smparkworld.park.domain.usecase.SyncSectionWishStateUseCase
 import com.smparkworld.park.model.Result
 import com.smparkworld.park.ui.base.BaseViewModel
 import com.smparkworld.park.ui.model.SectionItemEvent
@@ -28,7 +28,9 @@ internal class ParkViewModel @Inject constructor(
     private val getSectionsUseCase: GetSectionsUseCase,
     private val createWishUseCase: CreateWishUseCase,
     private val deleteWishUseCase: DeleteWishUseCase,
-    private val rollbackSectionWishStateUseCase: RollbackSectionWishStateUseCase
+    private val rollbackSectionWishStateUseCase: RollbackSectionWishStateUseCase,
+    private val syncSectionWishStateUseCase: SyncSectionWishStateUseCase,
+    private val cacheWishUseCase: CacheWishUseCase
 ) : BaseViewModel(),
     EventListener {
 
@@ -46,6 +48,49 @@ internal class ParkViewModel @Inject constructor(
 
     init {
         requestSections()
+    }
+
+    override fun onClickItem(v: View, event: SectionItemEvent) {
+        when (event) {
+            is SectionItemEvent.Click -> {
+                val linkUrl = event.model.getRedirectUrl()
+                // Redirect to linkUrl
+                Log.d("Test!!", "Clicked item! | linkUrl: $linkUrl")
+            }
+            is SectionItemEvent.LongClick -> {
+                val linkUrl = event.model.getRedirectUrl()
+                // Redirect to linkUrl
+            }
+            is SectionItemEvent.WishClick -> {
+                val isWished = event.isWished
+                val id = event.model.getWishTargetId() ?: return
+
+                onClickWish(id, isWished)
+            }
+        }
+    }
+
+    fun refreshItems() {
+        viewModelScope.launch {
+            refreshWishItemsByLocalCache()
+            // add partial update logics
+        }
+    }
+
+    private suspend fun refreshWishItemsByLocalCache() {
+
+        val result = _items.value?.let { items ->
+            syncSectionWishStateUseCase(items)
+        } ?: return
+
+        when (result) {
+            is Result.Success -> {
+                _items.value = result.data
+            }
+            is Result.Error -> {
+                // do nothing
+            }
+        }
     }
 
     private fun requestSections() {
@@ -72,25 +117,7 @@ internal class ParkViewModel @Inject constructor(
         }
     }
 
-    override fun onClickItem(v: View, event: SectionItemEvent) {
-        when (event) {
-            is SectionItemEvent.Click -> {
-                val linkUrl = event.model.getRedirectUrl()
-                // Redirect to linkUrl
-                Log.d("Test!!", "Clicked item! | linkUrl: $linkUrl")
-            }
-            is SectionItemEvent.LongClick -> {
-                val linkUrl = event.model.getRedirectUrl()
-                // Redirect to linkUrl
-            }
-            is SectionItemEvent.WishClick -> {
-                val isWished = event.isWished
-                val id = event.model.getWishTargetId() ?: return
 
-                onClickWish(id, isWished)
-            }
-        }
-    }
 
     private fun onSuccessGetSections(data: ParkSectionsDTO) {
         nextRequestUrl = data.requestUrl?.nextPageUrl
@@ -120,16 +147,23 @@ internal class ParkViewModel @Inject constructor(
             }
             when (result) {
                 is Result.Success -> {
+                    cacheWishState(id, isWished)
                     // do anything on wish api success. e.g) Show Snackbar.. etc..
                 }
                 is Result.Error -> {
-                    // do rollback wish state
                     onRollbackWishState(id, isWished)
-
                     // do anything on wish api failure. e.g) Show Snackbar.. etc..
                 }
             }
         }
+    }
+
+    private suspend fun cacheWishState(id: Long, isWished: Boolean) {
+        val payload = CacheWishUseCase.Payload(
+            id = id,
+            isWished = isWished
+        )
+        cacheWishUseCase(payload)
     }
 
     private suspend fun onRollbackWishState(id: Long, isWished: Boolean) {
