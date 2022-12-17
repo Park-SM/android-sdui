@@ -8,7 +8,7 @@ class RecyclerViewPaginator private constructor(
     listener: ((Int) -> Unit)? = null,
 ) : ScrollingViewPaginator {
 
-    private var currentPage = 0
+    private var currentPage = 1
     private var triggerPosition: Int? = null
 
     init {

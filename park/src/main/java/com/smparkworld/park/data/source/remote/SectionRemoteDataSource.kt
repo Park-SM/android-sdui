@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.smparkworld.hiltbinder.HiltBinds
 import com.smparkworld.park.data.vo.ParkSectionsVO
 import com.smparkworld.park.data.vo.SectionVO
+import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 interface SectionRemoteDataSource {
@@ -20,14 +21,26 @@ class SectionRemoteDataSourceFakeImpl @Inject constructor(
 
     override suspend fun requestSections(url: String): ParkSectionsVO {
 
-        return gson.fromJson(getRawData(), ParkSectionsVO::class.java)
+        return when {
+            (url == "/products?page=1" || url == "/products") -> {
+                delay(350L) // mocked network latency
+                gson.fromJson(getRawDataForPage1(), ParkSectionsVO::class.java)
+            }
+            (url == "/products?page=2") -> {
+                delay(350L) // mocked network latency
+                gson.fromJson(getRawDataForPage2(), ParkSectionsVO::class.java)
+            }
+            else -> {
+                throw Exception("Test Exception - Unknown Request URL.")
+            }
+        }
     }
 
-    private fun getRawData(): String = """
+    private fun getRawDataForPage1(): String = """
         {
         "requestUrl": {
-            "nextPageUrl": null,
-            "nextPageTriggerPosition": null
+            "nextPageUrl": "/products?page=2",
+            "nextPageTriggerPosition": 2
         },
         "sections": [
             {
@@ -190,7 +203,18 @@ class SectionRemoteDataSourceFakeImpl @Inject constructor(
                         }
                     }
                 ]
-            },
+            }
+        ]
+    }
+    """.trimIndent()
+
+    private fun getRawDataForPage2(): String = """
+        {
+        "requestUrl": {
+            "nextPageUrl": null,
+            "nextPageTriggerPosition": null
+        },
+        "sections": [
             {
                 "sectionType": "PRODUCT_SECTION",
                 "viewType": "PRODUCT_ONE_COLUMN",

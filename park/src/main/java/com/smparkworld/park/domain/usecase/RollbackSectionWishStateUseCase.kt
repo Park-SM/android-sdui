@@ -13,17 +13,17 @@ class RollbackSectionWishStateUseCase @Inject constructor(
 ) : UseCaseWithParam<RollbackSectionWishStateUseCase.Payload, List<SectionDTO>>(dispatcher) {
 
     override suspend fun execute(parameters: Payload): List<SectionDTO> {
-        val weakClonedItems = parameters.originItems.toMutableList()
+        val resultItems = mutableListOf<SectionDTO>()
 
-        weakClonedItems.forEachIndexed { index, item ->
+        parameters.originItems.forEach { item ->
             if (isRollbackTargetSection(item, parameters.id, parameters.isWished)) {
-                val newItem = getRollbackWishSection(item, parameters.isWished)
-                weakClonedItems.removeAt(index)
-                weakClonedItems.add(index, newItem)
+                resultItems.add(getRollbackWishSection(item, parameters.isWished))
+            } else {
+                resultItems.add(item)
             }
         }
 
-        return weakClonedItems
+        return resultItems
     }
 
     private fun isRollbackTargetSection(item: SectionDTO, id: Long, isWished: Boolean) =

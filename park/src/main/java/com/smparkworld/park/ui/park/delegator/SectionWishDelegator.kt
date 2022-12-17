@@ -31,7 +31,7 @@ class SectionWishDelegator @Inject constructor(
         }
     }
 
-    override suspend fun requestWishState(id: Long, isWished: Boolean) {
+    override suspend fun requestWishState(origin: List<SectionDTO>, id: Long, isWished: Boolean) {
         val result = if (isWished) {
             createWishUseCase(id)
         } else {
@@ -43,7 +43,7 @@ class SectionWishDelegator @Inject constructor(
                 // do anything on wish api success. e.g) Show Snackbar.. etc..
             }
             is Result.Error -> {
-                onRollbackWishState(id, isWished)
+                rollbackWishState(origin, id, isWished)
                 // do anything on wish api failure. e.g) Show Snackbar.. etc..
             }
         }
@@ -57,12 +57,12 @@ class SectionWishDelegator @Inject constructor(
         cacheWishUseCase(payload)
     }
 
-    private suspend fun onRollbackWishState(id: Long, isWished: Boolean) {
+    private suspend fun rollbackWishState(origin: List<SectionDTO>, id: Long, isWished: Boolean) {
 
         val payload = RollbackSectionWishStateUseCase.Payload(
             id = id,
             isWished = isWished,
-            originItems = _wishDelegatedItems.value ?: return
+            originItems = origin
         )
 
         when (val result = rollbackSectionWishStateUseCase(payload)) {
