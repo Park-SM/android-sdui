@@ -13,7 +13,6 @@ import com.smparkworld.core.ExtraKey
 import com.smparkworld.park.di.annotation.SectionViewBinders
 import com.smparkworld.park.domain.dto.SectionDTO
 import com.smparkworld.park.extension.viewModels
-import com.smparkworld.park.ui.common.pagination.RecyclerViewPaginator
 import com.smparkworld.park.ui.common.pagination.ScrollingViewPaginator
 import com.smparkworld.park.ui.park.model.SectionViewBinder
 import javax.inject.Inject
