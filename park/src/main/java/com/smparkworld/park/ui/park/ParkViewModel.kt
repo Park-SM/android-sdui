@@ -32,12 +32,15 @@ internal class ParkViewModel @Inject constructor(
     RedirectDelegator by redirectDefaultDelegator,
     WishDelegator<SectionDTO> by sectionWishDelegator {
 
-    private val _items = MutableLiveData<List<SectionDTO>>()
+    private val _sectionItems = MutableLiveData<List<SectionDTO>>()
 
-    val items: LiveData<List<SectionDTO>> get() = MediatorLiveData<List<SectionDTO>>().apply {
-        addSource(_items) { value = it }
-        addSource(_wishDelegatedItems) { value = it }
+    private val _items: MutableLiveData<List<SectionDTO>> = MediatorLiveData<List<SectionDTO>>().apply {
+        addSource(_sectionItems) { value = it }
+        addSource(_wishDelegatedItems) {
+            value = it
+        }
     }
+    val items: LiveData<List<SectionDTO>> get() = _items
 
     val isEmpty: LiveData<Boolean> get() = Transformations.map(_items) {
         it.isNullOrEmpty()
@@ -56,9 +59,9 @@ internal class ParkViewModel @Inject constructor(
     }
 
     private fun requestSections() {
-        viewModelScope.launch {
-            _isLoading.value = true
+        _isLoading.value = true
 
+        viewModelScope.launch {
             val requestUrl = getRequestUrl()
             if (requestUrl != null) {
 
@@ -80,12 +83,11 @@ internal class ParkViewModel @Inject constructor(
 
     fun requestNextSections() {
         if (_isLoading.value == true) return
+        _isLoading.value = true
 
         viewModelScope.launch {
-
             val requestUrl = nextRequestUrl
             if (requestUrl != null) {
-                _isLoading.value = true
 
                 when (val result = getSectionsUseCase(requestUrl)) {
                     is Result.Success -> {
@@ -95,8 +97,8 @@ internal class ParkViewModel @Inject constructor(
                         onFailureGetSections(result.exception)
                     }
                 }
-                _isLoading.value = false
             }
+            _isLoading.value = false
         }
     }
 
@@ -113,11 +115,12 @@ internal class ParkViewModel @Inject constructor(
                 redirectToUrl(linkUrl)
             }
             is SectionItemEvent.WishClick -> {
+                val origin = _items.value ?: return
                 val id = event.model.getWishTargetId() ?: return
                 val isWished = event.isWished
 
                 viewModelScope.launch {
-                    requestWishState(id, isWished)
+                    requestWishState(origin, id, isWished)
                 }
             }
         }
@@ -136,14 +139,14 @@ internal class ParkViewModel @Inject constructor(
         nextRequestUrl = data.requestUrl?.nextPageUrl
 
         _nextPageTriggerPosition.value = data.requestUrl?.nextPageTriggerPosition
-        _items.value = data.sections
+        _sectionItems.value = data.sections
     }
 
     private fun onSuccessGetMoreSections(data: ParkSectionsDTO) {
         nextRequestUrl = data.requestUrl?.nextPageUrl
 
         _nextPageTriggerPosition.value = data.requestUrl?.nextPageTriggerPosition
-        _items.value = (_items.value ?: emptyList()).toMutableList().also { currentItems ->
+        _sectionItems.value = (_items.value ?: emptyList()).toMutableList().also { currentItems ->
             currentItems.addAll(data.sections)
         }
     }
@@ -156,7 +159,7 @@ internal class ParkViewModel @Inject constructor(
     private fun onEmptyRequestUrl() {
         // Send non-fatal log, etc..
 
-        _items.value = emptyList()
+        _sectionItems.value = emptyList()
     }
 
     private fun getRequestUrl() = stateHandle.get<String>(ExtraKey.REQUEST_URL)

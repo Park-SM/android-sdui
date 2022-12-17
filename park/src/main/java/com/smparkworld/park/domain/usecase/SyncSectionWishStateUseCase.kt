@@ -19,16 +19,16 @@ class SyncSectionWishStateUseCase @Inject constructor(
 ) : UseCaseWithParam<List<SectionDTO>, List<SectionDTO>>(dispatcher) {
 
     override suspend fun execute(parameters: List<SectionDTO>): List<SectionDTO> {
+        val resultItems = mutableListOf<SectionDTO>()
 
-        val weakClonedItems = parameters.toMutableList()
-        weakClonedItems.forEachIndexed { index, item ->
+        parameters.forEach { item ->
             if (isIncorrectWishStateItem(item)) {
-                val newItem = getUpdatedWishSection(item)
-                weakClonedItems.removeAt(index)
-                weakClonedItems.add(index, newItem)
+                resultItems.add(getUpdatedWishSection(item))
+            } else {
+                resultItems.add(item)
             }
         }
-        return weakClonedItems
+        return resultItems
     }
 
     private suspend fun isIncorrectWishStateItem(item: SectionDTO): Boolean {

@@ -16,7 +16,6 @@ class WishRemoteDataSourceFakeImpl @Inject constructor(
 
 ) : WishRemoteDataSource {
 
-
     override suspend fun createWish(id: Long): Boolean {
         if (id == 777L) {
             delay(200L)
