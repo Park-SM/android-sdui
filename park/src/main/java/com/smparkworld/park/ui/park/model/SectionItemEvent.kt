@@ -1,4 +1,4 @@
-package com.smparkworld.park.ui.model
+package com.smparkworld.park.ui.park.model
 
 import com.smparkworld.park.model.action.ClickableDTO
 import com.smparkworld.park.model.action.LongClickableDTO

@@ -7,12 +7,12 @@ import com.smparkworld.park.extension.isAssignableFrom
 import javax.inject.Inject
 import kotlin.reflect.KClass
 
-class ProductSectionDTOMapper @Inject constructor(
+class ProductSectionVOMapper @Inject constructor(
 
-) : Mapper<ProductSectionVO, ProductSectionDTO>() {
+) : Mapper<ProductSectionDTO, ProductSectionVO>() {
 
-    override fun map(from: ProductSectionVO): ProductSectionDTO {
-        return ProductSectionDTO(
+    override fun map(from: ProductSectionDTO): ProductSectionVO {
+        return ProductSectionVO(
             sectionType = from.sectionType,
             viewType = from.viewType,
             id = from.id,
@@ -27,6 +27,6 @@ class ProductSectionDTOMapper @Inject constructor(
     }
 
     override fun equals(from: KClass<*>, to: KClass<*>): Boolean =
-        from.isAssignableFrom(ProductSectionVO::class)
-                && to.isAssignableFrom(ProductSectionDTO::class)
+        from.isAssignableFrom(ProductSectionDTO::class)
+                && to.isAssignableFrom(ProductSectionVO::class)
 }

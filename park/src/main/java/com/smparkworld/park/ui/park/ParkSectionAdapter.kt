@@ -1,12 +1,12 @@
-package com.smparkworld.park.ui
+package com.smparkworld.park.ui.park
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.smparkworld.park.domain.dto.SectionDTO
-import com.smparkworld.park.ui.model.SectionDiffCallback
-import com.smparkworld.park.ui.model.SectionViewBinder
-import com.smparkworld.park.ui.model.SectionViewTypeKey
+import com.smparkworld.park.ui.park.model.SectionDiffCallback
+import com.smparkworld.park.ui.park.model.SectionViewBinder
+import com.smparkworld.park.ui.park.model.SectionViewTypeKey
 
 class ParkSectionAdapter(
     private val viewBinders: Map<String, SectionViewBinder<SectionDTO, ViewHolder>>

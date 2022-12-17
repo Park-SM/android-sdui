@@ -1,8 +1,10 @@
 package com.smparkworld.park.extension
 
 import android.graphics.Bitmap
+import android.view.View
 import android.widget.ImageView
 import androidx.annotation.Dimension
+import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
@@ -40,6 +42,12 @@ object BindingAdapter {
             .apply(options)
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(this)
+    }
+
+    @JvmStatic
+    @BindingAdapter("isVisible")
+    fun View.isVisible(isVisible: Boolean) {
+        this.isVisible = isVisible
     }
 }
 
