@@ -268,6 +268,33 @@ class SectionRemoteDataSourceFakeImpl @Inject constructor(
                         }
                     }
                 ]
+            },
+            {
+                "sectionType": "PRODUCT_SECTION",
+                "viewType": "PRODUCT_ONE_COLUMN",
+                "id": "121",
+                "imageUrl": "http://smparkworld.com/img/blog_images/16291211130868351452949271973491813169204333982771.png",
+                "title": "[전남 여수] 아쿠아플라넷 여수 + 뮤지엄오브컬러",
+                "category": "입장권 • 전라도",
+                "reviewScore": "4.9 (145)",
+                "price": "19,950원",
+                "isWished": "false",
+                "linkUrl": "sdui://product/detail/121",
+                "refresh": null,
+                "logs": [
+                    {
+                        "type": "CLICK",
+                        "data": {
+                            "id": "121"
+                        }
+                    },
+                    {
+                        "type": "IMPRESSION",
+                        "data": {
+                            "id": "121"
+                        }
+                    }
+                ]
             }
         ]
     }
