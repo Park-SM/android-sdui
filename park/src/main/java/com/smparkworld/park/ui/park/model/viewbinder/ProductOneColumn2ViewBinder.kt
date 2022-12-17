@@ -1,4 +1,4 @@
-package com.smparkworld.park.ui.viewbinder
+package com.smparkworld.park.ui.park.model.viewbinder
 
 import android.view.LayoutInflater
 import android.view.View

@@ -20,18 +20,7 @@ class SectionWishDelegator @Inject constructor(
 
     override val _wishDelegatedItems = MutableLiveData<List<SectionDTO>>()
 
-    override suspend fun refreshWishItemsByLocalCache(origin: List<SectionDTO>) {
-        when (val result = syncSectionWishStateUseCase(origin)) {
-            is Result.Success -> {
-                _wishDelegatedItems.value = result.data
-            }
-            is Result.Error -> {
-                // do nothing
-            }
-        }
-    }
-
-    override suspend fun requestWishState(id: Long, isWished: Boolean) {
+    override suspend fun requestWishState(origin: List<SectionDTO>, id: Long, isWished: Boolean) {
         val result = if (isWished) {
             createWishUseCase(id)
         } else {
@@ -40,11 +29,26 @@ class SectionWishDelegator @Inject constructor(
         when (result) {
             is Result.Success -> {
                 cacheWishState(id, isWished)
+
+                // Requested a item can have multiple items in the list, apply wish state changes.
+                refreshWishItemsByLocalCache(origin)
+
                 // do anything on wish api success. e.g) Show Snackbar.. etc..
             }
             is Result.Error -> {
-                onRollbackWishState(id, isWished)
+                rollbackWishState(origin, id, isWished)
                 // do anything on wish api failure. e.g) Show Snackbar.. etc..
+            }
+        }
+    }
+
+    override suspend fun refreshWishItemsByLocalCache(origin: List<SectionDTO>) {
+        when (val result = syncSectionWishStateUseCase(origin)) {
+            is Result.Success -> {
+                _wishDelegatedItems.value = result.data
+            }
+            is Result.Error -> {
+                // do nothing
             }
         }
     }
@@ -57,12 +61,12 @@ class SectionWishDelegator @Inject constructor(
         cacheWishUseCase(payload)
     }
 
-    private suspend fun onRollbackWishState(id: Long, isWished: Boolean) {
+    private suspend fun rollbackWishState(origin: List<SectionDTO>, id: Long, isWished: Boolean) {
 
         val payload = RollbackSectionWishStateUseCase.Payload(
             id = id,
             isWished = isWished,
-            originItems = _wishDelegatedItems.value ?: return
+            originItems = origin
         )
 
         when (val result = rollbackSectionWishStateUseCase(payload)) {

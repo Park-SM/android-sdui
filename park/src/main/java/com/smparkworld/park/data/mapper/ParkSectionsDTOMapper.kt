@@ -14,7 +14,7 @@ class ParkSectionsDTOMapper @Inject constructor(
     override fun map(from: ParkSectionsVO): ParkSectionsDTO {
         return ParkSectionsDTO(
             requestUrl = delegateMap(from.requestUrl),
-            sections = delegateMaps(from.sections)
+            sections = delegateMaps(from.sections) ?: emptyList()
         )
     }
 
