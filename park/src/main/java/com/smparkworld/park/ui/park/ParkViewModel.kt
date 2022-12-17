@@ -46,10 +46,58 @@ internal class ParkViewModel @Inject constructor(
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> get() = _isLoading
 
+    private val _nextPageTriggerPosition = MutableLiveData<Int>()
+    val nextPageTriggerPosition: LiveData<Int> get() = _nextPageTriggerPosition
+
     private var nextRequestUrl: String? = null
 
     init {
         requestSections()
+    }
+
+    private fun requestSections() {
+        viewModelScope.launch {
+            _isLoading.value = true
+
+            val requestUrl = getRequestUrl()
+            if (requestUrl != null) {
+
+                when (val result = getSectionsUseCase(requestUrl)) {
+                    is Result.Success -> {
+                        onSuccessGetSections(result.data)
+                    }
+                    is Result.Error -> {
+                        onFailureGetSections(result.exception)
+                    }
+                }
+            } else {
+                onEmptyRequestUrl()
+            }
+
+            _isLoading.value = false
+        }
+    }
+
+    fun requestNextSections() {
+        if (_isLoading.value == true) return
+
+        viewModelScope.launch {
+
+            val requestUrl = nextRequestUrl
+            if (requestUrl != null) {
+                _isLoading.value = true
+
+                when (val result = getSectionsUseCase(requestUrl)) {
+                    is Result.Success -> {
+                        onSuccessGetMoreSections(result.data)
+                    }
+                    is Result.Error -> {
+                        onFailureGetSections(result.exception)
+                    }
+                }
+                _isLoading.value = false
+            }
+        }
     }
 
     override fun onClickItem(v: View, event: SectionItemEvent) {
@@ -84,36 +132,20 @@ internal class ParkViewModel @Inject constructor(
         }
     }
 
-    private fun requestSections() {
-
-        viewModelScope.launch {
-            _isLoading.value = true
-
-            val requestUrl = getRequestUrl()
-            if (requestUrl != null) {
-
-                when (val result = getSectionsUseCase(requestUrl)) {
-                    is Result.Success -> {
-                        onSuccessGetSections(result.data)
-                    }
-                    is Result.Error -> {
-                        onFailureGetSections(result.exception)
-                    }
-                }
-            } else {
-                onEmptyRequestUrl()
-            }
-
-            _isLoading.value = false
-        }
-    }
-
-
-
     private fun onSuccessGetSections(data: ParkSectionsDTO) {
         nextRequestUrl = data.requestUrl?.nextPageUrl
 
+        _nextPageTriggerPosition.value = data.requestUrl?.nextPageTriggerPosition
         _items.value = data.sections
+    }
+
+    private fun onSuccessGetMoreSections(data: ParkSectionsDTO) {
+        nextRequestUrl = data.requestUrl?.nextPageUrl
+
+        _nextPageTriggerPosition.value = data.requestUrl?.nextPageTriggerPosition
+        _items.value = (_items.value ?: emptyList()).toMutableList().also { currentItems ->
+            currentItems.addAll(data.sections)
+        }
     }
 
     private fun onFailureGetSections(exception: Exception) {
