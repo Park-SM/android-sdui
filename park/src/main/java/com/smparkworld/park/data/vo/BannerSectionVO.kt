@@ -7,6 +7,12 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class BannerSectionVO(
 
+    @SerializedName("sectionType")
+    override val sectionType: String? = null,
+
+    @SerializedName("viewType")
+    override val viewType: String? = null,
+
     @SerializedName("id")
     val id: Long? = null,
 
@@ -22,4 +28,4 @@ data class BannerSectionVO(
     @SerializedName("linkUrl")
     val linkUrl: String? = null
 
-) : SectionVO(), Parcelable
+) : SectionVO, Parcelable

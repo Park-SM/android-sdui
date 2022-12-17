@@ -2,5 +2,9 @@ package com.smparkworld.park.model.action
 
 interface WishClickableDTO {
 
-    fun getWishRequestUrl(isWished: Boolean): String?
+    fun getWishTargetId(): Long?
+
+    fun getWishState(): Boolean?
+
+    fun setWishState(isWished: Boolean)
 }

@@ -1,17 +1,16 @@
-package com.smparkworld.park.ui.model.viewbinder
+package com.smparkworld.park.ui.viewbinder
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.smparkworld.park.R
 import com.smparkworld.park.databinding.ParkSduiProductOneColumn2Binding
 import com.smparkworld.park.domain.dto.ProductSectionDTO
-import com.smparkworld.park.ui.EventListener
-import com.smparkworld.park.ui.model.SectionItemEvent
-import com.smparkworld.park.ui.model.SectionViewBinder
+import com.smparkworld.park.ui.park.ParkEventListener
+import com.smparkworld.park.ui.park.model.SectionItemEvent
+import com.smparkworld.park.ui.park.model.SectionViewBinder
 import javax.inject.Inject
 
 class ProductOneColumn2ViewBinder @Inject constructor(
@@ -21,7 +20,7 @@ class ProductOneColumn2ViewBinder @Inject constructor(
     override fun createViewHolder(
         parent: ViewGroup,
         owner: LifecycleOwner,
-        listener: EventListener
+        listener: ParkEventListener
     ): RecyclerView.ViewHolder {
         return ProductOneColumn2ViewHolder(
             ParkSduiProductOneColumn2Binding.inflate(
@@ -47,7 +46,7 @@ class ProductOneColumn2ViewBinder @Inject constructor(
 class ProductOneColumn2ViewHolder(
     private val binding: ParkSduiProductOneColumn2Binding,
     private val lifecycleOwner: LifecycleOwner,
-    private val eventListener: EventListener
+    private val eventListener: ParkEventListener
 ) : RecyclerView.ViewHolder(binding.root) {
 
     private val itemListener = object: ProductOneColumn2ItemListener {
@@ -56,7 +55,7 @@ class ProductOneColumn2ViewHolder(
             eventListener.onClickItem(v, SectionItemEvent.Click(model))
         }
 
-        override fun onClickWish(v: ImageView, model: ProductSectionDTO) {
+        override fun onClickWish(v: View, model: ProductSectionDTO) {
             eventListener.onClickItem(v, SectionItemEvent.WishClick(model, v.isSelected))
         }
     }
@@ -71,6 +70,6 @@ class ProductOneColumn2ViewHolder(
 
         fun onClickItem(v: View, model: ProductSectionDTO)
 
-        fun onClickWish(v: ImageView, model: ProductSectionDTO)
+        fun onClickWish(v: View, model: ProductSectionDTO)
     }
 }

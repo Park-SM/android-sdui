@@ -1,10 +1,10 @@
-package com.smparkworld.park.ui.model
+package com.smparkworld.park.ui.park.model
 
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.smparkworld.park.ui.EventListener
+import com.smparkworld.park.ui.park.ParkEventListener
 import kotlin.reflect.KClass
 
 abstract class SectionViewBinder<M, in VH : ViewHolder>(
@@ -12,9 +12,9 @@ abstract class SectionViewBinder<M, in VH : ViewHolder>(
 ) : DiffUtil.ItemCallback<M>() {
 
     private lateinit var lifecycleOwner: LifecycleOwner
-    private lateinit var eventListener: EventListener
+    private lateinit var eventListener: ParkEventListener
 
-    fun initialize(owner: LifecycleOwner, listener: EventListener) {
+    fun initialize(owner: LifecycleOwner, listener: ParkEventListener) {
         this.lifecycleOwner = owner
         this.eventListener = listener
     }
@@ -27,7 +27,7 @@ abstract class SectionViewBinder<M, in VH : ViewHolder>(
         }
     }
 
-    abstract fun createViewHolder(parent: ViewGroup, owner: LifecycleOwner, listener: EventListener): ViewHolder
+    abstract fun createViewHolder(parent: ViewGroup, owner: LifecycleOwner, listener: ParkEventListener): ViewHolder
     abstract fun bindViewHolder(model: M, viewHolder: VH)
     abstract fun getSectionItemType(): Int
 

@@ -3,17 +3,20 @@ package com.smparkworld.park.data.source.remote
 import com.google.gson.Gson
 import com.smparkworld.hiltbinder.HiltBinds
 import com.smparkworld.park.data.vo.ParkSectionsVO
+import com.smparkworld.park.data.vo.SectionVO
 import javax.inject.Inject
 
-interface ParkRemoteDataSource {
+interface SectionRemoteDataSource {
 
     suspend fun requestSections(url: String): ParkSectionsVO
+
+    suspend fun cloneSection(section: SectionVO): SectionVO
 }
 
 @HiltBinds
-class ParkRemoteDataSourceFakeImpl @Inject constructor(
+class SectionRemoteDataSourceFakeImpl @Inject constructor(
     private val gson: Gson
-) : ParkRemoteDataSource {
+) : SectionRemoteDataSource {
 
     override suspend fun requestSections(url: String): ParkSectionsVO {
 
@@ -36,6 +39,7 @@ class ParkRemoteDataSourceFakeImpl @Inject constructor(
                 "category": "입장권 • 서울",
                 "reviewScore": "4.6 (358)",
                 "price": "10,080원",
+                "isWished": "true",
                 "linkUrl": "sdui://product/detail/333",
                 "refresh": null,
                 "logs": [
@@ -88,6 +92,7 @@ class ParkRemoteDataSourceFakeImpl @Inject constructor(
                 "category": "입장권 • 제주",
                 "reviewScore": "4.8 (247)",
                 "price": "18,905원",
+                "isWished": "false",
                 "linkUrl": "sdui://product/detail/777",
                 "refresh": null,
                 "logs": [
@@ -108,4 +113,8 @@ class ParkRemoteDataSourceFakeImpl @Inject constructor(
         ]
     }
     """.trimIndent()
+
+    override suspend fun cloneSection(section: SectionVO): SectionVO {
+        return gson.fromJson(gson.toJson(section), SectionVO::class.java)
+    }
 }

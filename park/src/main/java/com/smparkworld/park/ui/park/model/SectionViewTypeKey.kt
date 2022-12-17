@@ -1,4 +1,4 @@
-package com.smparkworld.park.ui.model
+package com.smparkworld.park.ui.park.model
 
 object SectionViewTypeKey {
 

@@ -1,4 +1,4 @@
-package com.smparkworld.park.ui
+package com.smparkworld.park.ui.park
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,7 +13,7 @@ import com.smparkworld.core.ExtraKey
 import com.smparkworld.park.di.annotation.SectionViewBinders
 import com.smparkworld.park.domain.dto.SectionDTO
 import com.smparkworld.park.extension.viewModels
-import com.smparkworld.park.ui.model.SectionViewBinder
+import com.smparkworld.park.ui.park.model.SectionViewBinder
 import javax.inject.Inject
 
 private typealias ViewBinderMap = Map<String, SectionViewBinder<out SectionDTO, *>>
@@ -41,6 +41,11 @@ abstract class ParkFragment<V : ViewDataBinding> : Fragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        vm.refreshItems()
+    }
+
     fun setRequestUrl(url: String): ParkFragment<V> {
         arguments = (arguments ?: Bundle()).apply {
             putString(ExtraKey.REQUEST_URL, url)
@@ -53,6 +58,7 @@ abstract class ParkFragment<V : ViewDataBinding> : Fragment() {
         for ((_, viewBinder) in viewBinders) {
             viewBinder.initialize(this, vm)
         }
+        sections.itemAnimator = null
         sections.layoutManager = LinearLayoutManager(requireContext())
         sections.adapter = ParkSectionAdapter(viewBinders as ViewBinderMapInternal)
     }

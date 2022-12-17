@@ -1,7 +1,7 @@
 package com.smparkworld.sduisample
 
 import androidx.recyclerview.widget.RecyclerView
-import com.smparkworld.park.ui.ParkFragment
+import com.smparkworld.park.ui.park.ParkFragment
 import com.smparkworld.sduisample.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 
