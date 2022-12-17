@@ -12,22 +12,27 @@ class RecyclerViewPaginator private constructor(
     private var triggerPosition: Int? = null
 
     init {
-        with(view) {
-            addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    if (dy <= 0) return
-                    val triggerPosition = triggerPosition ?: return
+        initialize(view, listener)
+    }
 
-                    val lastVisibleItemPosition = (layoutManager as? LinearLayoutManager)?.findLastVisibleItemPosition() ?: -1
-                    val totalItemCount = layoutManager?.itemCount ?: 0
+    private fun initialize(
+        view: RecyclerView,
+        listener: ((Int) -> Unit)?
+    ) {
+        view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy <= 0) return
+                val triggerPosition = triggerPosition ?: return
 
-                    val triggered = (totalItemCount - triggerPosition) <= lastVisibleItemPosition
-                    if (triggered) {
-                        listener?.invoke(++currentPage)
-                    }
+                val lastVisibleItemPosition = (view.layoutManager as? LinearLayoutManager)?.findLastVisibleItemPosition() ?: -1
+                val totalItemCount = view.layoutManager?.itemCount ?: 0
+
+                val triggered = (totalItemCount - triggerPosition) <= lastVisibleItemPosition
+                if (triggered) {
+                    listener?.invoke(++currentPage)
                 }
-            })
-        }
+            }
+        })
     }
 
     override fun setNextPageTriggerPosition(position: Int?) {
