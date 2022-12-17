@@ -13,6 +13,8 @@ import com.smparkworld.core.ExtraKey
 import com.smparkworld.park.di.annotation.SectionViewBinders
 import com.smparkworld.park.domain.dto.SectionDTO
 import com.smparkworld.park.extension.viewModels
+import com.smparkworld.park.ui.common.pagination.RecyclerViewPaginator
+import com.smparkworld.park.ui.common.pagination.ScrollingViewPaginator
 import com.smparkworld.park.ui.park.model.SectionViewBinder
 import javax.inject.Inject
 
@@ -24,6 +26,8 @@ abstract class ParkFragment<V : ViewDataBinding> : Fragment() {
     @Inject
     @SectionViewBinders
     lateinit var viewBinders: @JvmSuppressWildcards ViewBinderMap
+
+    private lateinit var paginator: ScrollingViewPaginator
 
     private val vm: ParkViewModel by viewModels()
 
@@ -61,11 +65,20 @@ abstract class ParkFragment<V : ViewDataBinding> : Fragment() {
         sections.itemAnimator = null
         sections.layoutManager = LinearLayoutManager(requireContext())
         sections.adapter = ParkSectionAdapter(viewBinders as ViewBinderMapInternal)
+
+        paginator = ScrollingViewPaginator.with(sections)
+            .setOnNextPageListener {
+                vm.requestNextSections()
+            }
+            .create()
     }
 
     private fun initObserversInternal(sections: RecyclerView) {
         vm.items.observe(viewLifecycleOwner) { items ->
             (sections.adapter as? ParkSectionAdapter)?.submitList(items)
+        }
+        vm.nextPageTriggerPosition.observe(viewLifecycleOwner) { position ->
+            paginator.setNextPageTriggerPosition(position)
         }
     }
 

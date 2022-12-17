@@ -4,5 +4,5 @@ data class ParkSectionsDTO(
 
     var requestUrl: ParkRequestUrlDTO? = null,
 
-    var sections: List<SectionDTO>? = null,
+    var sections: List<SectionDTO>
 )
