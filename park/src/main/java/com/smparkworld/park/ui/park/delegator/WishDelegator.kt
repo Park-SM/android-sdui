@@ -6,7 +6,7 @@ interface WishDelegator<T> {
 
     val _wishDelegatedItems: MutableLiveData<List<T>>
 
-    suspend fun refreshWishItemsByLocalCache(origin: List<T>)
+    suspend fun requestWishState(origin: List<T>, id: Long, isWished: Boolean)
 
-    suspend fun requestWishState(id: Long, isWished: Boolean)
+    suspend fun refreshWishItemsByLocalCache(origin: List<T>)
 }
