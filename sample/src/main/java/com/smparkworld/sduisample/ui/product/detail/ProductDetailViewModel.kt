@@ -6,7 +6,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.smparkworld.core.SingleLiveEvent
-import com.smparkworld.core.model.Result
+import com.smparkworld.domain.Result
 import com.smparkworld.sduisample.BuildConfig
 import com.smparkworld.sduisample.domain.dto.ProductDTO
 import com.smparkworld.sduisample.ui.product.detail.delegator.ProductDelegator

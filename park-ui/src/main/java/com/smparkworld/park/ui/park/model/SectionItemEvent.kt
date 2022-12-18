@@ -1,8 +1,8 @@
 package com.smparkworld.park.ui.park.model
 
-import com.smparkworld.park.model.action.ClickableDTO
-import com.smparkworld.park.model.action.LongClickableDTO
-import com.smparkworld.park.model.action.WishClickableDTO
+import com.smparkworld.domain.dto.action.ClickableDTO
+import com.smparkworld.domain.dto.action.LongClickableDTO
+import com.smparkworld.domain.dto.action.WishClickableDTO
 
 sealed class SectionItemEvent {
 

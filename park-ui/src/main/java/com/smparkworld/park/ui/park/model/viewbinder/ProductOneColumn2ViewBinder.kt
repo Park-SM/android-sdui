@@ -5,9 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
+import com.smparkworld.domain.dto.ProductSectionDTO
 import com.smparkworld.park.R
 import com.smparkworld.park.databinding.ParkSduiProductOneColumn2Binding
-import com.smparkworld.park.domain.dto.ProductSectionDTO
 import com.smparkworld.park.ui.park.ParkEventListener
 import com.smparkworld.park.ui.park.model.SectionItemEvent
 import com.smparkworld.park.ui.park.model.SectionViewBinder

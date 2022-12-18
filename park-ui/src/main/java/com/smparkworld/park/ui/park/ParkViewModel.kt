@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.Transformations
 import com.smparkworld.core.ExtraKey
-import com.smparkworld.park.domain.dto.SectionDTO
+import com.smparkworld.domain.dto.SectionDTO
 import com.smparkworld.park.ui.base.BaseViewModel
 import com.smparkworld.park.ui.park.delegator.RedirectDefaultDelegator
 import com.smparkworld.park.ui.park.delegator.RedirectDelegator

@@ -3,7 +3,7 @@ package com.smparkworld.park.ui.park
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.smparkworld.park.domain.dto.SectionDTO
+import com.smparkworld.domain.dto.SectionDTO
 import com.smparkworld.park.ui.park.model.SectionDiffCallback
 import com.smparkworld.park.ui.park.model.SectionViewBinder
 import com.smparkworld.park.ui.park.model.SectionViewTypeKey

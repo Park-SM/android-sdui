@@ -1,13 +1,13 @@
 package com.smparkworld.park.ui.park.delegator
 
 import androidx.lifecycle.MutableLiveData
-import com.smparkworld.park.domain.dto.SectionDTO
-import com.smparkworld.park.domain.usecase.CacheWishUseCase
-import com.smparkworld.park.domain.usecase.CreateWishUseCase
-import com.smparkworld.park.domain.usecase.DeleteWishUseCase
-import com.smparkworld.park.domain.usecase.RollbackSectionWishStateUseCase
-import com.smparkworld.park.domain.usecase.SyncSectionWishStateUseCase
-import com.smparkworld.core.model.Result
+import com.smparkworld.domain.Result
+import com.smparkworld.domain.dto.SectionDTO
+import com.smparkworld.domain.usecase.CacheWishUseCase
+import com.smparkworld.domain.usecase.CreateWishUseCase
+import com.smparkworld.domain.usecase.DeleteWishUseCase
+import com.smparkworld.domain.usecase.RollbackSectionWishStateUseCase
+import com.smparkworld.domain.usecase.SyncSectionWishStateUseCase
 import javax.inject.Inject
 
 class SectionWishDelegator @Inject constructor(

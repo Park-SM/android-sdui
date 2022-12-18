@@ -1,7 +1,7 @@
 package com.smparkworld.sduisample.ui.main
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.smparkworld.sduisample.R
 import com.smparkworld.sduisample.databinding.ActivityMainBinding
