@@ -1,7 +1,7 @@
 package com.smparkworld.park.domain.usecase
 
 import com.smparkworld.park.BuildConfig
-import com.smparkworld.park.model.Result
+import com.smparkworld.core.model.Result
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 

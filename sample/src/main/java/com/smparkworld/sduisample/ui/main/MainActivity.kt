@@ -1,9 +1,11 @@
-package com.smparkworld.sduisample
+package com.smparkworld.sduisample.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
+import com.smparkworld.sduisample.R
 import com.smparkworld.sduisample.databinding.ActivityMainBinding
+import com.smparkworld.sduisample.ui.product.list.ProductListFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 
         val url = "/products"
 
-        val fragment = HomeFragment().setRequestUrl(url)
+        val fragment = ProductListFragment().setRequestUrl(url)
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.container, fragment)
