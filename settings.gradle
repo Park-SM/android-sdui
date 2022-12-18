@@ -14,9 +14,11 @@ dependencyResolutionManagement {
 }
 rootProject.name = "android-sdui"
 include ':sample'
-include ':park-ui'
 include ':core'
+include ':core-di'
 include ':network'
 include ':data'
 include ':domain'
-include ':core-di'
+include ':feature:park-ui'
+include ':feature:product-list'
+include ':feature:product-detail'
