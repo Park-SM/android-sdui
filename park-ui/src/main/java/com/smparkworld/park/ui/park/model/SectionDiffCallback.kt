@@ -2,7 +2,7 @@ package com.smparkworld.park.ui.park.model
 
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.smparkworld.park.domain.dto.SectionDTO
+import com.smparkworld.domain.dto.SectionDTO
 
 class SectionDiffCallback(
     viewBinders: Map<String, SectionViewBinder<SectionDTO, ViewHolder>>

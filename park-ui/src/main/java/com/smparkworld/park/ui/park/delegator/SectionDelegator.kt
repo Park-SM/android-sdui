@@ -2,7 +2,7 @@ package com.smparkworld.park.ui.park.delegator
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.smparkworld.park.domain.dto.SectionDTO
+import com.smparkworld.domain.dto.SectionDTO
 
 interface SectionDelegator {
 

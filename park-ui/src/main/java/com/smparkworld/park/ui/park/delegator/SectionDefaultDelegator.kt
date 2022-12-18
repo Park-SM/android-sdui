@@ -2,14 +2,12 @@ package com.smparkworld.park.ui.park.delegator
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.smparkworld.hiltbinder.HiltBinds
-import com.smparkworld.park.domain.dto.ParkSectionsDTO
-import com.smparkworld.park.domain.dto.SectionDTO
-import com.smparkworld.park.domain.usecase.GetSectionsUseCase
-import com.smparkworld.core.model.Result
+import com.smparkworld.domain.Result
+import com.smparkworld.domain.dto.ParkSectionsDTO
+import com.smparkworld.domain.dto.SectionDTO
+import com.smparkworld.domain.usecase.GetSectionsUseCase
 import javax.inject.Inject
 
-@HiltBinds
 class SectionDefaultDelegator @Inject constructor(
     private val getSectionsUseCase: GetSectionsUseCase
 ) : SectionDelegator {

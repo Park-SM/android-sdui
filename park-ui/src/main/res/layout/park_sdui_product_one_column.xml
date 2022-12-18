@@ -6,7 +6,7 @@
     <data>
         <variable
             name="model"
-            type="com.smparkworld.park.domain.dto.ProductSectionDTO" />
+            type="com.smparkworld.domain.dto.ProductSectionDTO" />
         <variable
             name="listener"
             type="com.smparkworld.park.ui.park.model.viewbinder.ProductOneColumnViewHolder.ProductOneColumnItemListener" />

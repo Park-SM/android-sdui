@@ -16,3 +16,7 @@ rootProject.name = "android-sdui"
 include ':sample'
 include ':park-ui'
 include ':core'
+include ':network'
+include ':data'
+include ':domain'
+include ':core-di'
