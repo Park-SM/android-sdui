@@ -6,7 +6,7 @@ import com.smparkworld.hiltbinder.HiltBinds
 import com.smparkworld.park.domain.dto.ParkSectionsDTO
 import com.smparkworld.park.domain.dto.SectionDTO
 import com.smparkworld.park.domain.usecase.GetSectionsUseCase
-import com.smparkworld.park.model.Result
+import com.smparkworld.core.model.Result
 import javax.inject.Inject
 
 @HiltBinds

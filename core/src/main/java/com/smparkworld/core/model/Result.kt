@@ -1,4 +1,4 @@
-package com.smparkworld.park.model
+package com.smparkworld.core.model
 
 sealed class Result<out R> {
 

@@ -38,6 +38,7 @@ android {
 
 dependencies {
 
+    implementation project(path: ':core')
     implementation project(path: ':park')
 
     implementation 'androidx.core:core-ktx:1.7.0'
@@ -48,6 +49,9 @@ dependencies {
     def hiltVersion = "2.44"
     implementation "com.google.dagger:hilt-android:$hiltVersion"
     kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"
+
+    def fragmentKtxVersion = "1.5.5"
+    implementation "androidx.fragment:fragment-ktx:$fragmentKtxVersion"
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'

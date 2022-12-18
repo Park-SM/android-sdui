@@ -7,7 +7,7 @@ import com.smparkworld.park.domain.usecase.CreateWishUseCase
 import com.smparkworld.park.domain.usecase.DeleteWishUseCase
 import com.smparkworld.park.domain.usecase.RollbackSectionWishStateUseCase
 import com.smparkworld.park.domain.usecase.SyncSectionWishStateUseCase
-import com.smparkworld.park.model.Result
+import com.smparkworld.core.model.Result
 import javax.inject.Inject
 
 class SectionWishDelegator @Inject constructor(
