@@ -4,13 +4,11 @@ import com.smparkworld.core_di.IoDispatcher
 import com.smparkworld.domain.repository.WishRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
-import javax.inject.Singleton
 
 // Assume that all products are managed with one ID system.
 // If the ID system is divided by product domain,
 // the `SectionRepository` and `WishRepository` classes can
 // be combined into one.
-@Singleton
 class CacheWishUseCase @Inject constructor(
     private val wishRepository: WishRepository,
     @IoDispatcher dispatcher : CoroutineDispatcher

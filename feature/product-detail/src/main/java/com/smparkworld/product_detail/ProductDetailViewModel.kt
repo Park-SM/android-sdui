@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.smparkworld.core.BuildConfig
+import com.smparkworld.core.ExtraKey
 import com.smparkworld.core.SingleLiveEvent
 import com.smparkworld.domain.Result
 import com.smparkworld.product_detail.delegator.ProductDelegator
@@ -78,11 +78,9 @@ class ProductDetailViewModel @Inject constructor(
     }
 
     private fun onFailureGetProduct(exception: Exception) {
-        if (BuildConfig.DEBUG) {
-            exception.printStackTrace()
-        }
+
         _event.value = ProductDetailEvent.InvalidArgument
     }
 
-    private fun getProductId(): Long? = savedStateHandle[""]
+    private fun getProductId(): Long? = savedStateHandle[ExtraKey.PRODUCT_ID]
 }

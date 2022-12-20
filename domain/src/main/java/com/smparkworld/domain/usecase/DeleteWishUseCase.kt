@@ -4,9 +4,7 @@ import com.smparkworld.core_di.IoDispatcher
 import com.smparkworld.domain.repository.WishRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
 class DeleteWishUseCase @Inject constructor(
     private val wishRepository: WishRepository,
     @IoDispatcher dispatcher: CoroutineDispatcher

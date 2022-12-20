@@ -5,9 +5,7 @@ import com.smparkworld.domain.dto.ParkSectionsDTO
 import com.smparkworld.domain.repository.SectionRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
 class GetSectionsUseCase @Inject constructor(
     private val sectionRepository: SectionRepository,
     @IoDispatcher dispatcher: CoroutineDispatcher

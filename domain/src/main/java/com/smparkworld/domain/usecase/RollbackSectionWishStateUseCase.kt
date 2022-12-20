@@ -6,9 +6,7 @@ import com.smparkworld.domain.dto.action.WishClickableDTO
 import com.smparkworld.domain.repository.SectionRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
 class RollbackSectionWishStateUseCase @Inject constructor(
     private val sectionRepository: SectionRepository,
     @DefaultDispatcher dispatcher: CoroutineDispatcher
