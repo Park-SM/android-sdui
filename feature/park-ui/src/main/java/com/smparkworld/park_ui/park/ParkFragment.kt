@@ -46,7 +46,7 @@ abstract class ParkFragment<V : ViewDataBinding> : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        vm.refreshItems()
+        vm.onRefreshItems()
     }
 
     fun setRequestUrl(url: String): ParkFragment<V> {
@@ -67,7 +67,7 @@ abstract class ParkFragment<V : ViewDataBinding> : Fragment() {
 
         paginator = ScrollingViewPaginator.with(sections)
             .setOnNextPageListener {
-                vm.requestNextSections()
+                vm.onRequestNextSections()
             }
             .create()
     }

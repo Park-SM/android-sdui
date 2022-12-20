@@ -6,13 +6,13 @@ import kotlinx.coroutines.withContext
 
 interface UseCase
 
-abstract class UseCaseWithParam<in P, R>(
+abstract class UseCaseWithParam<P, R>(
     private val dispatcher: CoroutineDispatcher
 ) : UseCase {
 
     suspend operator fun invoke(parameter: P): Result<R> {
         return try {
-            withContext(dispatcher!!) {
+            withContext(dispatcher) {
                 execute(parameter).let { result ->
                     Result.Success(result)
                 }

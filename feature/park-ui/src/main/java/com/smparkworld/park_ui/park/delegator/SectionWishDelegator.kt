@@ -30,7 +30,7 @@ class SectionWishDelegator @Inject constructor(
             is Result.Success -> {
                 cacheWishState(id, isWished)
 
-                // Requested a item can have multiple items in the list, apply wish state changes.
+                // Requested a item can be multiple items in the list, apply wish state changes.
                 refreshWishItemsByLocalCache(origin)
 
                 // do anything on wish api success. e.g) Show Snackbar.. etc..

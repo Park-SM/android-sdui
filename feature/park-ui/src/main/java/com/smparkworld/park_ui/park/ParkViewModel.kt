@@ -6,6 +6,10 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.distinctUntilChanged
+import androidx.lifecycle.map
+import androidx.lifecycle.viewModelScope
 import com.smparkworld.core.ExtraKey
 import com.smparkworld.domain.dto.SectionDTO
 import com.smparkworld.park_ui.park.delegator.RedirectDefaultDelegator
@@ -25,7 +29,7 @@ internal class ParkViewModel @Inject constructor(
     sectionDefaultDelegator: SectionDefaultDelegator,
     redirectDefaultDelegator: RedirectDefaultDelegator,
     sectionWishDelegator: SectionWishDelegator
-) : com.smparkworld.park_ui.base.BaseViewModel(),
+) : ViewModel(),
     ParkEventListener,
     SectionDelegator by sectionDefaultDelegator,
     RedirectDelegator by redirectDefaultDelegator,
@@ -35,20 +39,20 @@ internal class ParkViewModel @Inject constructor(
         addSource(_sectionDelegatedItems) { value = it }
         addSource(_wishDelegatedItems) { value = it }
     }
-    val items: LiveData<List<SectionDTO>> get() = _items
-    val isEmpty: LiveData<Boolean> get() = Transformations.map(_items) { it.isNullOrEmpty() }
+    val items: LiveData<List<SectionDTO>> get() = _items.distinctUntilChanged()
+    val isEmpty: LiveData<Boolean> get() = _items.map { it.isNullOrEmpty() }
 
     init {
         initialize()
     }
 
-    fun requestNextSections() {
+    fun onRequestNextSections() {
         viewModelScope.launch {
             requestNextSections(_items.value ?: emptyList())
         }
     }
 
-    fun refreshItems() {
+    fun onRefreshItems() {
         viewModelScope.launch {
             _items.value?.let { origin ->
                 refreshWishItemsByLocalCache(origin)
