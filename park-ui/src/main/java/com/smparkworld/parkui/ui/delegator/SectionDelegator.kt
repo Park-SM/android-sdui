@@ -1,17 +1,24 @@
 package com.smparkworld.parkui.ui.delegator
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.smparkworld.domain.dto.ParkSectionsDTO
 import com.smparkworld.domain.dto.SectionDTO
 
-internal interface SectionDelegator {
+interface SectionDelegator {
 
-    val _sectionDelegatedItems: MutableLiveData<List<SectionDTO>>
+    val _itemsForDelegatedSection: MutableLiveData<List<SectionDTO>>
 
-    val nextPageTriggerPosition: LiveData<Int?>
+    val _isLoadingForDelegatedSection: MutableLiveData<Boolean>
 
-    val isLoading: LiveData<Boolean>
+    val _errorForDelegatedSection: MutableLiveData<Exception>
+
+    val _nextPageTriggerPosition: MutableLiveData<Int?>
 
     suspend fun requestSections(initRequestUri: String?)
     suspend fun requestNextSections(origin: List<SectionDTO>)
+
+    fun onSuccessRequest(data: ParkSectionsDTO) {}
+    fun onSuccessMoreRequest(data: ParkSectionsDTO) {}
+    fun onFailureRequest(exception: Exception) {}
+    fun onEmptySections() {}
 }

@@ -52,7 +52,7 @@ class ProductOneColumn2ViewHolder(
     private val itemListener = object: ProductOneColumn2ItemListener {
 
         override fun onClickItem(v: View, model: ProductSectionDTO) {
-            eventListener.onClickItem(v, SectionItemEvent.Click(model))
+            eventListener.onClickSection(v, SectionItemEvent.Click(model))
         }
 
         override fun onClickWish(v: View, model: ProductSectionDTO) {
@@ -60,7 +60,7 @@ class ProductOneColumn2ViewHolder(
                 v.isSelected = it
                 model.isWished = it
             }
-            eventListener.onClickItem(v, SectionItemEvent.WishClick(model, isSelected))
+            eventListener.onClickSection(v, SectionItemEvent.WishClick(model, isSelected))
         }
     }
 
