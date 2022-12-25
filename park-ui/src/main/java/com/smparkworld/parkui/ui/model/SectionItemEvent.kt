@@ -1,17 +1,13 @@
 package com.smparkworld.parkui.ui.model
 
-import com.smparkworld.domain.dto.action.ClickableDTO
-import com.smparkworld.domain.dto.action.LongClickableDTO
-import com.smparkworld.domain.dto.action.WishClickableDTO
-
 sealed class SectionItemEvent {
 
     data class Click(
-        val model: ClickableDTO
+        val linkUri: String
     ) : SectionItemEvent()
 
     data class LongClick(
-        val model: LongClickableDTO
+        val linkUri: String
     ) : SectionItemEvent()
 
     data class WishClick(
