@@ -5,5 +5,5 @@ import com.smparkworld.parkui.ui.model.SectionItemEvent
 
 interface ParkEventListener {
 
-    fun onClickItem(v: View, event: SectionItemEvent)
+    fun onClickSection(v: View, event: SectionItemEvent)
 }

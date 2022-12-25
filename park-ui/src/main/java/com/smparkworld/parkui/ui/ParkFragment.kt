@@ -11,9 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.smparkworld.core.ExtraKey
 import com.smparkworld.core.deeplink.AppUriHandler
-import com.smparkworld.core.extension.viewModels
-import com.smparkworld.domain.dto.SectionDTO
 import com.smparkworld.core.ui.support.pagination.ScrollingViewPaginator
+import com.smparkworld.domain.dto.SectionDTO
 import com.smparkworld.parkui.di.SectionViewBinders
 import com.smparkworld.parkui.ui.model.SectionViewBinder
 import javax.inject.Inject
@@ -21,7 +20,7 @@ import javax.inject.Inject
 private typealias ViewBinderMap = Map<String, SectionViewBinder<out SectionDTO, *>>
 private typealias ViewBinderMapInternal = Map<String, SectionViewBinder<SectionDTO, RecyclerView.ViewHolder>>
 
-abstract class ParkFragment<V : ViewDataBinding> : Fragment() {
+abstract class ParkFragment<V : ViewDataBinding, VM: ParkViewModel> : Fragment() {
 
     @Inject
     @SectionViewBinders
@@ -32,7 +31,7 @@ abstract class ParkFragment<V : ViewDataBinding> : Fragment() {
 
     private lateinit var paginator: ScrollingViewPaginator
 
-    private val vm: ParkViewModel by viewModels()
+    abstract val vm: VM
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,10 +49,10 @@ abstract class ParkFragment<V : ViewDataBinding> : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        vm.onRefreshItems()
+        vm.onRefreshSections()
     }
 
-    fun setRequestUri(uri: String): ParkFragment<V> {
+    fun setRequestUri(uri: String): ParkFragment<V, VM> {
         arguments = (arguments ?: Bundle()).apply {
             putString(ExtraKey.REQUEST_URI, uri)
         }
