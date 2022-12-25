@@ -1,6 +1,6 @@
-package com.smparkworld.domain.dto.tmp
+package com.smparkworld.domain.dto
 
-data class ProductDTO(
+data class ProductDetailDTO(
 
     var id: Long? = null,
 

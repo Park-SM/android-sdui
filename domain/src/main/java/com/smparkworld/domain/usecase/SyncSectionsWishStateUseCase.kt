@@ -12,7 +12,7 @@ import javax.inject.Inject
 // If the ID system is divided by product domain,
 // the `SectionRepository` and `WishRepository` classes can
 // be combined into one.
-class SyncSectionWishStateUseCase @Inject constructor(
+class SyncSectionsWishStateUseCase @Inject constructor(
     private val sectionRepository: SectionRepository,
     private val wishRepository: WishRepository,
     @IoDispatcher dispatcher: CoroutineDispatcher
@@ -50,7 +50,9 @@ class SyncSectionWishStateUseCase @Inject constructor(
             val newItemId = newItem.getWishTargetId()
                 ?: return newItem
 
-            newItem.setWishState(wishRepository.getCachedWishState(newItemId) ?: false)
+            wishRepository.getCachedWishState(newItemId)?.let { newWishState ->
+                newItem.setWishState(newWishState)
+            }
         }
         return newItem
     }

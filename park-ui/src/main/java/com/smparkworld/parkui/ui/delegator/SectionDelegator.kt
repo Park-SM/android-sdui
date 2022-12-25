@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.smparkworld.domain.dto.SectionDTO
 
-interface SectionDelegator {
+internal interface SectionDelegator {
 
     val _sectionDelegatedItems: MutableLiveData<List<SectionDTO>>
 

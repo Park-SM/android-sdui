@@ -1,9 +1,9 @@
 package com.smparkworld.productdetail.ui.delegator
 
 import com.smparkworld.domain.Result
-import com.smparkworld.domain.dto.tmp.ProductDTO
+import com.smparkworld.domain.dto.ProductDetailDTO
 
-interface ProductDelegator {
+internal interface ProductDelegator {
 
-    suspend fun getProductById(id: Long): Result<ProductDTO>
+    suspend fun getProductById(id: Long): Result<ProductDetailDTO>
 }

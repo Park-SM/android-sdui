@@ -1,4 +1,4 @@
-package com.smparkworld.data.mapper.section
+package com.smparkworld.data.mapper
 
 import com.smparkworld.core.extension.isAssignableFrom
 import com.smparkworld.core.mapper.Mapper

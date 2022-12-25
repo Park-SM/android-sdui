@@ -1,5 +1,6 @@
 package com.smparkworld.productdetail.ui
 
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
@@ -8,44 +9,76 @@ import androidx.lifecycle.viewModelScope
 import com.smparkworld.core.ExtraKey
 import com.smparkworld.core.SingleLiveEvent
 import com.smparkworld.domain.Result
+import com.smparkworld.domain.dto.ProductDetailDTO
 import com.smparkworld.productdetail.BuildConfig
+import com.smparkworld.productdetail.ui.delegator.ProductDefaultDelegator
 import com.smparkworld.productdetail.ui.delegator.ProductDelegator
-import com.smparkworld.productdetail.ui.delegator.ProductFakeDelegator
+import com.smparkworld.productdetail.ui.delegator.WishDefaultDelegator
+import com.smparkworld.productdetail.ui.delegator.WishDelegator
 import com.smparkworld.productdetail.ui.model.ProductDetailEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ProductDetailViewModel @Inject constructor(
+internal class ProductDetailViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    productFakeDelegator: ProductFakeDelegator
+    productDefaultDelegator: ProductDefaultDelegator,
+    wishDefaultDelegator: WishDefaultDelegator
 ) : ViewModel(),
-    ProductDelegator by productFakeDelegator {
+    ProductDetailEventListener,
+    ProductDelegator by productDefaultDelegator,
+    WishDelegator by wishDefaultDelegator {
 
     private val _imageUri = MutableLiveData<String>()
-    val imageUri: LiveData<String> get() = _imageUri
+    override val imageUri: LiveData<String> get() = _imageUri
 
-    private val _isWished = MutableLiveData<Boolean>()
-    val isWished: LiveData<Boolean> get() = _isWished
+    override val isWished: LiveData<Boolean> get() = _isWished
 
     private val _title = MutableLiveData<String>()
-    val title: LiveData<String> get() = _title
+    override val title: LiveData<String> get() = _title
 
     private val _reviewScore = MutableLiveData<String>()
-    val reviewScore: LiveData<String> get() = _reviewScore
+    override val reviewScore: LiveData<String> get() = _reviewScore
 
     private val _price = MutableLiveData<String>()
-    val price: LiveData<String> get() = _price
+    override val price: LiveData<String> get() = _price
 
     private val _category = MutableLiveData<String>()
-    val category: LiveData<String> get() = _category
+    override val category: LiveData<String> get() = _category
 
     private val _event = SingleLiveEvent<ProductDetailEvent>()
-    val event: LiveData<ProductDetailEvent> get() = _event
+    override val event: LiveData<ProductDetailEvent> get() = _event
 
     init {
         requestProduct()
+    }
+
+    fun onRefreshItem() {
+
+        viewModelScope.launch {
+
+            val productId = getProductId()
+            if (productId != null) {
+                refreshWishStateByLocalCache(productId)
+            } else {
+                _event.value = ProductDetailEvent.InvalidArgument
+            }
+        }
+    }
+
+    override fun onClickWish(v: View) {
+
+        viewModelScope.launch {
+
+            val productId = getProductId()
+            if (productId != null) {
+                v.isSelected = !v.isSelected
+                requestWishState(productId, v.isSelected)
+            } else {
+                _event.value = ProductDetailEvent.InvalidArgument
+            }
+        }
     }
 
     private fun requestProduct() {
@@ -69,7 +102,7 @@ class ProductDetailViewModel @Inject constructor(
         }
     }
 
-    private fun onSuccessGetProduct(model: com.smparkworld.domain.dto.tmp.ProductDTO) {
+    private fun onSuccessGetProduct(model: ProductDetailDTO) {
         _imageUri.value = model.imageUri ?: ""
         _isWished.value = model.isWished ?: false
         _title.value = model.title ?: ""

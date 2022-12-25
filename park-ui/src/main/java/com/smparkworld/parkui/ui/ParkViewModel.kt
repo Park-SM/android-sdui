@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-internal class ParkViewModel @Inject constructor(
+open class ParkViewModel @Inject constructor(
     private val stateHandle: SavedStateHandle,
     sectionDefaultDelegator: SectionDefaultDelegator,
     redirectDefaultDelegator: RedirectDefaultDelegator,
@@ -54,8 +54,8 @@ internal class ParkViewModel @Inject constructor(
         viewModelScope.launch {
             _items.value?.let { origin ->
                 refreshWishItemsByLocalCache(origin)
+                // add partial update logics
             }
-            // add partial update logics
         }
     }
 

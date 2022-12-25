@@ -10,7 +10,7 @@ interface WishRemoteDataSource {
     suspend fun deleteWish(id: Long): Boolean
 }
 
-class WishRemoteDataSourceFakeImpl @Inject constructor(
+class FakeWishRemoteDataSourceImpl @Inject constructor(
 
 ) : WishRemoteDataSource {
 
