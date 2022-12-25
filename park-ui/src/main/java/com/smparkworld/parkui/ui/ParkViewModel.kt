@@ -87,7 +87,7 @@ abstract class ParkViewModel(
             }
             is SectionItemEvent.WishClick -> {
                 val origin = _items.value ?: return
-                val id = event.model.getWishTargetId() ?: return
+                val id = event.id
                 val isWished = event.isWished
 
                 viewModelScope.launch {
