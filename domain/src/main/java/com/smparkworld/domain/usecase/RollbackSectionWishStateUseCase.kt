@@ -1,6 +1,6 @@
 package com.smparkworld.domain.usecase
 
-import com.smparkworld.core_di.DefaultDispatcher
+import com.smparkworld.coredi.DefaultDispatcher
 import com.smparkworld.domain.dto.SectionDTO
 import com.smparkworld.domain.dto.action.WishClickableDTO
 import com.smparkworld.domain.repository.SectionRepository

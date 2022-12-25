@@ -1,10 +1,10 @@
 package com.smparkworld.core.di
 
-import com.smparkworld.core_di.ApplicationScope
-import com.smparkworld.core_di.DefaultDispatcher
-import com.smparkworld.core_di.IoDispatcher
-import com.smparkworld.core_di.MainDispatcher
-import com.smparkworld.core_di.MainImmediateDispatcher
+import com.smparkworld.coredi.ApplicationScope
+import com.smparkworld.coredi.DefaultDispatcher
+import com.smparkworld.coredi.IoDispatcher
+import com.smparkworld.coredi.MainDispatcher
+import com.smparkworld.coredi.MainImmediateDispatcher
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

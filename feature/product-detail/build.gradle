@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace 'com.smparkworld.product_detail'
+    namespace 'com.smparkworld.productdetail'
     compileSdk 32
 
     defaultConfig {
