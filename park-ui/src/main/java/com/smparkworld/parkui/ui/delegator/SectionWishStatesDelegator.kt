@@ -39,6 +39,8 @@ class SectionWishStatesDelegator @Inject constructor(
                 // do anything on wish api success. e.g) Show Snackbar.. etc..
             }
             is Result.Error -> {
+                cacheWishState(id, !isWished)
+
                 rollbackWishState(origin, id, isWished)
                 // do anything on wish api failure. e.g) Show Snackbar.. etc..
             }

@@ -15,7 +15,7 @@ sealed class SectionItemEvent {
     ) : SectionItemEvent()
 
     data class WishClick(
-        val model: WishClickableDTO,
+        val id: Long,
         val isWished: Boolean
     ) : SectionItemEvent()
 }
