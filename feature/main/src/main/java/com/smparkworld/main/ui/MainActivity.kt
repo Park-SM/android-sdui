@@ -1,8 +1,9 @@
-package com.smparkworld.main
+package com.smparkworld.main.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.smparkworld.main.R
 import com.smparkworld.main.databinding.ActivityMainBinding
 import com.smparkworld.main.ui.productlist.ProductListFragment
 import dagger.hilt.android.AndroidEntryPoint

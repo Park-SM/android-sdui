@@ -9,6 +9,8 @@ object ExtraKey {
 
 object DeeplinkHost {
 
+    const val MAIN = "/main"
+
     const val PRODUCT_DETAIL = "/product/detail"
 }
 
