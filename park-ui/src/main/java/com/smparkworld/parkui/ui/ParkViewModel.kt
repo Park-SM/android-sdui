@@ -76,14 +76,10 @@ abstract class ParkViewModel(
     override fun onClickSection(v: View, event: SectionItemEvent) {
         when (event) {
             is SectionItemEvent.Click -> {
-                val linkUri = event.model.getRedirectUri() ?: return
-
-                redirectToUri(linkUri)
+                redirectToUri(event.linkUri)
             }
             is SectionItemEvent.LongClick -> {
-                val linkUri = event.model.getRedirectUri() ?: return
-
-                redirectToUri(linkUri)
+                redirectToUri(event.linkUri)
             }
             is SectionItemEvent.WishClick -> {
                 val origin = _items.value ?: return

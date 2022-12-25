@@ -52,7 +52,8 @@ class ProductOneColumnViewHolder(
     private val itemListener = object: ProductOneColumnItemListener {
 
         override fun onClickItem(v: View, model: ProductSectionDTO) {
-            eventListener.onClickSection(v, SectionItemEvent.Click(model))
+            val linkUri = model.getRedirectUri() ?: return
+            eventListener.onClickSection(v, SectionItemEvent.Click(linkUri))
         }
 
         override fun onClickWish(v: View, model: ProductSectionDTO) {
