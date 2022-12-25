@@ -2,7 +2,7 @@ package com.smparkworld.domain.dto
 
 data class ParkSectionsDTO(
 
-    var requestUrl: ParkRequestUrlDTO? = null,
+    var requestUri: ParkRequestUriDTO? = null,
 
     var sections: List<SectionDTO>
 )

@@ -19,8 +19,8 @@ import kotlin.math.roundToInt
 object BindingAdapters {
 
     @JvmStatic
-    @BindingAdapter("imageUrl", "roundCorner", requireAll = false)
-    fun ImageView.loadImage(url: String?, @Dimension roundCorner: Float?) {
+    @BindingAdapter("imageUri", "roundCorner", requireAll = false)
+    fun ImageView.loadImage(uri: String?, @Dimension roundCorner: Float?) {
 
         val options = RequestOptions()
             .skipMemoryCache(false)
@@ -38,7 +38,7 @@ object BindingAdapters {
         }
 
         Glide.with(this)
-            .load(url)
+            .load(uri)
             .apply(options)
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(this)

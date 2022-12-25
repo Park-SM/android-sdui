@@ -13,8 +13,8 @@ class SectionRepositoryImpl @Inject constructor(
     private val mapperManager: MapperManager
 ) : SectionRepository {
 
-    override suspend fun requestSections(url: String): ParkSectionsDTO {
-        return remoteDataSource.requestSections(url).let { vo ->
+    override suspend fun requestSections(uri: String): ParkSectionsDTO {
+        return remoteDataSource.requestSections(uri).let { vo ->
             mapperManager.map(vo)
         }
     }

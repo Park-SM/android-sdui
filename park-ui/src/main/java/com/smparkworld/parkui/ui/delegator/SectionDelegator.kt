@@ -12,6 +12,6 @@ interface SectionDelegator {
 
     val isLoading: LiveData<Boolean>
 
-    suspend fun requestSections(initRequestUrl: String?)
+    suspend fun requestSections(initRequestUri: String?)
     suspend fun requestNextSections(origin: List<SectionDTO>)
 }

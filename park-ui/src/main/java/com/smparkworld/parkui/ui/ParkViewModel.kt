@@ -6,7 +6,6 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.distinctUntilChanged
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.smparkworld.core.ExtraKey
@@ -38,7 +37,7 @@ internal class ParkViewModel @Inject constructor(
         addSource(_sectionDelegatedItems) { value = it }
         addSource(_wishDelegatedItems) { value = it }
     }
-    val items: LiveData<List<SectionDTO>> get() = _items.distinctUntilChanged()
+    val items: LiveData<List<SectionDTO>> get() = _items
     val isEmpty: LiveData<Boolean> get() = _items.map { it.isNullOrEmpty() }
 
     init {
@@ -63,14 +62,14 @@ internal class ParkViewModel @Inject constructor(
     override fun onClickItem(v: View, event: SectionItemEvent) {
         when (event) {
             is SectionItemEvent.Click -> {
-                val linkUrl = event.model.getRedirectUrl() ?: return
+                val linkUri = event.model.getRedirectUri() ?: return
 
-                redirectToUrl(linkUrl)
+                redirectToUri(linkUri)
             }
             is SectionItemEvent.LongClick -> {
-                val linkUrl = event.model.getRedirectUrl() ?: return
+                val linkUri = event.model.getRedirectUri() ?: return
 
-                redirectToUrl(linkUrl)
+                redirectToUri(linkUri)
             }
             is SectionItemEvent.WishClick -> {
                 val origin = _items.value ?: return
@@ -85,8 +84,8 @@ internal class ParkViewModel @Inject constructor(
     }
 
     private fun initialize() = viewModelScope.launch {
-        requestSections(getRequestUrl())
+        requestSections(getRequestUri())
     }
 
-    private fun getRequestUrl() = stateHandle.get<String>(ExtraKey.REQUEST_URL)
+    private fun getRequestUri() = stateHandle.get<String>(ExtraKey.REQUEST_URI)
 }

@@ -4,7 +4,7 @@ data class ProductDTO(
 
     var id: Long? = null,
 
-    var imageUrl: String? = null,
+    var imageUri: String? = null,
 
     var title: String? = null,
 

@@ -11,7 +11,7 @@ data class ProductSectionDTO(
 
     var id: Long? = null,
 
-    var imageUrl: String? = null,
+    var imageUri: String? = null,
 
     var title: String? = null,
 
@@ -21,7 +21,7 @@ data class ProductSectionDTO(
 
     var price: String? = null,
 
-    var linkUrl: String? = null,
+    var linkUri: String? = null,
 
     var isWished: Boolean? = null,
 
@@ -29,8 +29,8 @@ data class ProductSectionDTO(
     ClickableDTO,
     WishClickableDTO {
 
-    override fun getRedirectUrl(): String? {
-        return linkUrl
+    override fun getRedirectUri(): String? {
+        return linkUri
     }
 
     override fun getWishTargetId(): Long? {

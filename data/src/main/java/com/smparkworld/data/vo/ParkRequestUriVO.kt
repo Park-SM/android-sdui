@@ -5,10 +5,10 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class ParkRequestUrlVO(
+data class ParkRequestUriVO(
 
-    @SerializedName("nextPageUrl")
-    val nextPageUrl: String? = null,
+    @SerializedName("nextPageUri")
+    val nextPageUri: String? = null,
 
     @SerializedName("nextPageTriggerPosition")
     val nextPageTriggerPosition: Int? = null

@@ -12,19 +12,41 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingHorizontal="12dp"
-        android:paddingTop="4dp"
         android:paddingBottom="24dp">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="0dp"
+            android:layout_height="?actionBarSize"
+            android:background="@color/white"
+            android:elevation="3dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|start"
+                android:paddingStart="13dp"
+                android:text="@string/product_detail_label_toolbar_title"
+                android:textColor="@color/black"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+
+        </com.google.android.material.appbar.AppBarLayout>
 
         <ImageView
             android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="12dp"
             android:scaleType="centerCrop"
-            app:imageUrl="@{vm.imageUrl}"
+            app:imageUri="@{vm.imageUri}"
             app:roundCorner="@{@dimen/corner_radius_20}"
             app:layout_constraintDimensionRatio="4:3"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appBarLayout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -33,7 +55,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_margin="10dp"
-            android:background="@drawable/selector_wish_icon"
+            android:background="@drawable/product_detail_selector_wish_icon"
             android:selected="@{vm.isWished == true}"
             app:layout_constraintEnd_toEndOf="@id/image"
             app:layout_constraintTop_toTopOf="@id/image" />
@@ -43,6 +65,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:layout_marginStart="12dp"
             android:ellipsize="end"
             android:maxLines="2"
             android:text="@{vm.title}"
@@ -57,7 +80,7 @@
             android:id="@+id/review_icon"
             android:layout_width="17dp"
             android:layout_height="17dp"
-            android:src="@drawable/ic_baseline_star_24"
+            android:src="@drawable/product_detail_ic_baseline_star_24"
             app:layout_constraintEnd_toStartOf="@+id/review_score"
             app:layout_constraintTop_toTopOf="@+id/title" />
 
@@ -65,6 +88,7 @@
             android:id="@+id/review_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
             android:text="@{vm.reviewScore}"
             android:textSize="14dp"
             android:textColor="@color/black"
@@ -78,6 +102,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginStart="12dp"
             android:text="@{vm.price}"
             android:textSize="15dp"
             android:textColor="@color/black"
@@ -89,6 +114,7 @@
             android:id="@+id/category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
             android:text="@{vm.category}"
             android:textSize="13dp"
             android:textColor="@color/gray"

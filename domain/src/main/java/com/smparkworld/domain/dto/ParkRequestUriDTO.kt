@@ -1,8 +1,8 @@
 package com.smparkworld.domain.dto
 
-data class ParkRequestUrlDTO(
+data class ParkRequestUriDTO(
 
-    var nextPageUrl: String? = null,
+    var nextPageUri: String? = null,
 
     var nextPageTriggerPosition: Int? = null
 )

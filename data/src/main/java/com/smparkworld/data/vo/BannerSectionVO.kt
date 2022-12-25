@@ -22,10 +22,10 @@ data class BannerSectionVO(
     @SerializedName("message")
     val message: String? = null,
 
-    @SerializedName("imageUrl")
-    val imageUrl: String? = null,
+    @SerializedName("imageUri")
+    val imageUri: String? = null,
 
-    @SerializedName("linkUrl")
-    val linkUrl: String? = null
+    @SerializedName("linkUri")
+    val linkUri: String? = null
 
 ) : SectionVO, Parcelable

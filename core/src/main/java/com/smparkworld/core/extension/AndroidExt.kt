@@ -1,5 +1,6 @@
 package com.smparkworld.core.extension
 
+import android.net.Uri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -48,3 +49,6 @@ class ViewModelLazy<VM : ViewModel>(
 
     override fun isInitialized(): Boolean = (cached != null)
 }
+
+val Uri.hostAndPath: String
+    get() = "/${host}${path}"

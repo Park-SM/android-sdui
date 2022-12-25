@@ -22,9 +22,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun initViews() {
 
-        val url = "/products"
+        val uri = "/products"
 
-        val fragment = ProductListFragment().setRequestUrl(url)
+        val fragment = ProductListFragment().setRequestUri(uri)
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.container, fragment)

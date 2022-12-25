@@ -8,8 +8,8 @@ import kotlinx.parcelize.RawValue
 @Parcelize
 data class ParkSectionsVO(
 
-    @SerializedName("requestUrl")
-    val requestUrl: ParkRequestUrlVO? = null,
+    @SerializedName("requestUri")
+    val requestUri: ParkRequestUriVO? = null,
 
     @SerializedName("sections")
     val sections: List<@RawValue SectionVO>? = null,
