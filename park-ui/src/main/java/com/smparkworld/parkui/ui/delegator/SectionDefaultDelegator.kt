@@ -18,8 +18,8 @@ class SectionDefaultDelegator @Inject constructor(
     private val _isLoading = MutableLiveData<Boolean>()
     override val isLoading: LiveData<Boolean> get() = _isLoading
 
-    private val _nextPageTriggerPosition = MutableLiveData<Int>()
-    override val nextPageTriggerPosition: LiveData<Int> get() = _nextPageTriggerPosition
+    private val _nextPageTriggerPosition = MutableLiveData<Int?>()
+    override val nextPageTriggerPosition: LiveData<Int?> get() = _nextPageTriggerPosition
 
     private var nextRequestUri: String? = null
 
@@ -64,18 +64,14 @@ class SectionDefaultDelegator @Inject constructor(
     private fun onSuccessGetSections(data: ParkSectionsDTO) {
         nextRequestUri = data.requestUri?.nextPageUri
 
-        data.requestUri?.nextPageTriggerPosition?.let { position ->
-            _nextPageTriggerPosition.value = position
-        }
+        _nextPageTriggerPosition.value = data.requestUri?.nextPageTriggerPosition
         _sectionDelegatedItems.value = data.sections
     }
 
     private fun onSuccessGetMoreSections(origin: List<SectionDTO>, data: ParkSectionsDTO) {
         nextRequestUri = data.requestUri?.nextPageUri
 
-        data.requestUri?.nextPageTriggerPosition?.let { position ->
-            _nextPageTriggerPosition.value = position
-        }
+        _nextPageTriggerPosition.value = data.requestUri?.nextPageTriggerPosition
         _sectionDelegatedItems.value = origin.toMutableList().also { currentItems ->
             currentItems.addAll(data.sections)
         }

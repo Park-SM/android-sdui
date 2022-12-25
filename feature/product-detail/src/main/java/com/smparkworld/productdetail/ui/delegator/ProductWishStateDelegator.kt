@@ -1,6 +1,7 @@
 package com.smparkworld.productdetail.ui.delegator
 
 import androidx.lifecycle.MutableLiveData
+import com.smparkworld.core.ui.delegator.WishStateDelegator
 import com.smparkworld.domain.Result
 import com.smparkworld.domain.usecase.CacheWishUseCase
 import com.smparkworld.domain.usecase.CreateWishUseCase
@@ -8,12 +9,12 @@ import com.smparkworld.domain.usecase.DeleteWishUseCase
 import com.smparkworld.domain.usecase.SyncProductWishStateUseCase
 import javax.inject.Inject
 
-class WishDefaultDelegator @Inject constructor(
+internal class ProductWishStateDelegator @Inject constructor(
     private val createWishUseCase: CreateWishUseCase,
     private val deleteWishUseCase: DeleteWishUseCase,
     private val cacheWishUseCase: CacheWishUseCase,
     private val syncProductWishStateUseCase: SyncProductWishStateUseCase
-) : WishDelegator {
+) : WishStateDelegator {
 
     override val _isWished = MutableLiveData<Boolean>()
 

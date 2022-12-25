@@ -1,8 +1,8 @@
-package com.smparkworld.productdetail.ui.delegator
+package com.smparkworld.core.ui.delegator
 
 import androidx.lifecycle.MutableLiveData
 
-interface WishDelegator {
+interface WishStateDelegator {
 
     val _isWished: MutableLiveData<Boolean>
 

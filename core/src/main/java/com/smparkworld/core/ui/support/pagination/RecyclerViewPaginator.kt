@@ -1,4 +1,4 @@
-package com.smparkworld.parkui.common.pagination
+package com.smparkworld.core.ui.support.pagination
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -46,7 +46,7 @@ class RecyclerViewPaginator private constructor(
         private var nextPageTriggerPosition: Int? = null
         private var onNextPageListener: ((Int) -> Unit)? = null
 
-        override fun setNextPageTriggerPosition(position: Int): ScrollingViewPaginator.Builder {
+        override fun setNextPageTriggerPosition(position: Int?): ScrollingViewPaginator.Builder {
             nextPageTriggerPosition = position
             return this
         }

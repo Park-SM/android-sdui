@@ -14,8 +14,8 @@ import com.smparkworld.parkui.ui.delegator.RedirectDefaultDelegator
 import com.smparkworld.parkui.ui.delegator.RedirectDelegator
 import com.smparkworld.parkui.ui.delegator.SectionDefaultDelegator
 import com.smparkworld.parkui.ui.delegator.SectionDelegator
-import com.smparkworld.parkui.ui.delegator.SectionWishDelegator
-import com.smparkworld.parkui.ui.delegator.WishDelegator
+import com.smparkworld.parkui.ui.delegator.SectionWishStatesDelegator
+import com.smparkworld.core.ui.delegator.WishStatesDelegator
 import com.smparkworld.parkui.ui.model.SectionItemEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -26,12 +26,12 @@ open class ParkViewModel @Inject constructor(
     private val stateHandle: SavedStateHandle,
     sectionDefaultDelegator: SectionDefaultDelegator,
     redirectDefaultDelegator: RedirectDefaultDelegator,
-    sectionWishDelegator: SectionWishDelegator
+    sectionWishDelegator: SectionWishStatesDelegator
 ) : ViewModel(),
     ParkEventListener,
     SectionDelegator by sectionDefaultDelegator,
     RedirectDelegator by redirectDefaultDelegator,
-    WishDelegator<SectionDTO> by sectionWishDelegator {
+    WishStatesDelegator<SectionDTO> by sectionWishDelegator {
 
     private val _items: MutableLiveData<List<SectionDTO>> = MediatorLiveData<List<SectionDTO>>().apply {
         addSource(_sectionDelegatedItems) { value = it }

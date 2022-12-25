@@ -13,7 +13,7 @@ import com.smparkworld.core.ExtraKey
 import com.smparkworld.core.deeplink.AppUriHandler
 import com.smparkworld.core.extension.viewModels
 import com.smparkworld.domain.dto.SectionDTO
-import com.smparkworld.parkui.common.pagination.ScrollingViewPaginator
+import com.smparkworld.core.ui.support.pagination.ScrollingViewPaginator
 import com.smparkworld.parkui.di.SectionViewBinders
 import com.smparkworld.parkui.ui.model.SectionViewBinder
 import javax.inject.Inject
