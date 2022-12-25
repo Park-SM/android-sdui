@@ -1,6 +1,7 @@
 package com.smparkworld.parkui.ui.delegator
 
 import androidx.lifecycle.MutableLiveData
+import com.smparkworld.core.ui.delegator.WishStatesDelegator
 import com.smparkworld.domain.Result
 import com.smparkworld.domain.dto.SectionDTO
 import com.smparkworld.domain.usecase.CacheWishUseCase
@@ -10,13 +11,13 @@ import com.smparkworld.domain.usecase.RollbackSectionWishStateUseCase
 import com.smparkworld.domain.usecase.SyncSectionsWishStateUseCase
 import javax.inject.Inject
 
-class SectionWishDelegator @Inject constructor(
+class SectionWishStatesDelegator @Inject constructor(
     private val createWishUseCase: CreateWishUseCase,
     private val deleteWishUseCase: DeleteWishUseCase,
     private val rollbackSectionWishStateUseCase: RollbackSectionWishStateUseCase,
     private val cacheWishUseCase: CacheWishUseCase,
     private val syncSectionsWishStateUseCase: SyncSectionsWishStateUseCase
-) : WishDelegator<SectionDTO> {
+) : WishStatesDelegator<SectionDTO> {
 
     override val _wishDelegatedItems = MutableLiveData<List<SectionDTO>>()
 

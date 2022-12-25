@@ -13,8 +13,8 @@ import com.smparkworld.domain.dto.ProductDetailDTO
 import com.smparkworld.productdetail.BuildConfig
 import com.smparkworld.productdetail.ui.delegator.ProductDefaultDelegator
 import com.smparkworld.productdetail.ui.delegator.ProductDelegator
-import com.smparkworld.productdetail.ui.delegator.WishDefaultDelegator
-import com.smparkworld.productdetail.ui.delegator.WishDelegator
+import com.smparkworld.productdetail.ui.delegator.ProductWishStateDelegator
+import com.smparkworld.core.ui.delegator.WishStateDelegator
 import com.smparkworld.productdetail.ui.model.ProductDetailEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -24,11 +24,11 @@ import javax.inject.Inject
 internal class ProductDetailViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     productDefaultDelegator: ProductDefaultDelegator,
-    wishDefaultDelegator: WishDefaultDelegator
+    wishDefaultDelegator: ProductWishStateDelegator
 ) : ViewModel(),
     ProductDetailEventListener,
     ProductDelegator by productDefaultDelegator,
-    WishDelegator by wishDefaultDelegator {
+    WishStateDelegator by wishDefaultDelegator {
 
     private val _imageUri = MutableLiveData<String>()
     override val imageUri: LiveData<String> get() = _imageUri

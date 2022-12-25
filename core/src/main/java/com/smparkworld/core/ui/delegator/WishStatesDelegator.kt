@@ -1,8 +1,8 @@
-package com.smparkworld.parkui.ui.delegator
+package com.smparkworld.core.ui.delegator
 
 import androidx.lifecycle.MutableLiveData
 
-internal interface WishDelegator<T> {
+interface WishStatesDelegator<T> {
 
     val _wishDelegatedItems: MutableLiveData<List<T>>
 

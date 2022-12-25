@@ -8,7 +8,7 @@ internal interface SectionDelegator {
 
     val _sectionDelegatedItems: MutableLiveData<List<SectionDTO>>
 
-    val nextPageTriggerPosition: LiveData<Int>
+    val nextPageTriggerPosition: LiveData<Int?>
 
     val isLoading: LiveData<Boolean>
 
