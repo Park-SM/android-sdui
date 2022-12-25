@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.smparkworld.core.ExtraKey
 import com.smparkworld.core.SingleLiveEvent
 import com.smparkworld.domain.Result
+import com.smparkworld.productdetail.BuildConfig
 import com.smparkworld.productdetail.ui.delegator.ProductDelegator
 import com.smparkworld.productdetail.ui.delegator.ProductFakeDelegator
 import com.smparkworld.productdetail.ui.model.ProductDetailEvent
@@ -22,8 +23,8 @@ class ProductDetailViewModel @Inject constructor(
 ) : ViewModel(),
     ProductDelegator by productFakeDelegator {
 
-    private val _imageUrl = MutableLiveData<String>()
-    val imageUrl: LiveData<String> get() = _imageUrl
+    private val _imageUri = MutableLiveData<String>()
+    val imageUri: LiveData<String> get() = _imageUri
 
     private val _isWished = MutableLiveData<Boolean>()
     val isWished: LiveData<Boolean> get() = _isWished
@@ -69,7 +70,7 @@ class ProductDetailViewModel @Inject constructor(
     }
 
     private fun onSuccessGetProduct(model: com.smparkworld.domain.dto.tmp.ProductDTO) {
-        _imageUrl.value = model.imageUrl ?: ""
+        _imageUri.value = model.imageUri ?: ""
         _isWished.value = model.isWished ?: false
         _title.value = model.title ?: ""
         _reviewScore.value = model.reviewScore ?: ""
@@ -78,6 +79,7 @@ class ProductDetailViewModel @Inject constructor(
     }
 
     private fun onFailureGetProduct(exception: Exception) {
+        if (BuildConfig.DEBUG) exception.printStackTrace()
 
         _event.value = ProductDetailEvent.InvalidArgument
     }

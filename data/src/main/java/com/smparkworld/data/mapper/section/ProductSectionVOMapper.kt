@@ -16,13 +16,13 @@ class ProductSectionVOMapper @Inject constructor(
             sectionType = from.sectionType,
             viewType = from.viewType,
             id = from.id,
-            imageUrl = from.imageUrl,
+            imageUri = from.imageUri,
             title = from.title,
             category = from.category,
             reviewScore = from.reviewScore,
             price = from.price,
             isWished = from.isWished,
-            linkUrl = from.linkUrl
+            linkUri = from.linkUri
         )
     }
 

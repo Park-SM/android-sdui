@@ -1,6 +1,11 @@
 package com.smparkworld.parkui.ui.delegator
 
+import android.net.Uri
+import androidx.lifecycle.LiveData
+
 interface RedirectDelegator {
 
-    fun redirectToUrl(linkUrl: String)
+    val redirectUri: LiveData<Uri>
+
+    fun redirectToUri(linkUri: String)
 }

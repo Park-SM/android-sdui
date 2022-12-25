@@ -23,7 +23,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center|start"
                 android:paddingStart="13dp"
-                android:text="@string/label_main_title"
+                android:text="@string/main_label_main_title"
                 android:textColor="@color/black"
                 android:textSize="17dp"
                 android:textStyle="bold" />

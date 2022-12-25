@@ -2,7 +2,16 @@ package com.smparkworld.core
 
 object ExtraKey {
 
-    const val REQUEST_URL = "request_url"
+    const val REQUEST_URI = "request_uri"
 
+    const val PRODUCT_ID = "product_id"
+}
+
+object DeeplinkHost {
+
+    const val PRODUCT_DETAIL = "/product/detail"
+}
+
+object QueryParamKey {
     const val PRODUCT_ID = "product_id"
 }

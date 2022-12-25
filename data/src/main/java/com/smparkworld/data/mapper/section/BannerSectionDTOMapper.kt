@@ -18,8 +18,8 @@ class BannerSectionDTOMapper @Inject constructor(
             id = from.id,
             title = from.title,
             message = from.message,
-            imageUrl = from.imageUrl,
-            linkUrl = from.linkUrl
+            imageUri = from.imageUri,
+            linkUri = from.linkUri
         )
     }
 

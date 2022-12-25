@@ -14,14 +14,14 @@ data class BannerSectionDTO(
 
     var message: String? = null,
 
-    var imageUrl: String? = null,
+    var imageUri: String? = null,
 
-    var linkUrl: String? = null,
+    var linkUri: String? = null,
 
 ) : SectionDTO,
     ClickableDTO {
 
-    override fun getRedirectUrl(): String? {
-        return linkUrl
+    override fun getRedirectUri(): String? {
+        return linkUri
     }
 }

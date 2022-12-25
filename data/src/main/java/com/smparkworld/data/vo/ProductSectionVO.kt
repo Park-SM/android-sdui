@@ -16,8 +16,8 @@ data class ProductSectionVO(
     @SerializedName("id")
     val id: Long? = null,
 
-    @SerializedName("imageUrl")
-    val imageUrl: String? = null,
+    @SerializedName("imageUri")
+    val imageUri: String? = null,
 
     @SerializedName("title")
     val title: String? = null,
@@ -34,7 +34,7 @@ data class ProductSectionVO(
     @SerializedName("isWished")
     val isWished: Boolean? = null,
 
-    @SerializedName("linkUrl")
-    val linkUrl: String? = null
+    @SerializedName("linkUri")
+    val linkUri: String? = null
 
 ) : SectionVO, Parcelable

@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.smparkworld.core.ExtraKey
+import com.smparkworld.core.deeplink.AppUriHandler
 import com.smparkworld.core.extension.viewModels
 import com.smparkworld.domain.dto.SectionDTO
 import com.smparkworld.parkui.common.pagination.ScrollingViewPaginator
@@ -25,6 +26,9 @@ abstract class ParkFragment<V : ViewDataBinding> : Fragment() {
     @Inject
     @SectionViewBinders
     lateinit var viewBinders: @JvmSuppressWildcards ViewBinderMap
+
+    @Inject
+    lateinit var appUriHandler: AppUriHandler
 
     private lateinit var paginator: ScrollingViewPaginator
 
@@ -49,9 +53,9 @@ abstract class ParkFragment<V : ViewDataBinding> : Fragment() {
         vm.onRefreshItems()
     }
 
-    fun setRequestUrl(url: String): ParkFragment<V> {
+    fun setRequestUri(uri: String): ParkFragment<V> {
         arguments = (arguments ?: Bundle()).apply {
-            putString(ExtraKey.REQUEST_URL, url)
+            putString(ExtraKey.REQUEST_URI, uri)
         }
         return this
     }
@@ -78,6 +82,9 @@ abstract class ParkFragment<V : ViewDataBinding> : Fragment() {
         }
         vm.nextPageTriggerPosition.observe(viewLifecycleOwner) { position ->
             paginator.setNextPageTriggerPosition(position)
+        }
+        vm.redirectUri.observe(viewLifecycleOwner) { redirectUri ->
+            appUriHandler.handle(requireActivity(), redirectUri)
         }
     }
 

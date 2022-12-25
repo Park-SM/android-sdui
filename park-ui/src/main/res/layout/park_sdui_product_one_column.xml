@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:scaleType="centerCrop"
-            app:imageUrl="@{model.imageUrl}"
+            app:imageUri="@{model.imageUri}"
             app:roundCorner="@{@dimen/corner_radius_20}"
             app:layout_constraintDimensionRatio="4:3"
             app:layout_constraintTop_toTopOf="parent"
@@ -39,7 +39,7 @@
             android:layout_height="30dp"
             android:layout_margin="10dp"
             android:onClick="@{(v) -> listener.onClickWish(v, model)}"
-            android:background="@drawable/selector_wish_icon"
+            android:background="@drawable/park_ui_selector_wish_icon"
             android:selected="@{model.isWished == true}"
             app:isVisible="@{model.isWished != null}"
             app:layout_constraintEnd_toEndOf="@id/image"
@@ -64,7 +64,7 @@
             android:id="@+id/review_icon"
             android:layout_width="17dp"
             android:layout_height="17dp"
-            android:src="@drawable/ic_baseline_star_24"
+            android:src="@drawable/park_ui_ic_baseline_star_24"
             app:layout_constraintEnd_toStartOf="@+id/review_score"
             app:layout_constraintTop_toTopOf="@+id/title" />
 

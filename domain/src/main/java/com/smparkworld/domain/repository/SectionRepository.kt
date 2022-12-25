@@ -5,7 +5,7 @@ import com.smparkworld.domain.dto.SectionDTO
 
 interface SectionRepository {
 
-    suspend fun requestSections(url: String): ParkSectionsDTO
+    suspend fun requestSections(uri: String): ParkSectionsDTO
 
     suspend fun cloneSection(section: SectionDTO): SectionDTO
 }

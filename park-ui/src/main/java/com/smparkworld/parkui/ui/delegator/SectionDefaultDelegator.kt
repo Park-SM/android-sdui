@@ -2,6 +2,7 @@ package com.smparkworld.parkui.ui.delegator
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.smparkworld.core.BuildConfig
 import com.smparkworld.domain.Result
 import com.smparkworld.domain.dto.ParkSectionsDTO
 import com.smparkworld.domain.dto.SectionDTO
@@ -20,13 +21,13 @@ class SectionDefaultDelegator @Inject constructor(
     private val _nextPageTriggerPosition = MutableLiveData<Int>()
     override val nextPageTriggerPosition: LiveData<Int> get() = _nextPageTriggerPosition
 
-    private var nextRequestUrl: String? = null
+    private var nextRequestUri: String? = null
 
-    override suspend fun requestSections(initRequestUrl: String?) {
+    override suspend fun requestSections(initRequestUri: String?) {
         _isLoading.value = true
 
-        if (initRequestUrl != null) {
-            when (val result = getSectionsUseCase(initRequestUrl)) {
+        if (initRequestUri != null) {
+            when (val result = getSectionsUseCase(initRequestUri)) {
                 is Result.Success -> {
                     onSuccessGetSections(result.data)
                 }
@@ -35,7 +36,7 @@ class SectionDefaultDelegator @Inject constructor(
                 }
             }
         } else {
-            onEmptyRequestUrl()
+            onEmptyRequestUri()
         }
 
         _isLoading.value = false
@@ -45,10 +46,10 @@ class SectionDefaultDelegator @Inject constructor(
         if (_isLoading.value == true) return
         _isLoading.value = true
 
-        val requestUrl = nextRequestUrl
-        if (requestUrl != null) {
+        val requestUri = nextRequestUri
+        if (requestUri != null) {
 
-            when (val result = getSectionsUseCase(requestUrl)) {
+            when (val result = getSectionsUseCase(requestUri)) {
                 is Result.Success -> {
                     onSuccessGetMoreSections(origin, result.data)
                 }
@@ -61,16 +62,20 @@ class SectionDefaultDelegator @Inject constructor(
     }
 
     private fun onSuccessGetSections(data: ParkSectionsDTO) {
-        nextRequestUrl = data.requestUrl?.nextPageUrl
+        nextRequestUri = data.requestUri?.nextPageUri
 
-        _nextPageTriggerPosition.value = data.requestUrl?.nextPageTriggerPosition
+        data.requestUri?.nextPageTriggerPosition?.let { position ->
+            _nextPageTriggerPosition.value = position
+        }
         _sectionDelegatedItems.value = data.sections
     }
 
     private fun onSuccessGetMoreSections(origin: List<SectionDTO>, data: ParkSectionsDTO) {
-        nextRequestUrl = data.requestUrl?.nextPageUrl
+        nextRequestUri = data.requestUri?.nextPageUri
 
-        _nextPageTriggerPosition.value = data.requestUrl?.nextPageTriggerPosition
+        data.requestUri?.nextPageTriggerPosition?.let { position ->
+            _nextPageTriggerPosition.value = position
+        }
         _sectionDelegatedItems.value = origin.toMutableList().also { currentItems ->
             currentItems.addAll(data.sections)
         }
@@ -78,10 +83,10 @@ class SectionDefaultDelegator @Inject constructor(
 
     private fun onFailureGetSections(exception: Exception) {
         // Send non-fatal log, etc..
-
+        if (BuildConfig.DEBUG) exception.printStackTrace()
     }
 
-    private fun onEmptyRequestUrl() {
+    private fun onEmptyRequestUri() {
         // Send non-fatal log, etc..
 
         _sectionDelegatedItems.value = emptyList()
