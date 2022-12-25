@@ -13,12 +13,26 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "android-sdui"
+
+// application module
 include ':sample'
+
+// core modules
 include ':core'
 include ':core-di'
+
+// network module
 include ':network'
+
+// data module
 include ':data'
+
+// domain module
 include ':domain'
+
+// SDUI module
 include ':park-ui'
-include ':feature:product-detail'
+
+// feature modules
 include ':feature:main'
+include ':feature:product-detail'
