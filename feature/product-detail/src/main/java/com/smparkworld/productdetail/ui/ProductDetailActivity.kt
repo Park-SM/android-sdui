@@ -21,10 +21,15 @@ class ProductDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_detail)
         binding.lifecycleOwner = this
-        binding.vm = vm
+        binding.listener = vm
 
         initViews()
         initObservers()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        vm.onRefreshItem()
     }
 
     private fun initViews() {

@@ -13,7 +13,7 @@ interface SectionRemoteDataSource {
     suspend fun cloneSection(section: SectionVO): SectionVO
 }
 
-class SectionRemoteDataSourceFakeImpl @Inject constructor(
+class FakeSectionRemoteDataSourceImpl @Inject constructor(
     private val gson: Gson
 ) : SectionRemoteDataSource {
 
@@ -77,6 +77,7 @@ class SectionRemoteDataSourceFakeImpl @Inject constructor(
                 "category": "입장권 • 대구",
                 "reviewScore": "4.6 (382)",
                 "price": "119,000원",
+                "isWished": "true",
                 "linkUri": "parkui://product/detail?product_id=555",
                 "refresh": null,
                 "logs": [

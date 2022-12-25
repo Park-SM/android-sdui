@@ -1,47 +1,51 @@
-package com.smparkworld.productdetail.ui.delegator
+package com.smparkworld.data.source.remote
 
-import com.smparkworld.domain.Result
-import com.smparkworld.domain.dto.tmp.ProductDTO
+import com.smparkworld.data.vo.ProductDetailVO
 import javax.inject.Inject
 
-class ProductFakeDelegator @Inject constructor(
+interface ProductRemoteDataSource {
 
-) : ProductDelegator {
+    suspend fun getProductById(id: Long): ProductDetailVO
+}
 
-    override suspend fun getProductById(id: Long): Result<ProductDTO> {
+class FakeProductRemoteDataSourceImpl @Inject constructor(
+
+) : ProductRemoteDataSource {
+
+    override suspend fun getProductById(id: Long): ProductDetailVO {
         return when (id) {
             333L -> {
-                Result.Success(getProduct333())
+                getProduct333()
             }
             555L -> {
-                Result.Success(getProduct555())
+                getProduct555()
             }
             777L -> {
-                Result.Success(getProduct777())
+                getProduct777()
             }
             999L -> {
-                Result.Success(getProduct999())
+                getProduct999()
             }
             121L -> {
-                Result.Success(getProduct121())
+                getProduct121()
             }
             131L -> {
-                Result.Success(getProduct131())
+                getProduct131()
             }
             141L -> {
-                Result.Success(getProduct141())
+                getProduct141()
             }
             151L -> {
-                Result.Success(getProduct151())
+                getProduct151()
             }
             else -> {
-                Result.Error(Exception("Not found product by id:$id"))
+                throw Exception("Not found product by id:$id")
             }
         }
     }
 
-    private fun getProduct333(): ProductDTO {
-        return ProductDTO(
+    private fun getProduct333(): ProductDetailVO {
+        return ProductDetailVO(
             id = 333L,
             imageUri = "http://smparkworld.com/img/blog_images/98866035372614732852192638679394314086458144735809.png",
             title = "[서울] 아쿠아플라넷 63 & 맥스달튼 얼리버드 입장권",
@@ -52,20 +56,20 @@ class ProductFakeDelegator @Inject constructor(
         )
     }
 
-    private fun getProduct555(): ProductDTO {
-        return ProductDTO(
+    private fun getProduct555(): ProductDetailVO {
+        return ProductDetailVO(
             id = 555L,
             imageUri = "http://smparkworld.com/img/blog_images/28700093715932212986310862007881110398175148893334.png",
             title = "[대구] 이월드 연간회원권",
             category = "입장권 • 대구",
             reviewScore = "4.6 (382)",
             price = "119,000원",
-            isWished = false,
+            isWished = true,
         )
     }
 
-    private fun getProduct777(): ProductDTO {
-        return ProductDTO(
+    private fun getProduct777(): ProductDetailVO {
+        return ProductDetailVO(
             id = 777L,
             imageUri = "http://smparkworld.com/img/blog_images/06457547313343780518062733748263636158307658431761.png",
             title = "[제주] 제주투어패스 48시간 프리패스권",
@@ -76,8 +80,8 @@ class ProductFakeDelegator @Inject constructor(
         )
     }
 
-    private fun getProduct999(): ProductDTO {
-        return ProductDTO(
+    private fun getProduct999(): ProductDetailVO {
+        return ProductDetailVO(
             id = 999L,
             imageUri = "http://smparkworld.com/img/blog_images/16983926760026723958646828432249051461689215943998.png",
             title = "[제주시] 제주 에코랜드 테마파크 입장권",
@@ -88,8 +92,8 @@ class ProductFakeDelegator @Inject constructor(
         )
     }
 
-    private fun getProduct121(): ProductDTO {
-        return ProductDTO(
+    private fun getProduct121(): ProductDetailVO {
+        return ProductDetailVO(
             id = 121L,
             imageUri = "http://smparkworld.com/img/blog_images/16291211130868351452949271973491813169204333982771.png",
             title = "[전남 여수] 아쿠아플라넷 여수 + 뮤지엄오브컬러",
@@ -100,8 +104,8 @@ class ProductFakeDelegator @Inject constructor(
         )
     }
 
-    private fun getProduct131(): ProductDTO {
-        return ProductDTO(
+    private fun getProduct131(): ProductDetailVO {
+        return ProductDetailVO(
             id = 131L,
             imageUri = "http://smparkworld.com/img/blog_images/87008134278537678068690502608342159353376206743060.png",
             title = "[대구] X-MAS 얼리버드 이월드 자유이용권",
@@ -112,8 +116,8 @@ class ProductFakeDelegator @Inject constructor(
         )
     }
 
-    private fun getProduct141(): ProductDTO {
-        return ProductDTO(
+    private fun getProduct141(): ProductDetailVO {
+        return ProductDetailVO(
             id = 141L,
             imageUri = "http://smparkworld.com/img/blog_images/70986350307720596737671692581374188341053778385665.png",
             title = "[경기 고양] 일산 원마운트 워터파크",
@@ -124,8 +128,8 @@ class ProductFakeDelegator @Inject constructor(
         )
     }
 
-    private fun getProduct151(): ProductDTO {
-        return ProductDTO(
+    private fun getProduct151(): ProductDetailVO {
+        return ProductDetailVO(
             id = 151L,
             imageUri = "http://smparkworld.com/img/blog_images/34909948107269078026609846524479087845551772700263.png",
             title = "[QR바로입장] 롯데월드 어드벤처 종합이용권",

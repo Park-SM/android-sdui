@@ -1,11 +1,12 @@
 package com.smparkworld.data.di
 
 import com.smparkworld.core.mapper.Mapper
+import com.smparkworld.data.mapper.BannerSectionDTOMapper
 import com.smparkworld.data.mapper.ParkRequestDTOMapper
 import com.smparkworld.data.mapper.ParkSectionsDTOMapper
-import com.smparkworld.data.mapper.section.BannerSectionDTOMapper
-import com.smparkworld.data.mapper.section.ProductSectionDTOMapper
-import com.smparkworld.data.mapper.section.ProductSectionVOMapper
+import com.smparkworld.data.mapper.ProductDetailDTOMapper
+import com.smparkworld.data.mapper.ProductSectionDTOMapper
+import com.smparkworld.data.mapper.ProductSectionVOMapper
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -35,4 +36,8 @@ interface MapperModule {
     @Binds
     @IntoSet
     fun bindBannerSectionDTOMapper(mapper: BannerSectionDTOMapper): Mapper<*, *>
+
+    @Binds
+    @IntoSet
+    fun bindProductDetailDTOMapper(mapper: ProductDetailDTOMapper): Mapper<*, *>
 }

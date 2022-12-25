@@ -56,7 +56,11 @@ class ProductOneColumn2ViewHolder(
         }
 
         override fun onClickWish(v: View, model: ProductSectionDTO) {
-            eventListener.onClickItem(v, SectionItemEvent.WishClick(model, v.isSelected))
+            val isSelected = v.isSelected.not().also {
+                v.isSelected = it
+                model.isWished = it
+            }
+            eventListener.onClickItem(v, SectionItemEvent.WishClick(model, isSelected))
         }
     }
 

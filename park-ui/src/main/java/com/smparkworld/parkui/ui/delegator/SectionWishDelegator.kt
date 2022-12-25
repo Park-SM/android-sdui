@@ -7,7 +7,7 @@ import com.smparkworld.domain.usecase.CacheWishUseCase
 import com.smparkworld.domain.usecase.CreateWishUseCase
 import com.smparkworld.domain.usecase.DeleteWishUseCase
 import com.smparkworld.domain.usecase.RollbackSectionWishStateUseCase
-import com.smparkworld.domain.usecase.SyncSectionWishStateUseCase
+import com.smparkworld.domain.usecase.SyncSectionsWishStateUseCase
 import javax.inject.Inject
 
 class SectionWishDelegator @Inject constructor(
@@ -15,7 +15,7 @@ class SectionWishDelegator @Inject constructor(
     private val deleteWishUseCase: DeleteWishUseCase,
     private val rollbackSectionWishStateUseCase: RollbackSectionWishStateUseCase,
     private val cacheWishUseCase: CacheWishUseCase,
-    private val syncSectionWishStateUseCase: SyncSectionWishStateUseCase
+    private val syncSectionsWishStateUseCase: SyncSectionsWishStateUseCase
 ) : WishDelegator<SectionDTO> {
 
     override val _wishDelegatedItems = MutableLiveData<List<SectionDTO>>()
@@ -43,7 +43,7 @@ class SectionWishDelegator @Inject constructor(
     }
 
     override suspend fun refreshWishItemsByLocalCache(origin: List<SectionDTO>) {
-        when (val result = syncSectionWishStateUseCase(origin)) {
+        when (val result = syncSectionsWishStateUseCase(origin)) {
             is Result.Success -> {
                 _wishDelegatedItems.value = result.data
             }

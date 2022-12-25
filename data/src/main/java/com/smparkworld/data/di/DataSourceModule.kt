@@ -1,9 +1,11 @@
 package com.smparkworld.data.di
 
+import com.smparkworld.data.source.remote.FakeProductRemoteDataSourceImpl
+import com.smparkworld.data.source.remote.FakeSectionRemoteDataSourceImpl
+import com.smparkworld.data.source.remote.FakeWishRemoteDataSourceImpl
+import com.smparkworld.data.source.remote.ProductRemoteDataSource
 import com.smparkworld.data.source.remote.SectionRemoteDataSource
-import com.smparkworld.data.source.remote.SectionRemoteDataSourceFakeImpl
 import com.smparkworld.data.source.remote.WishRemoteDataSource
-import com.smparkworld.data.source.remote.WishRemoteDataSourceFakeImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -14,8 +16,11 @@ import dagger.hilt.components.SingletonComponent
 interface DataSourceModule {
 
     @Binds
-    fun bindSectionDataSourceFakeImpl(source: SectionRemoteDataSourceFakeImpl): SectionRemoteDataSource
+    fun bindSectionDataSourceImpl(source: FakeSectionRemoteDataSourceImpl): SectionRemoteDataSource
 
     @Binds
-    fun bindWishRemoteDataSourceFakeImpl(source: WishRemoteDataSourceFakeImpl): WishRemoteDataSource
+    fun bindWishRemoteDataSourceImpl(source: FakeWishRemoteDataSourceImpl): WishRemoteDataSource
+
+    @Binds
+    fun bindProductRemoteDataSourceImpl(source: FakeProductRemoteDataSourceImpl): ProductRemoteDataSource
 }
