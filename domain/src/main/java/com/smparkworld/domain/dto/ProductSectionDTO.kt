@@ -9,6 +9,8 @@ data class ProductSectionDTO(
 
     override var viewType: String? = null,
 
+    override var refresh: ParkRefreshDTO? = null,
+
     var id: Long? = null,
 
     var imageUri: String? = null,

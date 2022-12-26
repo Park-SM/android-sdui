@@ -8,6 +8,8 @@ data class BannerSectionDTO(
 
     override var viewType: String? = null,
 
+    override var refresh: ParkRefreshDTO? = null,
+
     var id: Long? = null,
 
     var title: String? = null,

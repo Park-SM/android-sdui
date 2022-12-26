@@ -65,6 +65,10 @@ class SectionDefaultDelegator @Inject constructor(
         _isLoadingForDelegatedSection.value = false
     }
 
+    override suspend fun requestPartialSectionUpdate(origin: List<SectionDTO>) {
+        TODO("Not yet implemented")
+    }
+
     private fun onSuccessRequestInternal(data: ParkSectionsDTO) {
         nextRequestUri = data.requestUri?.nextPageUri
 

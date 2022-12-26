@@ -5,4 +5,6 @@ interface SectionDTO {
     var viewType: String?
 
     var sectionType: String?
+
+    var refresh: ParkRefreshDTO?
 }

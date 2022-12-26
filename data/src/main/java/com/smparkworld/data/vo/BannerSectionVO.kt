@@ -13,6 +13,9 @@ data class BannerSectionVO(
     @SerializedName("viewType")
     override val viewType: String? = null,
 
+    @SerializedName("refresh")
+    override val refresh: ParkRefreshVO? = null,
+
     @SerializedName("id")
     val id: Long? = null,
 

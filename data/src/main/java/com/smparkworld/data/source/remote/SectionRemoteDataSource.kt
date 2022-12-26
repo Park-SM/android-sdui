@@ -123,6 +123,33 @@ class FakeSectionRemoteDataSourceImpl @Inject constructor(
                 ]
             },
             {
+                "sectionType": "BANNER_SECTION",
+                "viewType": "BANNER_ONE_COLUMN",
+                "id": "10001",
+                "title": null,
+                "message": null,
+                "imageUri": "http://smparkworld.com/img/blog_images/03874774406742364719443500337657533898844656306735.png",
+                "linkUri": "parkui://webview?redirect_to=http://smparkworld.com/promotion/10001",
+                "refresh": {
+                    "type": "RETURN",
+                    "id": "CURATE_PROMOTION_BANNER"
+                },
+                "logs": [
+                    {
+                        "type": "CLICK",
+                        "data": {
+                            "id": "10001"
+                        }
+                    },
+                    {
+                        "type": "IMPRESSION",
+                        "data": {
+                            "id": "10001"
+                        }
+                    }
+                ]
+            },
+            {
                 "sectionType": "PRODUCT_SECTION",
                 "viewType": "PRODUCT_ONE_COLUMN",
                 "id": "999",
