@@ -2,6 +2,7 @@ package com.smparkworld.data.di
 
 import com.smparkworld.core.mapper.Mapper
 import com.smparkworld.data.mapper.BannerSectionDTOMapper
+import com.smparkworld.data.mapper.ParkRefreshDTOMapper
 import com.smparkworld.data.mapper.ParkRequestDTOMapper
 import com.smparkworld.data.mapper.ParkSectionsDTOMapper
 import com.smparkworld.data.mapper.ProductDetailDTOMapper
@@ -24,6 +25,10 @@ interface MapperModule {
     @Binds
     @IntoSet
     fun bindParkSectionsDTOMapper(mapper: ParkSectionsDTOMapper): Mapper<*, *>
+
+    @Binds
+    @IntoSet
+    fun bindParkRefreshDTOMapper(mapper: ParkRefreshDTOMapper): Mapper<*, *>
 
     @Binds
     @IntoSet

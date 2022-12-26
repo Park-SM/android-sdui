@@ -15,6 +15,7 @@ class ProductSectionDTOMapper @Inject constructor(
         return ProductSectionDTO(
             sectionType = from.sectionType,
             viewType = from.viewType,
+            refresh = delegateMap(from.refresh),
             id = from.id,
             imageUri = from.imageUri,
             title = from.title,

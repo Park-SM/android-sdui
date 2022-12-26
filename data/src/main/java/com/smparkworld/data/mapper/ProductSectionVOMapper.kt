@@ -15,6 +15,7 @@ class ProductSectionVOMapper @Inject constructor(
         return ProductSectionVO(
             sectionType = from.sectionType,
             viewType = from.viewType,
+            refresh = delegateMap(from.refresh),
             id = from.id,
             imageUri = from.imageUri,
             title = from.title,

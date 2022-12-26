@@ -15,6 +15,7 @@ class BannerSectionDTOMapper @Inject constructor(
         return BannerSectionDTO(
             sectionType = from.sectionType,
             viewType = from.viewType,
+            refresh = delegateMap(from.refresh),
             id = from.id,
             title = from.title,
             message = from.message,

@@ -39,7 +39,7 @@ abstract class ParkViewModel(
     val isEmpty: LiveData<Boolean> get() = _isEmpty
 
     private val _error: MutableLiveData<Exception> get() = MediatorLiveData<Exception>().apply {
-        addSource(_errorForDelegatedSection) { value = it}
+        addSource(_errorForDelegatedSection) { value = it }
         addSource(_errorForDelegatedWish) { value = it }
     }
     val error: LiveData<Exception> get() = _error
@@ -68,7 +68,7 @@ abstract class ParkViewModel(
         viewModelScope.launch {
             _items.value?.let { origin ->
                 refreshWishItemsByLocalCache(origin)
-                // add partial update logics
+                requestPartialSectionUpdate(origin)
             }
         }
     }
