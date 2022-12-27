@@ -19,10 +19,17 @@ class SectionRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun cloneSection(section: SectionDTO): SectionDTO {
-         val payload = mapperManager.map<SectionDTO, SectionVO>(section)
-         return remoteDataSource.cloneSection(payload).let { vo ->
-             mapperManager.map(vo)
+    override suspend fun cloneSection(sectionDTO: SectionDTO): SectionDTO {
+         val payload = mapperManager.map<SectionDTO, SectionVO>(sectionDTO)
+         return remoteDataSource.cloneSection(payload).let { sectionVO ->
+             mapperManager.map(sectionVO)
          }
+    }
+
+    override suspend fun requestPartialUpdateSections(sectionDTOs: List<SectionDTO>): List<SectionDTO> {
+        val payload = mapperManager.mapList<SectionDTO, SectionVO>(sectionDTOs)
+        return remoteDataSource.requestPartialUpdateSections(payload).let { sectionVOs ->
+            mapperManager.mapList(sectionVOs)
+        }
     }
 }

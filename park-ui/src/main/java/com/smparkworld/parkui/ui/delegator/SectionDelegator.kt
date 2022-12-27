@@ -16,10 +16,11 @@ interface SectionDelegator {
 
     suspend fun requestSections(initRequestUri: String?)
     suspend fun requestNextSections(origin: List<SectionDTO>)
-    suspend fun requestPartialSectionUpdate(origin: List<SectionDTO>)
+    suspend fun requestPartialUpdateSection(origin: List<SectionDTO>)
 
     fun onSuccessRequest(data: ParkSectionsDTO) {}
     fun onSuccessMoreRequest(data: ParkSectionsDTO) {}
+    fun onSuccessPartialUpdate(items: List<SectionDTO>) {}
     fun onFailureRequest(exception: Exception) {}
     fun onEmptySections() {}
 }
