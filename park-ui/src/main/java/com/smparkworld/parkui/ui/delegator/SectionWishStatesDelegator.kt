@@ -42,9 +42,11 @@ class SectionWishStatesDelegator @Inject constructor(
                 cacheWishState(id, !isWished)
 
                 rollbackWishState(origin, id, isWished)
+
                 // do anything on wish api failure. e.g) Show Snackbar.. etc..
             }
         }
+        onRequestWishState(origin, id, isWished)
     }
 
     override suspend fun refreshWishItemsByLocalCache(origin: List<SectionDTO>) {
