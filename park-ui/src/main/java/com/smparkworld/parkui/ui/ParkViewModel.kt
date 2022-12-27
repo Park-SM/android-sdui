@@ -68,7 +68,7 @@ abstract class ParkViewModel(
         viewModelScope.launch {
             _items.value?.let { origin ->
                 refreshWishItemsByLocalCache(origin)
-                requestPartialSectionUpdate(origin)
+                requestPartialUpdateSection(origin)
             }
         }
     }

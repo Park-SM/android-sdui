@@ -2,7 +2,9 @@ package com.smparkworld.data.di
 
 import com.smparkworld.core.mapper.Mapper
 import com.smparkworld.data.mapper.BannerSectionDTOMapper
+import com.smparkworld.data.mapper.BannerSectionVOMapper
 import com.smparkworld.data.mapper.ParkRefreshDTOMapper
+import com.smparkworld.data.mapper.ParkRefreshVOMapper
 import com.smparkworld.data.mapper.ParkRequestDTOMapper
 import com.smparkworld.data.mapper.ParkSectionsDTOMapper
 import com.smparkworld.data.mapper.ProductDetailDTOMapper
@@ -32,6 +34,10 @@ interface MapperModule {
 
     @Binds
     @IntoSet
+    fun bindParkRefreshVOMapper(mapper: ParkRefreshVOMapper): Mapper<*, *>
+
+    @Binds
+    @IntoSet
     fun bindProductSectionDTOMapper(mapper: ProductSectionDTOMapper): Mapper<*, *>
 
     @Binds
@@ -41,6 +47,10 @@ interface MapperModule {
     @Binds
     @IntoSet
     fun bindBannerSectionDTOMapper(mapper: BannerSectionDTOMapper): Mapper<*, *>
+
+    @Binds
+    @IntoSet
+    fun bindBannerSectionVOMapper(mapper: BannerSectionVOMapper): Mapper<*, *>
 
     @Binds
     @IntoSet

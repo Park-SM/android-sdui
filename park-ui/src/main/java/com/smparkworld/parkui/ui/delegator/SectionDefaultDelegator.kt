@@ -6,10 +6,12 @@ import com.smparkworld.domain.Result
 import com.smparkworld.domain.dto.ParkSectionsDTO
 import com.smparkworld.domain.dto.SectionDTO
 import com.smparkworld.domain.usecase.GetSectionsUseCase
+import com.smparkworld.domain.usecase.RequestPartialUpdateSectionUseCase
 import javax.inject.Inject
 
 class SectionDefaultDelegator @Inject constructor(
-    private val getSectionsUseCase: GetSectionsUseCase
+    private val getSectionsUseCase: GetSectionsUseCase,
+    private val requestPartialUpdateSectionUseCase: RequestPartialUpdateSectionUseCase
 ) : SectionDelegator {
 
     override val _itemsForDelegatedSection = MutableLiveData<List<SectionDTO>>()
@@ -23,6 +25,7 @@ class SectionDefaultDelegator @Inject constructor(
     private var nextRequestUri: String? = null
 
     override suspend fun requestSections(initRequestUri: String?) {
+        if (_isLoadingForDelegatedSection.value == true) return
         _isLoadingForDelegatedSection.value = true
 
         if (initRequestUri != null) {
@@ -65,8 +68,17 @@ class SectionDefaultDelegator @Inject constructor(
         _isLoadingForDelegatedSection.value = false
     }
 
-    override suspend fun requestPartialSectionUpdate(origin: List<SectionDTO>) {
-        TODO("Not yet implemented")
+    override suspend fun requestPartialUpdateSection(origin: List<SectionDTO>) {
+        when (val result = requestPartialUpdateSectionUseCase(origin)) {
+            is Result.Success -> {
+                onSuccessPartialUpdateInternal(result.data)
+                onSuccessPartialUpdate(result.data)
+            }
+            is Result.Error -> {
+                onFailureRequestInternal(result.exception)
+                onFailureRequest(result.exception)
+            }
+        }
     }
 
     private fun onSuccessRequestInternal(data: ParkSectionsDTO) {
@@ -83,6 +95,10 @@ class SectionDefaultDelegator @Inject constructor(
         _itemsForDelegatedSection.value = origin.toMutableList().also { currentItems ->
             currentItems.addAll(data.sections)
         }
+    }
+
+    private fun onSuccessPartialUpdateInternal(updatedSections: List<SectionDTO>) {
+        _itemsForDelegatedSection.value = updatedSections
     }
 
     private fun onFailureRequestInternal(exception: Exception) {

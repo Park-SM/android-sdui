@@ -7,5 +7,7 @@ interface SectionRepository {
 
     suspend fun requestSections(uri: String): ParkSectionsDTO
 
-    suspend fun cloneSection(section: SectionDTO): SectionDTO
+    suspend fun cloneSection(sectionDTO: SectionDTO): SectionDTO
+
+    suspend fun requestPartialUpdateSections(sectionDTOs: List<SectionDTO>): List<SectionDTO>
 }

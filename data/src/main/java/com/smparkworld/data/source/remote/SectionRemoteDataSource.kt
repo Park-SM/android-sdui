@@ -1,16 +1,21 @@
 package com.smparkworld.data.source.remote
 
 import com.google.gson.Gson
+import com.smparkworld.data.vo.BannerSectionVO
+import com.smparkworld.data.vo.ParkRefreshVO
 import com.smparkworld.data.vo.ParkSectionsVO
 import com.smparkworld.data.vo.SectionVO
 import kotlinx.coroutines.delay
 import javax.inject.Inject
+import kotlin.random.Random
 
 interface SectionRemoteDataSource {
 
     suspend fun requestSections(uri: String): ParkSectionsVO
 
     suspend fun cloneSection(section: SectionVO): SectionVO
+
+    suspend fun requestPartialUpdateSections(sections: List<SectionVO>): List<SectionVO>
 }
 
 class FakeSectionRemoteDataSourceImpl @Inject constructor(
@@ -32,6 +37,33 @@ class FakeSectionRemoteDataSourceImpl @Inject constructor(
                 throw Exception("Test Exception - Unknown Request URI.")
             }
         }
+    }
+
+    override suspend fun cloneSection(section: SectionVO): SectionVO {
+        return gson.fromJson(gson.toJson(section), SectionVO::class.java)
+    }
+
+    override suspend fun requestPartialUpdateSections(sections: List<SectionVO>): List<SectionVO> {
+        val results = mutableListOf<SectionVO>()
+
+        sections.forEach { section ->
+
+            // about BANNER_SECTION
+            if (section.sectionType == "BANNER_SECTION" &&
+                section.viewType == "BANNER_ONE_COLUMN" &&
+                section.refresh?.id == "CURATE_PROMOTION_BANNER") {
+
+                when (Random.nextInt(1, 5)) {
+                    1 -> results.add(getBanner1())
+                    2 -> results.add(getBanner2())
+                    3 -> results.add(getBanner3())
+                    4 -> results.add(getBanner4())
+                    5 -> results.add(getBanner5())
+                }
+            }
+        }
+
+        return results
     }
 
     private fun getRawDataForPage1(): String = """
@@ -242,6 +274,33 @@ class FakeSectionRemoteDataSourceImpl @Inject constructor(
         },
         "sections": [
             {
+                "sectionType": "BANNER_SECTION",
+                "viewType": "BANNER_ONE_COLUMN",
+                "id": "10002",
+                "title": null,
+                "message": null,
+                "imageUri": "http://smparkworld.com/img/blog_images/49716605770233819048279682845697778898975715953485.png",
+                "linkUri": "parkui://webview?redirect_to=http://smparkworld.com/promotion/10002",
+                "refresh": {
+                    "type": "RETURN",
+                    "id": "CURATE_PROMOTION_BANNER"
+                },
+                "logs": [
+                    {
+                        "type": "CLICK",
+                        "data": {
+                            "id": "10001"
+                        }
+                    },
+                    {
+                        "type": "IMPRESSION",
+                        "data": {
+                            "id": "10001"
+                        }
+                    }
+                ]
+            },
+            {
                 "sectionType": "PRODUCT_SECTION",
                 "viewType": "PRODUCT_ONE_COLUMN",
                 "id": "141",
@@ -326,7 +385,78 @@ class FakeSectionRemoteDataSourceImpl @Inject constructor(
     }
     """.trimIndent()
 
-    override suspend fun cloneSection(section: SectionVO): SectionVO {
-        return gson.fromJson(gson.toJson(section), SectionVO::class.java)
+    private fun getBanner1(): BannerSectionVO {
+        return BannerSectionVO(
+            sectionType = "BANNER_SECTION",
+            viewType = "BANNER_ONE_COLUMN",
+            refresh = ParkRefreshVO(
+                type = "RETURN",
+                id = "CURATE_PROMOTION_BANNER"
+            ),
+            title = null,
+            message = null,
+            imageUri = "http://smparkworld.com/img/blog_images/03874774406742364719443500337657533898844656306735.png",
+            linkUri = "parkui://webview?redirect_to=http://smparkworld.com/promotion/10001"
+        )
+    }
+
+    private fun getBanner2(): BannerSectionVO {
+        return BannerSectionVO(
+            sectionType = "BANNER_SECTION",
+            viewType = "BANNER_ONE_COLUMN",
+            refresh = ParkRefreshVO(
+                type = "RETURN",
+                id = "CURATE_PROMOTION_BANNER"
+            ),
+            title = null,
+            message = null,
+            imageUri = "http://smparkworld.com/img/blog_images/49716605770233819048279682845697778898975715953485.png",
+            linkUri = "parkui://webview?redirect_to=http://smparkworld.com/promotion/10002"
+        )
+    }
+
+    private fun getBanner3(): BannerSectionVO {
+        return BannerSectionVO(
+            sectionType = "BANNER_SECTION",
+            viewType = "BANNER_ONE_COLUMN",
+            refresh = ParkRefreshVO(
+                type = "RETURN",
+                id = "CURATE_PROMOTION_BANNER"
+            ),
+            title = null,
+            message = null,
+            imageUri = "http://smparkworld.com/img/blog_images/89016852741508166456526987980110807560743733400692.png",
+            linkUri = "parkui://webview?redirect_to=http://smparkworld.com/promotion/10003"
+        )
+    }
+
+    private fun getBanner4(): BannerSectionVO {
+        return BannerSectionVO(
+            sectionType = "BANNER_SECTION",
+            viewType = "BANNER_ONE_COLUMN",
+            refresh = ParkRefreshVO(
+                type = "RETURN",
+                id = "CURATE_PROMOTION_BANNER"
+            ),
+            title = null,
+            message = null,
+            imageUri = "http://smparkworld.com/img/blog_images/46297208347177014695376165264360176784891590873802.png",
+            linkUri = "parkui://webview?redirect_to=http://smparkworld.com/promotion/10004"
+        )
+    }
+
+    private fun getBanner5(): BannerSectionVO {
+        return BannerSectionVO(
+            sectionType = "BANNER_SECTION",
+            viewType = "BANNER_ONE_COLUMN",
+            refresh = ParkRefreshVO(
+                type = "RETURN",
+                id = "CURATE_PROMOTION_BANNER"
+            ),
+            title = null,
+            message = null,
+            imageUri = "http://smparkworld.com/img/blog_images/73355316462068393161959187232924191200784580485494.png",
+            linkUri = "parkui://webview?redirect_to=http://smparkworld.com/promotion/10005"
+        )
     }
 }
