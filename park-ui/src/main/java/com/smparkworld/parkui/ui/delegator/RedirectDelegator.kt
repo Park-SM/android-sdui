@@ -8,4 +8,6 @@ interface RedirectDelegator {
     val _redirectUri: MutableLiveData<Uri>
 
     fun redirectToUri(linkUri: String)
+
+    fun onRedirectToUri(linkUri: String) {}
 }

@@ -11,4 +11,6 @@ interface WishStatesDelegator<T> {
     suspend fun requestWishState(origin: List<T>, id: Long, isWished: Boolean)
 
     suspend fun refreshWishItemsByLocalCache(origin: List<T>)
+
+    fun onRequestWishState(origin: List<T>, id: Long, isWished: Boolean) {}
 }
