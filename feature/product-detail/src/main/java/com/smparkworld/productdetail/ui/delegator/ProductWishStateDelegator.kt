@@ -16,7 +16,9 @@ internal class ProductWishStateDelegator @Inject constructor(
     private val syncProductWishStateUseCase: SyncProductWishStateUseCase
 ) : WishStateDelegator {
 
-    override val _isWished = MutableLiveData<Boolean>()
+    override val _delegatedIsWishedByWishStateDelegator = MutableLiveData<Boolean>()
+
+    override val _delegatedErrorByWishStateDelegator = MutableLiveData<Exception>()
 
     override suspend fun requestWishState(id: Long, isWished: Boolean) {
         val result = if (isWished) {
@@ -31,20 +33,24 @@ internal class ProductWishStateDelegator @Inject constructor(
             }
             is Result.Error -> {
                 rollbackWishState(isWished)
+
+                _delegatedErrorByWishStateDelegator.value = result.exception
+
                 // do anything on wish api failure. e.g) Show Snackbar.. etc..
             }
         }
+        onRequestWishState(id, isWished)
     }
 
     override suspend fun refreshWishStateByLocalCache(id: Long) {
         when (val result = syncProductWishStateUseCase(id)) {
             is Result.Success -> {
                 result.data?.let { newWishState ->
-                    _isWished.value = newWishState
+                    _delegatedIsWishedByWishStateDelegator.value = newWishState
                 }
             }
             is Result.Error -> {
-                // do nothing
+                _delegatedErrorByWishStateDelegator.value = result.exception
             }
         }
     }
@@ -58,6 +64,6 @@ internal class ProductWishStateDelegator @Inject constructor(
     }
 
     private fun rollbackWishState(isWished: Boolean) {
-        _isWished.value = !isWished
+        _delegatedIsWishedByWishStateDelegator.value = !isWished
     }
 }

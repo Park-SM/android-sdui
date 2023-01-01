@@ -4,9 +4,9 @@ import androidx.lifecycle.MutableLiveData
 
 interface WishStatesDelegator<T> {
 
-    val _itemsForDelegatedWish: MutableLiveData<List<T>>
+    val _delegatedItemsByWishStatesDelegator: MutableLiveData<List<T>>
 
-    val _errorForDelegatedWish: MutableLiveData<Exception>
+    val _delegatedErrorByWishStatesDelegator: MutableLiveData<Exception>
 
     suspend fun requestWishState(origin: List<T>, id: Long, isWished: Boolean)
 

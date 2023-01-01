@@ -6,13 +6,13 @@ import com.smparkworld.domain.dto.SectionDTO
 
 interface SectionDelegator {
 
-    val _itemsForDelegatedSection: MutableLiveData<List<SectionDTO>>
+    val _delegatedItemsBySectionDelegator: MutableLiveData<List<SectionDTO>>
 
-    val _isLoadingForDelegatedSection: MutableLiveData<Boolean>
+    val _delegatedIsLoadingBySectionDelegator: MutableLiveData<Boolean>
 
-    val _errorForDelegatedSection: MutableLiveData<Exception>
+    val _delegatedErrorBySectionDelegator: MutableLiveData<Exception>
 
-    val _nextPageTriggerPosition: MutableLiveData<Int?>
+    val _delegatedNextPageTriggerPositionBySectionDelegator: MutableLiveData<Int?>
 
     suspend fun requestSections(initRequestUri: String?)
     suspend fun requestNextSections(origin: List<SectionDTO>)

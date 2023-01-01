@@ -19,9 +19,9 @@ class SectionWishStatesDelegator @Inject constructor(
     private val syncSectionsWishStateUseCase: SyncSectionsWishStateUseCase
 ) : WishStatesDelegator<SectionDTO> {
 
-    override val _itemsForDelegatedWish = MutableLiveData<List<SectionDTO>>()
+    override val _delegatedItemsByWishStatesDelegator = MutableLiveData<List<SectionDTO>>()
 
-    override val _errorForDelegatedWish = MutableLiveData<Exception>()
+    override val _delegatedErrorByWishStatesDelegator = MutableLiveData<Exception>()
 
     override suspend fun requestWishState(origin: List<SectionDTO>, id: Long, isWished: Boolean) {
         val result = if (isWished) {
@@ -52,10 +52,10 @@ class SectionWishStatesDelegator @Inject constructor(
     override suspend fun refreshWishItemsByLocalCache(origin: List<SectionDTO>) {
         when (val result = syncSectionsWishStateUseCase(origin)) {
             is Result.Success -> {
-                _itemsForDelegatedWish.value = result.data
+                _delegatedItemsByWishStatesDelegator.value = result.data
             }
             is Result.Error -> {
-                _errorForDelegatedWish.value = result.exception
+                _delegatedErrorByWishStatesDelegator.value = result.exception
             }
         }
     }
@@ -78,10 +78,10 @@ class SectionWishStatesDelegator @Inject constructor(
 
         when (val result = rollbackSectionWishStateUseCase(payload)) {
             is Result.Success -> {
-                _itemsForDelegatedWish.value = result.data
+                _delegatedItemsByWishStatesDelegator.value = result.data
             }
             is Result.Error -> {
-                _errorForDelegatedWish.value = result.exception
+                _delegatedErrorByWishStatesDelegator.value = result.exception
             }
         }
     }

@@ -14,19 +14,19 @@ class SectionDefaultDelegator @Inject constructor(
     private val requestPartialUpdateSectionUseCase: RequestPartialUpdateSectionUseCase
 ) : SectionDelegator {
 
-    override val _itemsForDelegatedSection = MutableLiveData<List<SectionDTO>>()
+    override val _delegatedItemsBySectionDelegator = MutableLiveData<List<SectionDTO>>()
 
-    override val _isLoadingForDelegatedSection = MutableLiveData<Boolean>()
+    override val _delegatedIsLoadingBySectionDelegator = MutableLiveData<Boolean>()
 
-    override val _errorForDelegatedSection = MutableLiveData<Exception>()
+    override val _delegatedErrorBySectionDelegator = MutableLiveData<Exception>()
 
-    override val _nextPageTriggerPosition = MutableLiveData<Int?>()
+    override val _delegatedNextPageTriggerPositionBySectionDelegator = MutableLiveData<Int?>()
 
     private var nextRequestUri: String? = null
 
     override suspend fun requestSections(initRequestUri: String?) {
-        if (_isLoadingForDelegatedSection.value == true) return
-        _isLoadingForDelegatedSection.value = true
+        if (_delegatedIsLoadingBySectionDelegator.value == true) return
+        _delegatedIsLoadingBySectionDelegator.value = true
 
         if (initRequestUri != null) {
             when (val result = getSectionsUseCase(initRequestUri)) {
@@ -44,12 +44,12 @@ class SectionDefaultDelegator @Inject constructor(
             onEmptySections()
         }
 
-        _isLoadingForDelegatedSection.value = false
+        _delegatedIsLoadingBySectionDelegator.value = false
     }
 
     override suspend fun requestNextSections(origin: List<SectionDTO>) {
-        if (_isLoadingForDelegatedSection.value == true) return
-        _isLoadingForDelegatedSection.value = true
+        if (_delegatedIsLoadingBySectionDelegator.value == true) return
+        _delegatedIsLoadingBySectionDelegator.value = true
 
         val requestUri = nextRequestUri
         if (requestUri != null) {
@@ -65,7 +65,7 @@ class SectionDefaultDelegator @Inject constructor(
                 }
             }
         }
-        _isLoadingForDelegatedSection.value = false
+        _delegatedIsLoadingBySectionDelegator.value = false
     }
 
     override suspend fun requestPartialUpdateSection(origin: List<SectionDTO>) {
@@ -84,33 +84,33 @@ class SectionDefaultDelegator @Inject constructor(
     private fun onSuccessRequestInternal(data: ParkSectionsDTO) {
         nextRequestUri = data.requestUri?.nextPageUri
 
-        _nextPageTriggerPosition.value = data.requestUri?.nextPageTriggerPosition
-        _itemsForDelegatedSection.value = data.sections
+        _delegatedNextPageTriggerPositionBySectionDelegator.value = data.requestUri?.nextPageTriggerPosition
+        _delegatedItemsBySectionDelegator.value = data.sections
     }
 
     private fun onSuccessMoreRequestInternal(origin: List<SectionDTO>, data: ParkSectionsDTO) {
         nextRequestUri = data.requestUri?.nextPageUri
 
-        _nextPageTriggerPosition.value = data.requestUri?.nextPageTriggerPosition
-        _itemsForDelegatedSection.value = origin.toMutableList().also { currentItems ->
+        _delegatedNextPageTriggerPositionBySectionDelegator.value = data.requestUri?.nextPageTriggerPosition
+        _delegatedItemsBySectionDelegator.value = origin.toMutableList().also { currentItems ->
             currentItems.addAll(data.sections)
         }
     }
 
     private fun onSuccessPartialUpdateInternal(updatedSections: List<SectionDTO>) {
-        _itemsForDelegatedSection.value = updatedSections
+        _delegatedItemsBySectionDelegator.value = updatedSections
     }
 
     private fun onFailureRequestInternal(exception: Exception) {
         // Send non-fatal log, etc..
         if (BuildConfig.DEBUG) exception.printStackTrace()
 
-        _errorForDelegatedSection.value = exception
+        _delegatedErrorBySectionDelegator.value = exception
     }
 
     private fun onEmptySectionsInternal() {
         // Send non-fatal log, etc..
 
-        _itemsForDelegatedSection.value = emptyList()
+        _delegatedItemsBySectionDelegator.value = emptyList()
     }
 }
