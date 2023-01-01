@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 
 interface RedirectDelegator {
 
-    val _delegatedRedirectUriByRedirectDelegator: MutableLiveData<Uri>
+    val _redirectUriByRedirectDelegator: MutableLiveData<Uri>
 
     fun redirectToUri(linkUri: String)
 

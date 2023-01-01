@@ -1,12 +1,13 @@
 package com.smparkworld.core.ui.delegator
 
 import androidx.lifecycle.MutableLiveData
+import com.smparkworld.core.MutableLiveEvent
 
 interface WishStatesDelegator<T> {
 
-    val _delegatedItemsByWishStatesDelegator: MutableLiveData<List<T>>
+    val _itemsByWishStatesDelegator: MutableLiveData<List<T>>
 
-    val _delegatedErrorByWishStatesDelegator: MutableLiveData<Exception>
+    val _errorByWishStatesDelegator: MutableLiveEvent<Exception>
 
     suspend fun requestWishState(origin: List<T>, id: Long, isWished: Boolean)
 

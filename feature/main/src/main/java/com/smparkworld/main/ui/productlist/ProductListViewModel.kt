@@ -30,6 +30,14 @@ class ProductListViewModel @Inject constructor(
         // hook function
     }
 
+    override fun onFailureMoreRequest(exception: Exception) {
+        // hook function
+    }
+
+    override fun onFailurePartialUpdate(exception: Exception) {
+        // hook function
+    }
+
     override fun onEmptySections() {
         // hook function
     }

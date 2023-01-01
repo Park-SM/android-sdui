@@ -22,6 +22,8 @@ class FakeSectionRemoteDataSourceImpl @Inject constructor(
     private val gson: Gson
 ) : SectionRemoteDataSource {
 
+    private var mockedErrorTestCount = -1
+
     override suspend fun requestSections(uri: String): ParkSectionsVO {
 
         return when {
@@ -30,7 +32,10 @@ class FakeSectionRemoteDataSourceImpl @Inject constructor(
                 gson.fromJson(getRawDataForPage1(), ParkSectionsVO::class.java)
             }
             (uri == "/products?page=2") -> {
-                delay(350L) // mocked network latency
+                delay(1500L) // mocked network latency
+                if (mockedErrorTestCount++ < 0)
+                    throw Exception("Test Retry Exception")
+
                 gson.fromJson(getRawDataForPage2(), ParkSectionsVO::class.java)
             }
             else -> {

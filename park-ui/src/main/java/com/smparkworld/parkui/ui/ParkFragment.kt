@@ -31,6 +31,8 @@ abstract class ParkFragment<V : ViewDataBinding, VM: ParkViewModel> : Fragment()
 
     private lateinit var paginator: ScrollingViewPaginator
 
+    private lateinit var adapter: ParkSectionAdapter
+
     abstract val vm: VM
 
     override fun onCreateView(
@@ -64,9 +66,13 @@ abstract class ParkFragment<V : ViewDataBinding, VM: ParkViewModel> : Fragment()
         for ((_, viewBinder) in viewBinders) {
             viewBinder.initialize(this, vm)
         }
-        sections.itemAnimator = null
+        adapter = ParkSectionAdapter(viewBinders as ViewBinderMapInternal)
+
+        sections.itemAnimator = ParkItemAnimator()
         sections.layoutManager = LinearLayoutManager(requireContext())
-        sections.adapter = ParkSectionAdapter(viewBinders as ViewBinderMapInternal)
+        sections.adapter = adapter.withBottomLoadState(
+            ParkSectionBottomLoadStateAdapter(onRetry = vm::onRequestNextSections)
+        )
 
         paginator = ScrollingViewPaginator.with(sections)
             .setOnNextPageListener {
@@ -77,13 +83,16 @@ abstract class ParkFragment<V : ViewDataBinding, VM: ParkViewModel> : Fragment()
 
     private fun initObserversInternal(sections: RecyclerView) {
         vm.items.observe(viewLifecycleOwner) { items ->
-            (sections.adapter as? ParkSectionAdapter)?.submitList(items)
+            adapter.submitList(items)
         }
         vm.nextPageTriggerPosition.observe(viewLifecycleOwner) { position ->
             paginator.setNextPageTriggerPosition(position)
         }
         vm.redirectUri.observe(viewLifecycleOwner) { redirectUri ->
             appUriHandler.handle(requireActivity(), redirectUri)
+        }
+        vm.bottomLoadState.observe(viewLifecycleOwner) { loadState ->
+            adapter.setBottomLoadState(loadState)
         }
     }
 

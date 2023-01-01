@@ -1,6 +1,7 @@
 package com.smparkworld.parkui.ui.delegator
 
 import androidx.lifecycle.MutableLiveData
+import com.smparkworld.core.MutableLiveEvent
 import com.smparkworld.core.ui.delegator.WishStatesDelegator
 import com.smparkworld.domain.Result
 import com.smparkworld.domain.dto.SectionDTO
@@ -19,9 +20,9 @@ class SectionWishStatesDelegator @Inject constructor(
     private val syncSectionsWishStateUseCase: SyncSectionsWishStateUseCase
 ) : WishStatesDelegator<SectionDTO> {
 
-    override val _delegatedItemsByWishStatesDelegator = MutableLiveData<List<SectionDTO>>()
+    override val _itemsByWishStatesDelegator = MutableLiveData<List<SectionDTO>>()
 
-    override val _delegatedErrorByWishStatesDelegator = MutableLiveData<Exception>()
+    override val _errorByWishStatesDelegator = MutableLiveEvent<Exception>()
 
     override suspend fun requestWishState(origin: List<SectionDTO>, id: Long, isWished: Boolean) {
         val result = if (isWished) {
@@ -52,11 +53,11 @@ class SectionWishStatesDelegator @Inject constructor(
     override suspend fun refreshWishItemsByLocalCache(origin: List<SectionDTO>): List<SectionDTO> {
         return when (val result = syncSectionsWishStateUseCase(origin)) {
             is Result.Success -> {
-                _delegatedItemsByWishStatesDelegator.value = result.data
+                _itemsByWishStatesDelegator.value = result.data
                 result.data
             }
             is Result.Error -> {
-                _delegatedErrorByWishStatesDelegator.value = result.exception
+                _errorByWishStatesDelegator.value = result.exception
                 origin
             }
         }
@@ -80,10 +81,10 @@ class SectionWishStatesDelegator @Inject constructor(
 
         when (val result = rollbackSectionWishStateUseCase(payload)) {
             is Result.Success -> {
-                _delegatedItemsByWishStatesDelegator.value = result.data
+                _itemsByWishStatesDelegator.value = result.data
             }
             is Result.Error -> {
-                _delegatedErrorByWishStatesDelegator.value = result.exception
+                _errorByWishStatesDelegator.value = result.exception
             }
         }
     }

@@ -59,8 +59,11 @@ dependencies {
     def fragmentKtxVersion = "1.5.5"
     implementation "androidx.fragment:fragment-ktx:$fragmentKtxVersion"
 
-    def livedataKtxVersion = "2.5.1"
+    def livedataKtxVersion = "2.2.0"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$livedataKtxVersion"
+
+    def recyclerViewVersion = "1.2.1"
+    implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
 
     testImplementation 'junit:junit:4.13.2'
 

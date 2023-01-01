@@ -4,12 +4,14 @@ import android.net.Uri
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.smparkworld.core.ExtraKey
+import com.smparkworld.core.MediatorLiveEvent
+import com.smparkworld.core.extension.get
 import com.smparkworld.core.ui.delegator.WishStatesDelegator
+import com.smparkworld.core.ui.support.recyclerview.BottomLoadState
 import com.smparkworld.domain.dto.SectionDTO
 import com.smparkworld.parkui.ui.delegator.ParkDelegators
 import com.smparkworld.parkui.ui.delegator.RedirectDelegator
@@ -26,35 +28,43 @@ abstract class ParkViewModel(
     RedirectDelegator by delegators.redirectDelegator,
     WishStatesDelegator<SectionDTO> by delegators.wishDelegator {
 
-    private val _items: MutableLiveData<List<SectionDTO>> = MediatorLiveData<List<SectionDTO>>().apply {
-        addSource(_delegatedItemsBySectionDelegator) { value = it }
-        addSource(_delegatedItemsByWishStatesDelegator) { value = it }
+    private val _items = MediatorLiveData<List<SectionDTO>>().apply {
+        addSource(_itemsBySectionDelegator) { value = it }
+        addSource(_itemsByWishStatesDelegator) { value = it }
     }
     val items: LiveData<List<SectionDTO>> get() = _items
 
-    private val _isEmpty: MutableLiveData<Boolean> get() = MediatorLiveData<Boolean>().apply {
-        addSource(_delegatedItemsBySectionDelegator) { value = it.isNullOrEmpty() }
-        addSource(_delegatedItemsByWishStatesDelegator) { value = it.isNullOrEmpty() }
+    private val _isEmpty = MediatorLiveData<Boolean>().apply {
+        addSource(_itemsBySectionDelegator) { value = it.isNullOrEmpty() }
+        addSource(_itemsByWishStatesDelegator) { value = it.isNullOrEmpty() }
     }
     val isEmpty: LiveData<Boolean> get() = _isEmpty
 
-    private val _error: MutableLiveData<Exception> get() = MediatorLiveData<Exception>().apply {
-        addSource(_delegatedErrorBySectionDelegator) { value = it }
-        addSource(_delegatedErrorByWishStatesDelegator) { value = it }
+    private val _error = MediatorLiveEvent<Exception>().apply {
+        addSource(_errorBySectionDelegator) { value = it }
+        addSource(_errorByWishStatesDelegator) { value = it }
     }
     val error: LiveData<Exception> get() = _error
 
+    val isLoading: LiveData<Boolean>
+        get() = _isLoadingBySectionDelegator
+
+    val bottomLoadState: LiveData<BottomLoadState>
+        get() = _bottomLoadStateBySectionDelegator
+
     val nextPageTriggerPosition: LiveData<Int?>
-        get() = _delegatedNextPageTriggerPositionBySectionDelegator
+        get() = _nextPageTriggerPositionBySectionDelegator
 
     val redirectUri: LiveData<Uri>
-        get() = _delegatedRedirectUriByRedirectDelegator
+        get() = _redirectUriByRedirectDelegator
 
     init {
-        initSections()
+        stateHandle.get(ExtraKey.INIT_REQUEST, true).takeIf { it }?.let {
+            onRequestSections()
+        }
     }
 
-    private fun initSections() {
+    fun onRequestSections() {
         viewModelScope.launch {
             requestSections(getRequestUri())
         }
