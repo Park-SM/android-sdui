@@ -3,27 +3,18 @@ package com.smparkworld.core.ui.delegator
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.smparkworld.core.ui.support.recyclerview.LoadStateFooterAdapter
+import com.smparkworld.core.ui.support.recyclerview.BottomLoadState
+import com.smparkworld.core.ui.support.recyclerview.BottomLoadStateAdapter
 
 interface BottomLoadStateDelegator {
 
-    var footerAdapter: LoadStateFooterAdapter?
+    var bottomAdapter: BottomLoadStateAdapter?
 
-    fun withLoadStateFooter(
+    fun withBottomLoadState(
         originAdapter: RecyclerView.Adapter<ViewHolder>,
-        footerAdapter: LoadStateFooterAdapter
+        bottomAdapter: BottomLoadStateAdapter
     ): ConcatAdapter
 
-    fun setLoadState(loadState: BottomLoadState)
+    fun setBottomLoadState(loadState: BottomLoadState)
 
-    sealed class BottomLoadState {
-
-        object IsNotLoading : BottomLoadState()
-
-        object IsLoading : BottomLoadState()
-
-        data class Error(
-            val exception: Exception
-        ): BottomLoadState()
-    }
 }

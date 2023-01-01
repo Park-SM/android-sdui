@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.smparkworld.core.ExtraKey
 import com.smparkworld.core.deeplink.AppUriHandler
-import com.smparkworld.core.ui.delegator.BottomLoadStateDelegator.BottomLoadState
 import com.smparkworld.core.ui.support.pagination.ScrollingViewPaginator
 import com.smparkworld.domain.dto.SectionDTO
 import com.smparkworld.parkui.di.SectionViewBinders
@@ -71,8 +70,8 @@ abstract class ParkFragment<V : ViewDataBinding, VM: ParkViewModel> : Fragment()
 
         sections.itemAnimator = ParkItemAnimator()
         sections.layoutManager = LinearLayoutManager(requireContext())
-        sections.adapter = adapter.withLoadStateFooter(
-            ParkSectionLoadStateAdapter(vm::onRequestNextSections)
+        sections.adapter = adapter.withBottomLoadState(
+            ParkSectionBottomLoadStateAdapter(vm::onRequestNextSections)
         )
 
         paginator = ScrollingViewPaginator.with(sections)
@@ -93,11 +92,7 @@ abstract class ParkFragment<V : ViewDataBinding, VM: ParkViewModel> : Fragment()
             appUriHandler.handle(requireActivity(), redirectUri)
         }
         vm.bottomLoadState.observe(viewLifecycleOwner) { loadState ->
-            adapter.setLoadState(loadState)  // Rename
-        }
-        // FIXME error 대신 errorOnMore 로 변경?
-        vm.error.observe(viewLifecycleOwner) { exception ->
-            adapter.setLoadState(BottomLoadState.Error(exception))
+            adapter.setBottomLoadState(loadState)
         }
     }
 

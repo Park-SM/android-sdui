@@ -2,9 +2,8 @@ package com.smparkworld.core.ui.support.recyclerview
 
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.smparkworld.core.ui.delegator.BottomLoadStateDelegator.BottomLoadState
 
-abstract class LoadStateFooterAdapter: RecyclerView.Adapter<ViewHolder>() {
+abstract class BottomLoadStateAdapter: RecyclerView.Adapter<ViewHolder>() {
 
     var loadState: BottomLoadState = BottomLoadState.IsNotLoading
         set(value) {

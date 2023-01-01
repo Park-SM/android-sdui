@@ -3,21 +3,22 @@ package com.smparkworld.core.ui.delegator
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.smparkworld.core.ui.support.recyclerview.LoadStateFooterAdapter
+import com.smparkworld.core.ui.support.recyclerview.BottomLoadState
+import com.smparkworld.core.ui.support.recyclerview.BottomLoadStateAdapter
 
 class BottomLoadStateDefaultDelegator : BottomLoadStateDelegator {
 
-    override var footerAdapter: LoadStateFooterAdapter? = null
+    override var bottomAdapter: BottomLoadStateAdapter? = null
 
-    override fun withLoadStateFooter(
+    override fun withBottomLoadState(
         originAdapter: RecyclerView.Adapter<ViewHolder>,
-        footerAdapter: LoadStateFooterAdapter
+        bottomAdapter: BottomLoadStateAdapter
     ): ConcatAdapter {
-        this.footerAdapter = footerAdapter
-        return ConcatAdapter(originAdapter, footerAdapter)
+        this.bottomAdapter = bottomAdapter
+        return ConcatAdapter(originAdapter, bottomAdapter)
     }
 
-    override fun setLoadState(loadState: BottomLoadStateDelegator.BottomLoadState) {
-        footerAdapter?.loadState = loadState
+    override fun setBottomLoadState(loadState: BottomLoadState) {
+        bottomAdapter?.loadState = loadState
     }
 }

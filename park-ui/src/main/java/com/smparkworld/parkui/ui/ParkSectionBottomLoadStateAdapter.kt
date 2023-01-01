@@ -4,15 +4,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.smparkworld.core.ui.delegator.BottomLoadStateDelegator.BottomLoadState
-import com.smparkworld.core.ui.support.recyclerview.LoadStateFooterAdapter
+import com.smparkworld.core.ui.support.recyclerview.BottomLoadState
+import com.smparkworld.core.ui.support.recyclerview.BottomLoadStateAdapter
 import com.smparkworld.park.R
 import com.smparkworld.park.databinding.ParkSduiLoadStateErrorBinding
 import com.smparkworld.park.databinding.ParkSduiLoadStateLoadingBinding
 
-class ParkSectionLoadStateAdapter(
+class ParkSectionBottomLoadStateAdapter(
     private val retryMoreSection: () -> Unit
-) : LoadStateFooterAdapter() {
+) : BottomLoadStateAdapter() {
 
     override fun getStateViewType(loadState: BottomLoadState): Int {
         return when (loadState) {
@@ -61,7 +61,7 @@ class ParkSectionLoadStateAdapter(
 
         fun bind() {
             binding.btnRetry.setOnClickListener {
-                retryMoreSection.invoke()
+                retryMoreSection()
             }
         }
     }

@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.smparkworld.core.ui.delegator.BottomLoadStateDefaultDelegator
 import com.smparkworld.core.ui.delegator.BottomLoadStateDelegator
-import com.smparkworld.core.ui.support.recyclerview.LoadStateFooterAdapter
+import com.smparkworld.core.ui.support.recyclerview.BottomLoadStateAdapter
 import com.smparkworld.domain.dto.SectionDTO
 import com.smparkworld.parkui.ui.model.SectionDiffCallback
 import com.smparkworld.parkui.ui.model.SectionViewBinder
@@ -35,9 +35,9 @@ class ParkSectionAdapter(
         return getViewBinder(getItemViewType(position)).bindViewHolder(getItem(position), holder)
     }
 
-    fun withLoadStateFooter(
-        footerAdapter: LoadStateFooterAdapter
+    fun withBottomLoadState(
+        footerAdapter: BottomLoadStateAdapter
     ): ConcatAdapter {
-        return withLoadStateFooter(this, footerAdapter)
+        return withBottomLoadState(this, footerAdapter)
     }
 }

@@ -2,7 +2,7 @@ package com.smparkworld.parkui.ui.delegator
 
 import androidx.lifecycle.MutableLiveData
 import com.smparkworld.core.BuildConfig
-import com.smparkworld.core.ui.delegator.BottomLoadStateDelegator.BottomLoadState
+import com.smparkworld.core.ui.support.recyclerview.BottomLoadState
 import com.smparkworld.domain.Result
 import com.smparkworld.domain.dto.ParkSectionsDTO
 import com.smparkworld.domain.dto.SectionDTO

@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.smparkworld.core.ExtraKey
 import com.smparkworld.core.extension.get
-import com.smparkworld.core.ui.delegator.BottomLoadStateDelegator.BottomLoadState
+import com.smparkworld.core.ui.support.recyclerview.BottomLoadState
 import com.smparkworld.core.ui.delegator.WishStatesDelegator
 import com.smparkworld.domain.dto.SectionDTO
 import com.smparkworld.parkui.ui.delegator.ParkDelegators
