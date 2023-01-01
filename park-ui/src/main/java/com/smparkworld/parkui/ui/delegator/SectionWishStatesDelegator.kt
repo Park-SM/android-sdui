@@ -49,13 +49,15 @@ class SectionWishStatesDelegator @Inject constructor(
         onRequestWishState(origin, id, isWished)
     }
 
-    override suspend fun refreshWishItemsByLocalCache(origin: List<SectionDTO>) {
-        when (val result = syncSectionsWishStateUseCase(origin)) {
+    override suspend fun refreshWishItemsByLocalCache(origin: List<SectionDTO>): List<SectionDTO> {
+        return when (val result = syncSectionsWishStateUseCase(origin)) {
             is Result.Success -> {
                 _delegatedItemsByWishStatesDelegator.value = result.data
+                result.data
             }
             is Result.Error -> {
                 _delegatedErrorByWishStatesDelegator.value = result.exception
+                origin
             }
         }
     }
