@@ -1,4 +1,4 @@
-package com.smparkworld.coredi
+package com.smparkworld.qualifier
 
 import javax.inject.Qualifier
 
