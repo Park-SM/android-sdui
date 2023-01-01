@@ -9,6 +9,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.smparkworld.core.ExtraKey
+import com.smparkworld.core.extension.get
+import com.smparkworld.core.ui.delegator.BottomLoadStateDelegator.BottomLoadState
 import com.smparkworld.core.ui.delegator.WishStatesDelegator
 import com.smparkworld.domain.dto.SectionDTO
 import com.smparkworld.parkui.ui.delegator.ParkDelegators
@@ -44,6 +46,12 @@ abstract class ParkViewModel(
     }
     val error: LiveData<Exception> get() = _error
 
+    val isLoading: LiveData<Boolean>
+        get() = _delegatedIsLoadingBySectionDelegator
+
+    val bottomLoadState: LiveData<BottomLoadState>
+        get() = _delegatedBottomLoadStateBySectionDelegator
+
     val nextPageTriggerPosition: LiveData<Int?>
         get() = _delegatedNextPageTriggerPositionBySectionDelegator
 
@@ -51,10 +59,12 @@ abstract class ParkViewModel(
         get() = _delegatedRedirectUriByRedirectDelegator
 
     init {
-        initSections()
+        stateHandle.get(ExtraKey.INIT_REQUEST, true).takeIf { it }?.let {
+            onRequestSections()
+        }
     }
 
-    private fun initSections() {
+    fun onRequestSections() {
         viewModelScope.launch {
             requestSections(getRequestUri())
         }

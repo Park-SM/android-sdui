@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="park_sdui_desc_network_failure">서비스를 이용할 수 없습니다. 네트워크 연결 상태를 다시 확인해주세요.</string>
+
+    <string name="park_sdui_label_retry">재시도</string>
+</resources>

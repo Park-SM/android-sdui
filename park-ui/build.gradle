@@ -62,6 +62,9 @@ dependencies {
     def livedataKtxVersion = "2.5.1"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$livedataKtxVersion"
 
+    def recyclerViewVersion = "1.2.1"
+    implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
+
     testImplementation 'junit:junit:4.13.2'
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'

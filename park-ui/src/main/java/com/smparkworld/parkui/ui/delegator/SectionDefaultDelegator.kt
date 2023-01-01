@@ -2,6 +2,7 @@ package com.smparkworld.parkui.ui.delegator
 
 import androidx.lifecycle.MutableLiveData
 import com.smparkworld.core.BuildConfig
+import com.smparkworld.core.ui.delegator.BottomLoadStateDelegator.BottomLoadState
 import com.smparkworld.domain.Result
 import com.smparkworld.domain.dto.ParkSectionsDTO
 import com.smparkworld.domain.dto.SectionDTO
@@ -14,9 +15,11 @@ class SectionDefaultDelegator @Inject constructor(
     private val requestPartialUpdateSectionUseCase: RequestPartialUpdateSectionUseCase
 ) : SectionDelegator {
 
-    override val _delegatedItemsBySectionDelegator = MutableLiveData<List<SectionDTO>>()
-
     override val _delegatedIsLoadingBySectionDelegator = MutableLiveData<Boolean>()
+
+    override val _delegatedBottomLoadStateBySectionDelegator = MutableLiveData<BottomLoadState>()
+
+    override val _delegatedItemsBySectionDelegator = MutableLiveData<List<SectionDTO>>()
 
     override val _delegatedErrorBySectionDelegator = MutableLiveData<Exception>()
 
@@ -48,8 +51,8 @@ class SectionDefaultDelegator @Inject constructor(
     }
 
     override suspend fun requestNextSections(origin: List<SectionDTO>) {
-        if (_delegatedIsLoadingBySectionDelegator.value == true) return
-        _delegatedIsLoadingBySectionDelegator.value = true
+        if (_delegatedBottomLoadStateBySectionDelegator.value == BottomLoadState.IsLoading) return
+        _delegatedBottomLoadStateBySectionDelegator.value = BottomLoadState.IsLoading
 
         val requestUri = nextRequestUri
         if (requestUri != null) {
@@ -58,14 +61,18 @@ class SectionDefaultDelegator @Inject constructor(
                 is Result.Success -> {
                     onSuccessMoreRequestInternal(origin, result.data)
                     onSuccessMoreRequest(result.data)
+
+                    _delegatedBottomLoadStateBySectionDelegator.value = BottomLoadState.IsNotLoading
                 }
                 is Result.Error -> {
-                    onFailureRequestInternal(result.exception)
-                    onFailureRequest(result.exception)
+                    onFailureMoreRequestInternal(result.exception)
+                    onFailureMoreRequest(result.exception)
+
+                    _delegatedNextPageTriggerPositionBySectionDelegator.value = null
+                    _delegatedBottomLoadStateBySectionDelegator.value = BottomLoadState.Error(result.exception)
                 }
             }
         }
-        _delegatedIsLoadingBySectionDelegator.value = false
     }
 
     override suspend fun requestPartialUpdateSection(origin: List<SectionDTO>) {
@@ -75,8 +82,8 @@ class SectionDefaultDelegator @Inject constructor(
                 onSuccessPartialUpdate(result.data)
             }
             is Result.Error -> {
-                onFailureRequestInternal(result.exception)
-                onFailureRequest(result.exception)
+                onFailurePartialUpdateInternal(result.exception)
+                onFailurePartialUpdate(result.exception)
             }
         }
     }
@@ -106,6 +113,18 @@ class SectionDefaultDelegator @Inject constructor(
         if (BuildConfig.DEBUG) exception.printStackTrace()
 
         _delegatedErrorBySectionDelegator.value = exception
+    }
+
+    private fun onFailurePartialUpdateInternal(exception: Exception) {
+        // Send non-fatal log, etc..
+        if (BuildConfig.DEBUG) exception.printStackTrace()
+
+        _delegatedErrorBySectionDelegator.value = exception
+    }
+
+    private fun onFailureMoreRequestInternal(exception: Exception) {
+        // Send non-fatal log, etc..
+        if (BuildConfig.DEBUG) exception.printStackTrace()
     }
 
     private fun onEmptySectionsInternal() {

@@ -2,6 +2,7 @@ package com.smparkworld.core.extension
 
 import android.net.Uri
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
@@ -52,3 +53,7 @@ class ViewModelLazy<VM : ViewModel>(
 
 val Uri.hostAndPath: String
     get() = "/${host}${path}"
+
+fun <T> SavedStateHandle.get(key: String, default: T): T {
+    return get<T>(key) ?: default
+}

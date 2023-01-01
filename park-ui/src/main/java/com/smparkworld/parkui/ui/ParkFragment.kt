@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.smparkworld.core.ExtraKey
 import com.smparkworld.core.deeplink.AppUriHandler
+import com.smparkworld.core.ui.delegator.BottomLoadStateDelegator.BottomLoadState
 import com.smparkworld.core.ui.support.pagination.ScrollingViewPaginator
 import com.smparkworld.domain.dto.SectionDTO
 import com.smparkworld.parkui.di.SectionViewBinders
@@ -20,6 +21,7 @@ import javax.inject.Inject
 private typealias ViewBinderMap = Map<String, SectionViewBinder<out SectionDTO, *>>
 private typealias ViewBinderMapInternal = Map<String, SectionViewBinder<SectionDTO, RecyclerView.ViewHolder>>
 
+@Suppress("UNCHECKED_CAST")
 abstract class ParkFragment<V : ViewDataBinding, VM: ParkViewModel> : Fragment() {
 
     @Inject
@@ -30,6 +32,8 @@ abstract class ParkFragment<V : ViewDataBinding, VM: ParkViewModel> : Fragment()
     lateinit var appUriHandler: AppUriHandler
 
     private lateinit var paginator: ScrollingViewPaginator
+
+    private lateinit var adapter: ParkSectionAdapter
 
     abstract val vm: VM
 
@@ -59,14 +63,17 @@ abstract class ParkFragment<V : ViewDataBinding, VM: ParkViewModel> : Fragment()
         return this
     }
 
-    @Suppress("UNCHECKED_CAST")
     private fun initViewsInternal(sections: RecyclerView) {
         for ((_, viewBinder) in viewBinders) {
             viewBinder.initialize(this, vm)
         }
-        sections.itemAnimator = null
+        adapter = ParkSectionAdapter(viewBinders as ViewBinderMapInternal)
+
+        sections.itemAnimator = ParkItemAnimator()
         sections.layoutManager = LinearLayoutManager(requireContext())
-        sections.adapter = ParkSectionAdapter(viewBinders as ViewBinderMapInternal)
+        sections.adapter = adapter.withLoadStateFooter(
+            ParkSectionLoadStateAdapter(vm::onRequestNextSections)
+        )
 
         paginator = ScrollingViewPaginator.with(sections)
             .setOnNextPageListener {
@@ -77,13 +84,20 @@ abstract class ParkFragment<V : ViewDataBinding, VM: ParkViewModel> : Fragment()
 
     private fun initObserversInternal(sections: RecyclerView) {
         vm.items.observe(viewLifecycleOwner) { items ->
-            (sections.adapter as? ParkSectionAdapter)?.submitList(items)
+            adapter.submitList(items)
         }
         vm.nextPageTriggerPosition.observe(viewLifecycleOwner) { position ->
             paginator.setNextPageTriggerPosition(position)
         }
         vm.redirectUri.observe(viewLifecycleOwner) { redirectUri ->
             appUriHandler.handle(requireActivity(), redirectUri)
+        }
+        vm.bottomLoadState.observe(viewLifecycleOwner) { loadState ->
+            adapter.setLoadState(loadState)  // Rename
+        }
+        // FIXME error 대신 errorOnMore 로 변경?
+        vm.error.observe(viewLifecycleOwner) { exception ->
+            adapter.setLoadState(BottomLoadState.Error(exception))
         }
     }
 
