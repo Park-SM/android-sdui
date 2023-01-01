@@ -11,7 +11,7 @@ import com.smparkworld.park.databinding.ParkSduiLoadStateErrorBinding
 import com.smparkworld.park.databinding.ParkSduiLoadStateLoadingBinding
 
 class ParkSectionBottomLoadStateAdapter(
-    private val retryMoreSection: () -> Unit
+    private val onRetry: () -> Unit
 ) : BottomLoadStateAdapter() {
 
     override fun getStateViewType(loadState: BottomLoadState): Int {
@@ -35,7 +35,7 @@ class ParkSectionBottomLoadStateAdapter(
                 ErrorViewHolder(
                     ParkSduiLoadStateErrorBinding.inflate(
                         LayoutInflater.from(parent.context), parent, false
-                    ), retryMoreSection
+                    ), onRetry
                 )
             }
             else -> {
@@ -56,13 +56,11 @@ class ParkSectionBottomLoadStateAdapter(
 
     internal class ErrorViewHolder(
         private val binding: ParkSduiLoadStateErrorBinding,
-        private val retryMoreSection: () -> Unit
+        private val retry: () -> Unit
     ): ViewHolder(binding.root) {
 
         fun bind() {
-            binding.btnRetry.setOnClickListener {
-                retryMoreSection()
-            }
+            binding.btnRetry.setOnClickListener { retry() }
         }
     }
 }

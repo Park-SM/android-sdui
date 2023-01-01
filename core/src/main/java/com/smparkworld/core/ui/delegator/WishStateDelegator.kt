@@ -4,9 +4,9 @@ import androidx.lifecycle.MutableLiveData
 
 interface WishStateDelegator {
 
-    val _delegatedIsWishedByWishStateDelegator: MutableLiveData<Boolean>
+    val _isWishedByWishStateDelegator: MutableLiveData<Boolean>
 
-    val _delegatedErrorByWishStateDelegator: MutableLiveData<Exception>
+    val _errorByWishStateDelegator: MutableLiveData<Exception>
 
     suspend fun requestWishState(id: Long, isWished: Boolean)
 

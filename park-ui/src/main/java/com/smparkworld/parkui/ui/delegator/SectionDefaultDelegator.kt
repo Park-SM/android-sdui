@@ -2,6 +2,7 @@ package com.smparkworld.parkui.ui.delegator
 
 import androidx.lifecycle.MutableLiveData
 import com.smparkworld.core.BuildConfig
+import com.smparkworld.core.MutableLiveEvent
 import com.smparkworld.core.ui.support.recyclerview.BottomLoadState
 import com.smparkworld.domain.Result
 import com.smparkworld.domain.dto.ParkSectionsDTO
@@ -15,21 +16,21 @@ class SectionDefaultDelegator @Inject constructor(
     private val requestPartialUpdateSectionUseCase: RequestPartialUpdateSectionUseCase
 ) : SectionDelegator {
 
-    override val _delegatedIsLoadingBySectionDelegator = MutableLiveData<Boolean>()
+    override val _isLoadingBySectionDelegator = MutableLiveData<Boolean>()
 
-    override val _delegatedBottomLoadStateBySectionDelegator = MutableLiveData<BottomLoadState>()
+    override val _bottomLoadStateBySectionDelegator = MutableLiveData<BottomLoadState>()
 
-    override val _delegatedItemsBySectionDelegator = MutableLiveData<List<SectionDTO>>()
+    override val _itemsBySectionDelegator = MutableLiveData<List<SectionDTO>>()
 
-    override val _delegatedErrorBySectionDelegator = MutableLiveData<Exception>()
+    override val _errorBySectionDelegator = MutableLiveEvent<Exception>()
 
-    override val _delegatedNextPageTriggerPositionBySectionDelegator = MutableLiveData<Int?>()
+    override val _nextPageTriggerPositionBySectionDelegator = MutableLiveData<Int?>()
 
     private var nextRequestUri: String? = null
 
     override suspend fun requestSections(initRequestUri: String?) {
-        if (_delegatedIsLoadingBySectionDelegator.value == true) return
-        _delegatedIsLoadingBySectionDelegator.value = true
+        if (_isLoadingBySectionDelegator.value == true) return
+        _isLoadingBySectionDelegator.value = true
 
         if (initRequestUri != null) {
             when (val result = getSectionsUseCase(initRequestUri)) {
@@ -47,12 +48,12 @@ class SectionDefaultDelegator @Inject constructor(
             onEmptySections()
         }
 
-        _delegatedIsLoadingBySectionDelegator.value = false
+        _isLoadingBySectionDelegator.value = false
     }
 
     override suspend fun requestNextSections(origin: List<SectionDTO>) {
-        if (_delegatedBottomLoadStateBySectionDelegator.value == BottomLoadState.IsLoading) return
-        _delegatedBottomLoadStateBySectionDelegator.value = BottomLoadState.IsLoading
+        if (_bottomLoadStateBySectionDelegator.value == BottomLoadState.IsLoading) return
+        _bottomLoadStateBySectionDelegator.value = BottomLoadState.IsLoading
 
         val requestUri = nextRequestUri
         if (requestUri != null) {
@@ -62,14 +63,14 @@ class SectionDefaultDelegator @Inject constructor(
                     onSuccessMoreRequestInternal(origin, result.data)
                     onSuccessMoreRequest(result.data)
 
-                    _delegatedBottomLoadStateBySectionDelegator.value = BottomLoadState.IsNotLoading
+                    _bottomLoadStateBySectionDelegator.value = BottomLoadState.IsNotLoading
                 }
                 is Result.Error -> {
                     onFailureMoreRequestInternal(result.exception)
                     onFailureMoreRequest(result.exception)
 
-                    _delegatedNextPageTriggerPositionBySectionDelegator.value = null
-                    _delegatedBottomLoadStateBySectionDelegator.value = BottomLoadState.Error(result.exception)
+                    _nextPageTriggerPositionBySectionDelegator.value = null
+                    _bottomLoadStateBySectionDelegator.value = BottomLoadState.Error(result.exception)
                 }
             }
         }
@@ -91,35 +92,35 @@ class SectionDefaultDelegator @Inject constructor(
     private fun onSuccessRequestInternal(data: ParkSectionsDTO) {
         nextRequestUri = data.requestUri?.nextPageUri
 
-        _delegatedNextPageTriggerPositionBySectionDelegator.value = data.requestUri?.nextPageTriggerPosition
-        _delegatedItemsBySectionDelegator.value = data.sections
+        _nextPageTriggerPositionBySectionDelegator.value = data.requestUri?.nextPageTriggerPosition
+        _itemsBySectionDelegator.value = data.sections
     }
 
     private fun onSuccessMoreRequestInternal(origin: List<SectionDTO>, data: ParkSectionsDTO) {
         nextRequestUri = data.requestUri?.nextPageUri
 
-        _delegatedNextPageTriggerPositionBySectionDelegator.value = data.requestUri?.nextPageTriggerPosition
-        _delegatedItemsBySectionDelegator.value = origin.toMutableList().also { currentItems ->
+        _nextPageTriggerPositionBySectionDelegator.value = data.requestUri?.nextPageTriggerPosition
+        _itemsBySectionDelegator.value = origin.toMutableList().also { currentItems ->
             currentItems.addAll(data.sections)
         }
     }
 
     private fun onSuccessPartialUpdateInternal(updatedSections: List<SectionDTO>) {
-        _delegatedItemsBySectionDelegator.value = updatedSections
+        _itemsBySectionDelegator.value = updatedSections
     }
 
     private fun onFailureRequestInternal(exception: Exception) {
         // Send non-fatal log, etc..
         if (BuildConfig.DEBUG) exception.printStackTrace()
 
-        _delegatedErrorBySectionDelegator.value = exception
+        _errorBySectionDelegator.value = exception
     }
 
     private fun onFailurePartialUpdateInternal(exception: Exception) {
         // Send non-fatal log, etc..
         if (BuildConfig.DEBUG) exception.printStackTrace()
 
-        _delegatedErrorBySectionDelegator.value = exception
+        _errorBySectionDelegator.value = exception
     }
 
     private fun onFailureMoreRequestInternal(exception: Exception) {
@@ -130,6 +131,6 @@ class SectionDefaultDelegator @Inject constructor(
     private fun onEmptySectionsInternal() {
         // Send non-fatal log, etc..
 
-        _delegatedItemsBySectionDelegator.value = emptyList()
+        _itemsBySectionDelegator.value = emptyList()
     }
 }

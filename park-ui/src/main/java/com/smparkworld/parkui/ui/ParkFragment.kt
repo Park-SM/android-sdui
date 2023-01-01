@@ -71,7 +71,7 @@ abstract class ParkFragment<V : ViewDataBinding, VM: ParkViewModel> : Fragment()
         sections.itemAnimator = ParkItemAnimator()
         sections.layoutManager = LinearLayoutManager(requireContext())
         sections.adapter = adapter.withBottomLoadState(
-            ParkSectionBottomLoadStateAdapter(vm::onRequestNextSections)
+            ParkSectionBottomLoadStateAdapter(onRetry = vm::onRequestNextSections)
         )
 
         paginator = ScrollingViewPaginator.with(sections)

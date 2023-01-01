@@ -16,5 +16,4 @@ interface BottomLoadStateDelegator {
     ): ConcatAdapter
 
     fun setBottomLoadState(loadState: BottomLoadState)
-
 }

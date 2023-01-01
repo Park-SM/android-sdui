@@ -8,7 +8,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.smparkworld.core.ExtraKey
-import com.smparkworld.core.SingleLiveEvent
+import com.smparkworld.core.MutableLiveEvent
 import com.smparkworld.core.ui.delegator.WishStateDelegator
 import com.smparkworld.domain.Result
 import com.smparkworld.domain.dto.ProductDetailDTO
@@ -32,7 +32,7 @@ internal class ProductDetailViewModel @Inject constructor(
     WishStateDelegator by wishDefaultDelegator {
 
     private val _isWished = MediatorLiveData<Boolean>().apply {
-        addSource(_delegatedIsWishedByWishStateDelegator) { value = it }
+        addSource(_isWishedByWishStateDelegator) { value = it }
     }
     override val isWished: LiveData<Boolean> get() = _isWished
 
@@ -51,7 +51,7 @@ internal class ProductDetailViewModel @Inject constructor(
     private val _category = MutableLiveData<String>()
     override val category: LiveData<String> get() = _category
 
-    private val _event = SingleLiveEvent<ProductDetailEvent>()
+    private val _event = MutableLiveEvent<ProductDetailEvent>()
     override val event: LiveData<ProductDetailEvent> get() = _event
 
     init {

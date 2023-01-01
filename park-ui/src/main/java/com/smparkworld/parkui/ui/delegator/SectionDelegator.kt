@@ -1,21 +1,22 @@
 package com.smparkworld.parkui.ui.delegator
 
 import androidx.lifecycle.MutableLiveData
+import com.smparkworld.core.MutableLiveEvent
 import com.smparkworld.core.ui.support.recyclerview.BottomLoadState
 import com.smparkworld.domain.dto.ParkSectionsDTO
 import com.smparkworld.domain.dto.SectionDTO
 
 interface SectionDelegator {
 
-    val _delegatedIsLoadingBySectionDelegator: MutableLiveData<Boolean>
+    val _isLoadingBySectionDelegator: MutableLiveData<Boolean>
 
-    val _delegatedBottomLoadStateBySectionDelegator: MutableLiveData<BottomLoadState>
+    val _bottomLoadStateBySectionDelegator: MutableLiveData<BottomLoadState>
 
-    val _delegatedItemsBySectionDelegator: MutableLiveData<List<SectionDTO>>
+    val _itemsBySectionDelegator: MutableLiveData<List<SectionDTO>>
 
-    val _delegatedErrorBySectionDelegator: MutableLiveData<Exception>
+    val _errorBySectionDelegator: MutableLiveEvent<Exception>
 
-    val _delegatedNextPageTriggerPositionBySectionDelegator: MutableLiveData<Int?>
+    val _nextPageTriggerPositionBySectionDelegator: MutableLiveData<Int?>
 
     suspend fun requestSections(initRequestUri: String?)
     suspend fun requestNextSections(origin: List<SectionDTO>)

@@ -1,6 +1,7 @@
 package com.smparkworld.productdetail.ui.delegator
 
 import androidx.lifecycle.MutableLiveData
+import com.smparkworld.core.MutableLiveEvent
 import com.smparkworld.core.ui.delegator.WishStateDelegator
 import com.smparkworld.domain.Result
 import com.smparkworld.domain.usecase.CacheWishUseCase
@@ -16,9 +17,9 @@ internal class ProductWishStateDelegator @Inject constructor(
     private val syncProductWishStateUseCase: SyncProductWishStateUseCase
 ) : WishStateDelegator {
 
-    override val _delegatedIsWishedByWishStateDelegator = MutableLiveData<Boolean>()
+    override val _isWishedByWishStateDelegator = MutableLiveData<Boolean>()
 
-    override val _delegatedErrorByWishStateDelegator = MutableLiveData<Exception>()
+    override val _errorByWishStateDelegator = MutableLiveEvent<Exception>()
 
     override suspend fun requestWishState(id: Long, isWished: Boolean) {
         val result = if (isWished) {
@@ -34,7 +35,7 @@ internal class ProductWishStateDelegator @Inject constructor(
             is Result.Error -> {
                 rollbackWishState(isWished)
 
-                _delegatedErrorByWishStateDelegator.value = result.exception
+                _errorByWishStateDelegator.value = result.exception
 
                 // do anything on wish api failure. e.g) Show Snackbar.. etc..
             }
@@ -46,11 +47,11 @@ internal class ProductWishStateDelegator @Inject constructor(
         when (val result = syncProductWishStateUseCase(id)) {
             is Result.Success -> {
                 result.data?.let { newWishState ->
-                    _delegatedIsWishedByWishStateDelegator.value = newWishState
+                    _isWishedByWishStateDelegator.value = newWishState
                 }
             }
             is Result.Error -> {
-                _delegatedErrorByWishStateDelegator.value = result.exception
+                _errorByWishStateDelegator.value = result.exception
             }
         }
     }
@@ -64,6 +65,6 @@ internal class ProductWishStateDelegator @Inject constructor(
     }
 
     private fun rollbackWishState(isWished: Boolean) {
-        _delegatedIsWishedByWishStateDelegator.value = !isWished
+        _isWishedByWishStateDelegator.value = !isWished
     }
 }
