@@ -2,19 +2,20 @@ package com.smparkworld.productdetail.ui
 
 import android.view.View
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.smparkworld.core.ExtraKey
 import com.smparkworld.core.SingleLiveEvent
+import com.smparkworld.core.ui.delegator.WishStateDelegator
 import com.smparkworld.domain.Result
 import com.smparkworld.domain.dto.ProductDetailDTO
 import com.smparkworld.productdetail.BuildConfig
 import com.smparkworld.productdetail.ui.delegator.ProductDefaultDelegator
 import com.smparkworld.productdetail.ui.delegator.ProductDelegator
 import com.smparkworld.productdetail.ui.delegator.ProductWishStateDelegator
-import com.smparkworld.core.ui.delegator.WishStateDelegator
 import com.smparkworld.productdetail.ui.model.ProductDetailEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -30,10 +31,13 @@ internal class ProductDetailViewModel @Inject constructor(
     ProductDelegator by productDefaultDelegator,
     WishStateDelegator by wishDefaultDelegator {
 
+    private val _isWished = MediatorLiveData<Boolean>().apply {
+        addSource(_delegatedIsWishedByWishStateDelegator) { value = it }
+    }
+    override val isWished: LiveData<Boolean> get() = _isWished
+
     private val _imageUri = MutableLiveData<String>()
     override val imageUri: LiveData<String> get() = _imageUri
-
-    override val isWished: LiveData<Boolean> get() = _isWished
 
     private val _title = MutableLiveData<String>()
     override val title: LiveData<String> get() = _title

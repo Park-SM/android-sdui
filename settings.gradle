@@ -19,7 +19,7 @@ include ':sample'
 
 // core modules
 include ':core'
-include ':core-di'
+include ':qualifier'
 
 // network module
 include ':network'

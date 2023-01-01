@@ -8,10 +8,10 @@ class RedirectDefaultDelegator @Inject constructor(
 
 ) : RedirectDelegator {
 
-    override val _redirectUri = SingleLiveEvent<Uri>()
+    override val _delegatedRedirectUriByRedirectDelegator = SingleLiveEvent<Uri>()
 
     override fun redirectToUri(linkUri: String) {
         onRedirectToUri(linkUri)
-        _redirectUri.value = Uri.parse(linkUri)
+        _delegatedRedirectUriByRedirectDelegator.value = Uri.parse(linkUri)
     }
 }

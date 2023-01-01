@@ -1,6 +1,6 @@
 package com.smparkworld.domain.usecase
 
-import com.smparkworld.coredi.IoDispatcher
+import com.smparkworld.qualifier.IoDispatcher
 import com.smparkworld.domain.repository.WishRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
