@@ -20,7 +20,6 @@ import javax.inject.Inject
 private typealias ViewBinderMap = Map<String, SectionViewBinder<out SectionDTO, *>>
 private typealias ViewBinderMapInternal = Map<String, SectionViewBinder<SectionDTO, RecyclerView.ViewHolder>>
 
-@Suppress("UNCHECKED_CAST")
 abstract class ParkFragment<V : ViewDataBinding, VM: ParkViewModel> : Fragment() {
 
     @Inject
@@ -62,6 +61,7 @@ abstract class ParkFragment<V : ViewDataBinding, VM: ParkViewModel> : Fragment()
         return this
     }
 
+    @Suppress("UNCHECKED_CAST")
     private fun initViewsInternal(sections: RecyclerView) {
         for ((_, viewBinder) in viewBinders) {
             viewBinder.initialize(this, vm)
